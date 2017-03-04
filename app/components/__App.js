@@ -7,7 +7,7 @@ import store from '../store';
 function mapStateToProps(state) {
     return {
         state: {
-
+            currentPath: state.currentPath
         },
         store
     };

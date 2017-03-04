@@ -1,13 +1,18 @@
 import React from 'react';
 
-class Index extends React.Component {
+import MainHeaderComponent from './header/Main';
+
+class IndexComponent extends React.Component {
     render() {
         return (
-            <div className="">
-                <p>INDEX</p>
+            <div>
+                <MainHeaderComponent {...this.props} />
+                <div className="">
+                    <p>INDEX</p>
+                </div>
             </div>
         );
     }
 }
 
-export default Index;
+export default IndexComponent;

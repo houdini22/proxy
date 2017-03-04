@@ -16,7 +16,7 @@ class Server extends Model
 
     public function getPort()
     {
-
+        list(, $port) = explode(':', $this->address);
         return $port;
     }
 

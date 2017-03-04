@@ -18,6 +18,7 @@ const router = (
         <Router history={history} key={new Date()}>
             <Route component={AppComponent} path="/">
                 <IndexRoute component={IndexComponent}/>
+                <Route path="/about" component={IndexComponent}/>
                 <Route path="*" component={NotFoundComponent}/>
             </Route>
         </Router>
