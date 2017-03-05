@@ -25,15 +25,15 @@ class Proxy
         if (!defined('CURLOPT_CONNECTTIMEOUT_MS')) define('CURLOPT_CONNECTTIMEOUT_MS', 156);
     }
 
-    public function test($servers)
+    public function testOldHttp($servers)
     {
-        $client = new \Guzzle\Http\Client('http://imagizer.it/');
+        $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url'));
         $requests = array();
         $responses = array();
         foreach ($servers as $server)
         {
             $requests[] = $client->get(
-                "/~enjoy/proxy/proxy_test",
+                \Config::get('proxy.test_server_old_http_path'),
                 array(),
                 array(
                     'proxy'           => "tcp://{$server->address}",
@@ -43,12 +43,8 @@ class Proxy
                 )
             );
 
-            $server->is_available = 0;
-            $server->type = $server->ping = $server->speed = null;
             $server->is_checked = 1;
             $server->checked_at = date('Y-m-d H:i:s');
-            $server->no_redirect = null;
-            $server->is_hacked = 0;
             $server->ping_error++;
             $server->save();
         }
@@ -76,7 +72,7 @@ class Proxy
             {
                 $response = (string)$request->getResponse()->getBody();
                 $query = $request->getQuery();
-                if ($server = \Server::find($query['id']))
+                if ($server = \App\AvailableServer::where('address', '=', $query['address'])->find())
                 {
                     if (preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $response))
                     {
@@ -100,7 +96,7 @@ class Proxy
                         $server->is_hacked = 0;
                     }
                     $server->save();
-                    $ids[] = $successfullIds[] = $query['id'];
+                    $ids[] = $successfullIds[] = $server->id;
                 }
             }
 
@@ -110,7 +106,7 @@ class Proxy
                 $exception = $e->getExceptionForFailedRequest($request);
                 $query = $request->getQuery();
                 $ids[] = $failedIds[] = $query['id'];
-                $server = \Server::find($query['id']);
+                $server = \App\Server::find($query['id']);
                 if ($server)
                 {
                     preg_match('#\[status code\]\s(\d+)#', $exception->getMessage(), $matches);
@@ -132,6 +128,7 @@ class Proxy
             }
         }
         self::log('Successed count: ' . count($successfullIds));
+        var_dump($successfullIds);
     }
 
     public function testSocks($servers)
@@ -341,6 +338,7 @@ class Proxy
                 }
                 catch (\Exception $e)
                 {
+                    var_dump($e->getMessage());
                 }
             }
         }

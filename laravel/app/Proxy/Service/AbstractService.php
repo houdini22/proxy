@@ -78,7 +78,7 @@ abstract class AbstractService
                     $empty = FALSE;
                     \App\Proxy\Proxy::log("Adding proxy: {$address['ip']}:{$address['port']}");
                 } catch (\Exception $e) {
-                    //var_dump($e->getMessage());
+                    var_dump($e->getMessage());
                 }
             }
         }

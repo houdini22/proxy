@@ -8,10 +8,7 @@ class IndexComponent extends React.Component {
             <div>
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
-                    <div className="jumbotron">
-                        <h1>ProxyAggregator</h1>
-                        <p>Hello, world.</p>
-                    </div>
+                    About
                 </div>
             </div>
         );

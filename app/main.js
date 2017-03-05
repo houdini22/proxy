@@ -1,6 +1,7 @@
 import {render} from 'react-dom';
 
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap-theme.css";
 import "./scss/screen.scss";
 
 import React from 'react';
@@ -10,6 +11,7 @@ import store, {history} from './store';
 import {Router, Route, IndexRoute} from 'react-router';
 
 import IndexComponent from './components/Index';
+import AboutComponent from './components/About';
 import NotFoundComponent from './components/NotFound';
 import AppComponent from './components/__App';
 
@@ -18,7 +20,7 @@ const router = (
         <Router history={history} key={new Date()}>
             <Route component={AppComponent} path="/">
                 <IndexRoute component={IndexComponent}/>
-                <Route path="/about" component={IndexComponent}/>
+                <Route path="/about" component={AboutComponent}/>
                 <Route path="*" component={NotFoundComponent}/>
             </Route>
         </Router>

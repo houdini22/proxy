@@ -18,3 +18,78 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function () {
 
 });
+
+Route::get('/proxy_test_old', function () {
+    echo 'proxy_test::';
+
+    $oldServer = \App\Server::where('address', '=', Input::get('ip') . ':' . Input::get('port'))->first();
+    $oldServer->is_available = 1;
+    if ($oldServer->first_ping === '0000-00-00 00:00:00') {
+        $oldServer->first_ping = date('Y-m-d H:i:s');
+    }
+    $oldServer->last_availability = date('Y-m-d H:i:s');
+    $oldServer->ping_error -= 1;
+    $oldServer->ping_success += 1;
+    $oldServer->save();
+
+    $json = array('id' => NULL);
+    if ($oldServer) {
+        $server = new \App\AvailableServer();
+
+        $server->is_checked = 1;
+        if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
+            $server->type = 'elite';
+        } elseif (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $server->type = 'anonymous';
+        } else {
+            $server->type = 'transparent';
+        }
+        $server->ping = microtime(true) - (float)Input::get('start');
+        $server->is_available = 1;
+        $server->first_ping = $oldServer->first_ping;
+        if ($server->first_ping === '0000-00-00 00:00:00') {
+            $server->first_ping = date('Y-m-d H:i:s');
+        }
+        $server->checked_at = $oldServer->checked_at;
+        $server->last_availability = date('Y-m-d H:i:s');
+        $server->ping_error = $oldServer->ping_error - 1;
+        $server->ping_success = $oldServer->ping_success + 1;
+        $server->address = $oldServer->address;
+        $server->speed = $server->is_checked_speed = 0;
+        $server->save();
+
+        $json['id'] = $server->id;
+        $json['address'] = $server->address;
+
+        $client = new \Guzzle\Http\Client('http://ip-api.com/');
+        $request = $client->get("/php/" . Input::get('ip'), array(), array(
+            'timeout' => 10,
+            'connect_timeout' => 2
+        ));
+        if (empty($server->country)) {
+            try {
+                $response = $request->send();
+                $body = (string)$response->getBody();
+                $result = unserialize($body);
+            } catch (\Exception $e) {
+                $result = array();
+            }
+            if (!empty($result['status']) AND $result['status'] === 'success') {
+                $server->country = !empty($result['country']) ? $result['country'] : NULL;
+                $server->country_code = !empty($result['countryCode']) ? $result['countryCode'] : NULL;
+                $server->region_code = !empty($result['region']) ? $result['region'] : NULL;
+                $server->region_name = !empty($result['regionName']) ? $result['regionName'] : NULL;
+                $server->city = !empty($result['city']) ? $result['city'] : NULL;
+                $server->zip = !empty($result['zip']) ? $result['zip'] : NULL;
+                $server->lat = !empty($result['lat']) ? $result['lat'] : NULL;
+                $server->lon = !empty($result['lon']) ? $result['lon'] : NULL;
+                $server->timezone = !empty($result['timezone']) ? $result['timezone'] : NULL;
+                $server->isp = !empty($result['isp']) ? $result['isp'] : NULL;
+                $server->organization = !empty($result['org']) ? $result['org'] : NULL;
+                $server->save();
+            }
+        }
+    }
+    echo json_encode($json);
+    echo '::proxy_test';
+});
