@@ -41,7 +41,7 @@ class TestProxiesHttpOld extends Command
         ini_set('mysql.connect_timeout', 300);
         ini_set('default_socket_timeout', 300);
 
-        $servers = \App\Server::take($this->option('limit'))
+        $servers = \App\Server::take(100)
             ->orderBy(\DB::raw('RAND()'))
             ->where('is_available', '=', 0)
             ->get();
