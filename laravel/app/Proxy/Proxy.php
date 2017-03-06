@@ -128,7 +128,6 @@ class Proxy
             }
         }
         self::log('Successed count: ' . count($successfullIds));
-        var_dump($successfullIds);
     }
 
     public function testSocks($servers)

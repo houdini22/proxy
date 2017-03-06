@@ -11,7 +11,7 @@ class TestProxiesHttpOld extends Command
      *
      * @var string
      */
-    protected $signature = 'command:TestProxiesHttp';
+    protected $signature = 'command:TestProxiesHttpOld';
 
     /**
      * The console command description.
@@ -43,7 +43,7 @@ class TestProxiesHttpOld extends Command
 
         $servers = \App\Server::take(100)
             ->orderBy(\DB::raw('RAND()'))
-            ->where('is_available', '=', 0)
+            ->where('is_available', '=', 1)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));
