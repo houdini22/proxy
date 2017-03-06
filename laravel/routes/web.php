@@ -26,7 +26,7 @@ Route::group(['prefix' => 'api'], function () {
 Route::get('/proxy_test_old', function (Request $request) {
     echo 'proxy_test::';
 
-    $oldServer = \App\Server::where('address', '=', $request->get('ip') . ':' . $request->get('port'))->first();
+    $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $oldServer->is_available = 1;
     if ($oldServer->first_ping === '0000-00-00 00:00:00') {
         $oldServer->first_ping = date('Y-m-d H:i:s');
@@ -48,7 +48,7 @@ Route::get('/proxy_test_old', function (Request $request) {
         } else {
             $server->type = 'transparent';
         }
-        $server->ping = microtime(true) - (float)$request->get('start');
+        $server->ping = microtime(true) - (float)$request->query('start');
         $server->is_available = 1;
         $server->first_ping = $oldServer->first_ping;
         if ($server->first_ping === '0000-00-00 00:00:00') {
@@ -66,7 +66,7 @@ Route::get('/proxy_test_old', function (Request $request) {
         $json['address'] = $server->address;
 
         $client = new \Guzzle\Http\Client('http://ip-api.com/');
-        $request = $client->get("/php/" . $request->get('ip'), array(), array(
+        $request = $client->get("/php/" . $request->query('ip'), array(), array(
             'timeout' => 10,
             'connect_timeout' => 2
         ));
