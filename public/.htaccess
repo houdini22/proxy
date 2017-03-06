@@ -3,12 +3,13 @@
         Options -MultiViews
     </IfModule>
 
+    RewriteEngine On
+    RewriteBase /proxy
+
     RewriteCond %{HTTPS} =on
     RewriteRule ^(.*)$ - [env=ps:https]
     RewriteCond %{HTTPS} !=on
     RewriteRule ^(.*)$ - [env=ps:http]
-
-    RewriteEngine On
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
