@@ -1,8 +1,8 @@
 <?php
 
 return array(
-    'check_server_url' => 'http://195.154.179.219:8080',
-    'test_server_old_http_path' => '/~hud/new_proxy/proxy_test_old',
+    'check_server_url_http' => 'http://195.154.179.219',
+    'test_server_old_http_path' => '/proxy/proxy_test_old',
 	'services' => array(
         /*array(
             'url' => 'http://best-proxy-list-ips.blogspot.com/',

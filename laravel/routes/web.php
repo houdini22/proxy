@@ -16,7 +16,9 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'api'], function () {
-
+    Route::get('/', function () {
+        return "API";
+    });
 });
 
 Route::get('/proxy_test_old', function () {

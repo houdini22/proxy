@@ -27,7 +27,7 @@ class Proxy
 
     public function testOldHttp($servers)
     {
-        $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url'));
+        $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url_http'));
         $requests = array();
         $responses = array();
         foreach ($servers as $server)
