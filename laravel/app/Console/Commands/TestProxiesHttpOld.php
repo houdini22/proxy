@@ -43,7 +43,7 @@ class TestProxiesHttpOld extends Command
 
         $servers = \App\Server::take(200)
             ->orderBy(\DB::raw('RAND()'))
-            ->where('is_available', '=', 1)
+            ->where('is_checked', '=', 0)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));
