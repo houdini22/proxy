@@ -72,7 +72,7 @@ class Proxy
             {
                 $response = (string)$request->getResponse()->getBody();
                 $query = $request->getQuery();
-                if ($server = \App\AvailableServer::where('address', '=', $query['address'])->first())
+                if ($server = \App\AvailableServer::where('address', '=', $query['ip'] . ':' . $query['port'])->first())
                 {
                     if (preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $response))
                     {
