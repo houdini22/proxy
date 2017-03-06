@@ -27,7 +27,7 @@ Route::get('/proxy_test_old', function (Request $request) {
     echo 'proxy_test::';
 
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
-    $oldServer->is_available = 1;
+    $oldServer->is_available = $oldServer->was_available = 1;
     if ($oldServer->first_ping === '0000-00-00 00:00:00') {
         $oldServer->first_ping = date('Y-m-d H:i:s');
     }
@@ -49,7 +49,7 @@ Route::get('/proxy_test_old', function (Request $request) {
             $server->type = 'transparent';
         }
         $server->ping = microtime(true) - (float)$request->query('start');
-        $server->is_available = 1;
+        $server->is_available = $server->was_available = 1;
         $server->first_ping = $oldServer->first_ping;
         if ($server->first_ping === '0000-00-00 00:00:00') {
             $server->first_ping = date('Y-m-d H:i:s');
