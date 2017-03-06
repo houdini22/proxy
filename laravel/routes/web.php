@@ -21,7 +21,7 @@ Route::group(['prefix' => 'api'], function () {
     });
 });
 
-Route::get('/proxy_test_old', function (Request $request) {
+Route::get('/proxy_test_old', function () {
     echo 'proxy_test::';
 
     $oldServer = \App\Server::where('address', '=', Input::get('ip') . ':' . Input::get('port'))->first();
