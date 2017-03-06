@@ -60,6 +60,7 @@ Route::get('/proxy_test_old', function (Request $request) {
         $server->ping_success = $oldServer->ping_success + 1;
         $server->address = $oldServer->address;
         $server->speed = $server->is_checked_speed = 0;
+        $server->is_checked = 1;
         $server->save();
 
         $json['id'] = $server->id;
