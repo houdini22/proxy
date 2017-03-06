@@ -40,7 +40,6 @@ Route::get('/proxy_test_old', function (Request $request) {
     if ($oldServer) {
         $server = new \App\AvailableServer();
 
-        $server->is_checked = 1;
         if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
             $server->type = 'elite';
         } elseif (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -48,6 +47,8 @@ Route::get('/proxy_test_old', function (Request $request) {
         } else {
             $server->type = 'transparent';
         }
+
+        $server->is_checked = 1;
         $server->ping = microtime(true) - (float)$request->query('start');
         $server->is_available = $server->was_available = 1;
         $server->first_ping = $oldServer->first_ping;
@@ -60,7 +61,6 @@ Route::get('/proxy_test_old', function (Request $request) {
         $server->ping_success = $oldServer->ping_success + 1;
         $server->address = $oldServer->address;
         $server->speed = $server->is_checked_speed = 0;
-        $server->is_checked = 1;
         $server->save();
 
         $json['id'] = $server->id;
