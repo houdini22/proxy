@@ -214,7 +214,7 @@ class Proxy
                 $exception = $e->getExceptionForFailedRequest($request);
                 $query = $request->getQuery();
                 $ids[] = $failedIds[] = $query['id'];
-                $server = \Server::find($query['id']);
+                $server = AvailableServer::find($query['id']);
                 if ($server)
                 {
                     preg_match('#\[status code\]\s(\d+)#', $exception->getMessage(), $matches);
