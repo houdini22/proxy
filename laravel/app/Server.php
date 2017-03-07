@@ -22,9 +22,6 @@ class Server extends Model
 
     public function save(array $options = array())
     {
-        list($ip, $port) = explode(':', $this->address);
-        $this->ip = $ip;
-        $this->port = $port;
         return parent::save($options);
     }
 }

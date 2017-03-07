@@ -46,6 +46,8 @@ Route::get('/proxy_test_old', function (Request $request) {
         $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
         if (!$server) {
             $server = new \App\AvailableServer();
+            $server->port = $oldServer->getPort();
+            $server->ip = $oldServer->getIp();
         }
 
         if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
