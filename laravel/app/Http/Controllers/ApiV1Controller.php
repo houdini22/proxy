@@ -43,7 +43,7 @@ class ApiV1Controller extends Controller
             return AvailableServer::orderBy('checked_at', 'DESC')
                 ->where('is_available', '=', 1)
                 ->where('last_availability', '>', date('Y-m-d H:i:s', time() - (15 * 60)))
-                ->groupBy('id')
+                ->get()
                 ->count();
         });
 
