@@ -5,7 +5,7 @@ import { createHistory } from 'history'
 import { useRouterHistory } from 'react-router'
 
 const browserHistory = useRouterHistory(createHistory)({
-    basename: '/'
+    basename: '/proxy/'
 });
 
 const defaultState = {
