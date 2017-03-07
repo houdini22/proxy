@@ -18,7 +18,7 @@ import AppComponent from './components/__App';
 const router = (
     <Provider store={store}>
         <Router history={history} key={new Date()}>
-            <Route component={AppComponent} path="/">
+            <Route component={AppComponent} path="/proxy/">
                 <IndexRoute component={IndexComponent}/>
                 <Route path="/about" component={AboutComponent}/>
                 <Route path="*" component={NotFoundComponent}/>
