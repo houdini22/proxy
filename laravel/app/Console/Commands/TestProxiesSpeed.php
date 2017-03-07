@@ -11,7 +11,7 @@ class TestProxiesSpeed extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:TestProxiesSpeed';
 
     /**
      * The console command description.
