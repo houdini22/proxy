@@ -12,4 +12,27 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #000;
   padding-top: 70px;
+  font-size: 14px;
+}
+
+.panel-title {
+  font-size: 14px;
+}
+
+.page.page-index {
+  .container .panel-statistics table {
+    margin: 0;
+    width: 100%;
+    tr, th {
+      font-size: 13px;
+      padding: 3px 0;
+    }
+    th {
+      width: 75%;
+    }
+    td {
+      width: 25%;
+      text-align: right;
+    }
+  }
 }

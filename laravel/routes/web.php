@@ -18,6 +18,9 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'api'], function () {
+    Route::group(['prefix' => 'v1'], function () {
+        Route::get('/statistics', 'ApiV1Controller@getStatistics');
+    });
     Route::get('/', function () {
         return "API";
     });
