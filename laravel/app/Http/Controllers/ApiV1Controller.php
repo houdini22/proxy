@@ -19,14 +19,32 @@ class ApiV1Controller extends Controller
         $response['nb_servers_available_in_past'] = Cache::remember('nb_servers_available_in_past', 5, function () {
             return AvailableServer::count();
         });
-        $response['nb_servers_available_now'] = Cache::remember('nb_servers_available_now', 5, function () {
-            return AvailableServer::where('is_available', '=', 1)->count();
+        $response['nb_servers_available_today'] = Cache::remember('nb_servers_available_today', 5, function () {
+            return AvailableServer::where(\DB::raw('DATE(last_availability)'), '=', date('Y-m-d'))
+                ->count();
         });
         $response['nb_server_countries'] = Cache::remember('nb_server_countries', 5, function () {
-            return AvailableServer::distinct('country')->whereNotNull('country')->select('country')->groupBy('country')->get()->count();
+            return AvailableServer::distinct('country')
+                ->whereNotNull('country')
+                ->select('country')
+                ->groupBy('country')
+                ->get()
+                ->count();
         });
         $response['nb_server_cities'] = Cache::remember('nb_server_cities', 5, function () {
-            return AvailableServer::distinct('city')->whereNotNull('city')->select('city')->groupBy('city')->get()->count();
+            return AvailableServer::distinct('city')
+                ->whereNotNull('city')
+                ->select('city')
+                ->groupBy('city')
+                ->get()
+                ->count();
+        });
+        $response['nb_servers_available_past_15min'] = Cache::remember('nb_servers_available_past_15min', 1, function () {
+            return AvailableServer::orderBy('checked_at', 'DESC')
+                ->where('is_available', '=', 1)
+                ->where('last_availability', '>', date('Y-m-d H:i:s', time() - (15 * 60)))
+                ->groupBy('id')
+                ->count();
         });
 
         return JsonResponse::create($response);
@@ -57,7 +75,7 @@ class ApiV1Controller extends Controller
         $token = $request->route('token');
         $server = AvailableServer::where(\DB::raw('md5(CONCAT(address, "' . $this->_token . '"))'), $token)->first();
 
-        if($server) {
+        if ($server) {
             $pathDisk = base_path() . '/../public/files/addresses/' . $token . '.png';
             if (!file_exists($pathDisk)) {
                 $im = imagecreatetruecolor(160, 23);

@@ -12,11 +12,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #000;
   padding-top: 70px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .panel-title {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .page.page-index {
@@ -35,7 +35,6 @@ body {
     .proxy-table {
       margin: 0;
       tr, th {
-        font-size: 13px;
         img {
           display: inline-block;
           vertical-align: middle;
@@ -44,6 +43,11 @@ body {
       th {
         font-weight: bold;
         text-align: center;
+      }
+      td {
+        .label {
+          font-size: 12px;
+        }
       }
     }
     nav {
