@@ -9,6 +9,10 @@ class TableComponent extends React.Component {
         this.fetchServers();
     }
 
+    componentWillUnmount() {
+        clearInterval(this.autoRefreshInterval);
+    }
+
     fetchServers() {
         this.props.ajax.get('/servers', {
             params: {
