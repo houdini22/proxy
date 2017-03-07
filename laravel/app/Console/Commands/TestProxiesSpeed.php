@@ -50,11 +50,10 @@ class TestProxiesSpeed extends Command
         foreach ($servers as $server)
         {
             $request = $client->get(\Config::get('proxy.test_server_speed_path'), array(), array(
-                'proxy'   => "{$server->address}",
+                'proxy' => "tcp://{$server->address}",
                 'timeout' => 50,
                 'connect_timeout' => 10
             ));
-            $request->getCurlOptions()->set(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
             $start = microtime(true);
 
             $server->is_checked_speed = 1;
