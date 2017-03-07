@@ -41,7 +41,7 @@ class TestProxiesSpeed extends Command
         $servers = \App\AvailableServer::where('is_available', 1)
             ->where('is_checked_speed', '=', 0)
             ->take(5)
-            ->orderBy(DB::raw('RAND()'))
+            ->orderBy(\DB::raw('RAND()'))
             ->get();
         $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url_http'));
         $requests = array();
