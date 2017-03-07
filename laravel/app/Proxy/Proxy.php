@@ -2,6 +2,7 @@
 
 namespace App\Proxy;
 
+use App\AvailableServer;
 use \App\Proxy\Service\Exception\EmptyPagesLimit as EmptyPagesLimitExcetion;
 
 class Proxy
@@ -138,7 +139,7 @@ class Proxy
         foreach ($servers as $server)
         {
             $request = $client->get(
-                "/~hud/proxy/proxy_test_socks",
+                \Config::get('proxy.test_server_socks_http_path'),
                 array(),
                 array(
                     'proxy'           => "{$server->address}",
@@ -150,13 +151,9 @@ class Proxy
             $request->getCurlOptions()->set(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
             $requests[] = $request;
 
-            $server->is_available = 0;
-            $server->type = $server->ping = $server->speed = null;
             $server->is_checked_socks = 1;
-            $server->checked_at = date('Y-m-d H:i:s');
-            $server->no_redirect = null;
-            $server->is_hacked = 0;
-            $server->ping_error++;
+            $server->socks_checked_at = date('Y-m-d H:i:s');
+            $server->ping_socks_error++;
             $server->save();
         }
         $ids = array();
@@ -183,7 +180,7 @@ class Proxy
             {
                 $response = (string)$request->getResponse()->getBody();
                 $query = $request->getQuery();
-                if ($server = \Server::find($query['id']))
+                if ($server = AvailableServer::find($query['id']))
                 {
                     if (preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $response))
                     {
@@ -239,69 +236,6 @@ class Proxy
             }
         }
         self::log('Successed count: ' . count($successfullIds));
-    }
-
-    public function testSocksOnline($servers)
-    {
-        $client = new \Guzzle\Http\Client('http://195.154.179.219:8080');
-        $requests = array();
-        $responses = array();
-        foreach ($servers as $server)
-        {
-            $request = $client->get(
-                "/~hud/proxy/proxy_test_socks_online",
-                array(),
-                array(
-                    'proxy'           => "{$server->address}",
-                    'query'           => array('start' => microtime(true), 'ip' => $server->getIp(), 'port' => $server->getPort(), 'id' => $server->id),
-                    'timeout'         => 60,
-                    'connect_timeout' => 60
-                )
-            );
-            $request->getCurlOptions()->set(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-            $requests[] = $request;
-        }
-        $successfullIds = array();
-        try
-        {
-            $responses = $client->send($requests);
-            foreach ($responses as $response)
-            {
-                $body = (string)$response->getBody();
-                preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $body, $matches);
-                if (!empty($matches[1]))
-                {
-                    $data = json_decode($matches[1]);
-                    $successfullIds[] = $data->id;
-                }
-            }
-        }
-        catch (\Guzzle\Http\Exception\MultiTransferException $e)
-        {
-            $successfulRequests = $e->getSuccessfulRequests();
-            foreach ($successfulRequests as $request)
-            {
-                $query = $request->getQuery();
-                if ($server = \Server::find($query['id']))
-                {
-                    $successfullIds[] = $query['id'];
-                }
-            }
-        }
-        return $successfullIds;
-    }
-
-    public function fetchFrom($from, $url)
-    {
-        $config = array();
-        if ($url)
-        {
-            $config['url'] = $url;
-        }
-        $config['sourpce'] = $from;
-        $class = '\Proxy\Service\\' . $from;
-        $object = new $class($config);
-        $object->getAllPages($url);
     }
 
     public static function log($str)

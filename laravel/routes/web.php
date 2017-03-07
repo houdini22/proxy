@@ -105,3 +105,23 @@ Route::get('/proxy_test_old', function (Request $request) {
     echo json_encode($json);
     echo '::proxy_test';
 });
+
+Route::get('/proxy_test_socks', function (Request $request) {
+    echo 'proxy_test::';
+
+    $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
+    $json = array('id' => NULL);
+
+    if ($server) {
+        $server->is_socks = 1;
+        $server->ping_socks_error -= 1;
+        $server->ping_socks_success += 1;
+        $server->save();
+
+        $json['id'] = $server->id;
+        $json['address'] = $server->address;
+    }
+
+    echo json_encode($json);
+    echo '::proxy_test';
+});
