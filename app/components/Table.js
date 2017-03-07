@@ -78,6 +78,7 @@ class TableComponent extends React.Component {
                 <td><span className={pingRatioClassName}>{obj.ping_success} / {obj.ping_error}</span></td>
                 <td>{obj.country}</td>
                 <td>{obj.city}</td>
+                <td>{obj.checked_at}</td>
             </tr>
         );
     }
@@ -119,6 +120,7 @@ class TableComponent extends React.Component {
                                     <th>Ping Ratio</th>
                                     <th>Country</th>
                                     <th>City</th>
+                                    <th>Checked at</th>
                                 </tr>
                                 </thead>
                                 <tbody>

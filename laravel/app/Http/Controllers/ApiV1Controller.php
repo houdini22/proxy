@@ -45,6 +45,7 @@ class ApiV1Controller extends Controller
 
         foreach ($response['data'] as & $server) {
             $server['address_img_url'] = url('/api/v1/address/' . md5($server['address'] . $this->_token));
+            $server['checked_at'] = \App\Date::fuzzy_span(strtotime($server['checked_at']));
             unset($server['address']);
         }
 
