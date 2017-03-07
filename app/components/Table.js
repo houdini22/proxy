@@ -164,7 +164,7 @@ class TableComponent extends React.Component {
                                     onClick={this.handleButtonAutoRefreshClick.bind(this)}
                                 >
                                     <span className="glyphicon glyphicon-refresh"/>
-                                    Auto-Refresh?
+                                    Auto refresh?
                                 </a>
                                 <a
                                     href="#"

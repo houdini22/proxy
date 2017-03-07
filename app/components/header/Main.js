@@ -14,7 +14,7 @@ class MainHeaderComponent extends React.Component {
             <nav className="navbar navbar-inverse navbar-fixed-top">
                 <div className="container">
                     <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">Proxy Aggregator</Link>
+                        <Link className="navbar-brand" to="/">ProxyAggregator</Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">
