@@ -14,16 +14,17 @@ class ApiV1Controller extends Controller
 
     public function getStatistics(Request $request)
     {
+        $cacheLifetime = 29/60;
         $response = [];
 
-        $response['nb_servers_available_in_past'] = Cache::remember('nb_servers_available_in_past', 5, function () {
+        $response['nb_servers_available_in_past'] = Cache::remember('nb_servers_available_in_past', $cacheLifetime, function () {
             return AvailableServer::count();
         });
-        $response['nb_servers_available_today'] = Cache::remember('nb_servers_available_today', 5, function () {
+        $response['nb_servers_available_today'] = Cache::remember('nb_servers_available_today', $cacheLifetime, function () {
             return AvailableServer::where(\DB::raw('DATE(last_availability)'), '=', date('Y-m-d'))
                 ->count();
         });
-        $response['nb_server_countries'] = Cache::remember('nb_server_countries', 5, function () {
+        $response['nb_server_countries'] = Cache::remember('nb_server_countries', $cacheLifetime, function () {
             return AvailableServer::distinct('country')
                 ->whereNotNull('country')
                 ->select('country')
@@ -31,7 +32,7 @@ class ApiV1Controller extends Controller
                 ->get()
                 ->count();
         });
-        $response['nb_server_cities'] = Cache::remember('nb_server_cities', 5, function () {
+        $response['nb_server_cities'] = Cache::remember('nb_server_cities', $cacheLifetime, function () {
             return AvailableServer::distinct('city')
                 ->whereNotNull('city')
                 ->select('city')
@@ -39,7 +40,7 @@ class ApiV1Controller extends Controller
                 ->get()
                 ->count();
         });
-        $response['nb_servers_available_past_15min'] = Cache::remember('nb_servers_available_past_15min', 1, function () {
+        $response['nb_servers_available_past_15min'] = Cache::remember('nb_servers_available_past_15min', $cacheLifetime, function () {
             return AvailableServer::orderBy('checked_at', 'DESC')
                 ->where('is_available', '=', 1)
                 ->where('last_availability', '>', date('Y-m-d H:i:s', time() - (15 * 60)))
