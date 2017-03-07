@@ -122,6 +122,29 @@ class ApiV1Controller extends Controller
                 break;
         }
 
+        switch ($request->query('speed')) {
+            case 'slow':
+                $servers->where(function($query) {
+                    $query->where('speed', '<', 2048)
+                        ->orWhereNull('speed');
+                });
+                break;
+
+            case 'medium':
+                $servers->where('speed', '>=', 2048)
+                    ->where('speed', '<', 10240);
+                break;
+
+            case 'fast':
+                $servers->where('speed', '>=', 10240)
+                    ->where('speed', '<', 25600);
+                break;
+
+            case 'fastest':
+                $servers->where('speed', '>=', 25600);
+                break;
+        }
+
         $response = $servers->paginate()->toArray();
 
         foreach ($response['data'] as & $server) {

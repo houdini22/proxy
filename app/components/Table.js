@@ -1,6 +1,5 @@
 import React from 'react';
-
-import MainHeaderComponent from './header/Main';
+import {formatBytes} from '../helpers/number-helper';
 
 class TableComponent extends React.Component {
     componentDidMount() {
@@ -22,13 +21,15 @@ class TableComponent extends React.Component {
         if (obj.is_checked_speed && obj.speed !== null) {
             speed = obj.speed;
             if (speed < 2048) {
+                speedClassName = 'label label-danger';
+            } else if (speed >= 2048 && speed < 10240) {
                 speedClassName = 'label label-warning';
-            } else if (speed > 20480) {
-                speedClassName = 'label label-success';
-            } else {
+            } else if (speed >= 10240 && speed <= 25600) {
                 speedClassName = 'label label-info';
+            } else {
+                speedClassName = 'label label-success';
             }
-            speed = `${speed} bytes / sec`;
+            speed = `${formatBytes(speed, true)} bytes / sec`;
         } else {
             speed = 'ERROR';
             speedClassName = 'label label-danger';
@@ -123,11 +124,13 @@ class TableComponent extends React.Component {
         const availability = this.filterAvailability.value;
         const type = this.filterType.value;
         const ping = this.filterPing.value;
+        const speed = this.filterSpeed.value;
 
         const values = {
             availability,
             type,
-            ping
+            ping,
+            speed
         };
 
         this.filters = values;
@@ -149,7 +152,7 @@ class TableComponent extends React.Component {
         }
 
         let filterButtonClassNames = "btn btn-info btn-xs";
-        if(this.filtersOpened) {
+        if (this.filtersOpened) {
             filterButtonClassNames += " active";
         }
 
@@ -247,9 +250,14 @@ class TableComponent extends React.Component {
                                                         ref={(input) => {
                                                             this.filterSpeed = input;
                                                         }}
+                                                        onChange={this.handleOnChangeFiltersInput.bind(this)}
                                                         className="form-control input-sm"
                                                     >
                                                         <option value="all">All</option>
+                                                        <option value="fastest">Fastest (25 kB/seconds)</option>
+                                                        <option value="fast">Fast (10 - 25 kB/seconds)</option>
+                                                        <option value="medium">Medium (2 - 10 kB/seconds)</option>
+                                                        <option value="slow">Slow ( > 2 kB/seconds)</option>
                                                     </select>
                                                 </div>
                                             </div>
