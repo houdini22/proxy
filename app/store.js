@@ -1,7 +1,12 @@
 import {createStore, compose} from 'redux';
 import {syncHistoryWithStore} from 'react-router-redux';
-import {browserHistory} from 'react-router';
 import rootReducer from './reducers/index';
+import { createHistory } from 'history'
+import { useRouterHistory } from 'react-router'
+
+const browserHistory = useRouterHistory(createHistory)({
+    basename: '/'
+});
 
 const defaultState = {
     currentPath: '/',
