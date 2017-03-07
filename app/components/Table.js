@@ -29,7 +29,7 @@ class TableComponent extends React.Component {
             } else {
                 speedClassName = 'label label-success';
             }
-            speed = `${formatBytes(speed, true)} bytes / sec`;
+            speed = `${formatBytes(speed, true)} / sec`;
         } else {
             speed = 'ERROR';
             speedClassName = 'label label-danger';
