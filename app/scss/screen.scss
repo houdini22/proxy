@@ -35,4 +35,21 @@ body {
       text-align: right;
     }
   }
+  .container .proxy-table {
+    margin: 0;
+    width: 100%;
+    tr, th {
+      font-size: 13px;
+      padding: 3px 0;
+      line-height: 23px;
+      img {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    th {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
 }

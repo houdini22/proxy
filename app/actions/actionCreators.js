@@ -5,3 +5,11 @@ export function statisticsReceived(statistics) {
         statistics
     };
 }
+
+// servers received
+export function serversReceived(servers) {
+    return {
+        type: 'SERVERS_RECEIVED',
+        servers
+    };
+}
