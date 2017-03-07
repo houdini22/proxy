@@ -3,14 +3,11 @@ var webpack = require('webpack');
 
 module.exports = {
     devtool: 'source-map',
-    entry: [
-
-        './app/main'
-    ],
+    entry: path.resolve(__dirname, 'app/main.js'),
     output: {
-        path: path.join(__dirname, 'public/static/js'),
+        path: path.resolve(__dirname, 'public/static/js/'),
         filename: 'bundle.js',
-        publicPath: 'public/static/js'
+        publicPath: '/proxy/static/js/'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
@@ -44,10 +41,14 @@ module.exports = {
                 loaders: ['style-loader', 'css-loader']
             },
             // files
-            {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-            {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+            },
+            {
+                test: /\.(ttf|otf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?|(jpg|gif)$/,
+                loader: 'file-loader'
+            }
         ]
     }
 };
