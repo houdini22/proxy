@@ -112,6 +112,7 @@ class TableComponent extends React.Component {
                                     <th>Type</th>
                                     <th>Ping</th>
                                     <th>Speed</th>
+                                    <th>Ping Ratio</th>
                                     <th>Country</th>
                                     <th>City</th>
                                 </tr>
