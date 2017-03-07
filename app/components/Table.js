@@ -247,7 +247,7 @@ class TableComponent extends React.Component {
                                                         ref={(input) => {
                                                             this.filterSpeed = input;
                                                         }}
-                                                        className="form-control"
+                                                        className="form-control input-sm"
                                                     >
                                                         <option value="all">All</option>
                                                     </select>
