@@ -77,6 +77,8 @@ class TestProxiesSpeed extends Command
                 preg_match("#milliseconds with (\d+) out of $filesize#", $e->getMessage(), $matches);
                 if ( ! empty($matches[1]))
                 {
+                    $time = microtime(TRUE) - $startTime;
+
                     $server->speed = round($matches[1] / $time);
                     $server->speed_success++;
 
