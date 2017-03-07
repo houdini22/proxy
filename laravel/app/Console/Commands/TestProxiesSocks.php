@@ -43,6 +43,7 @@ class TestProxiesSocks extends Command
 
         $servers = \App\AvailableServer::take(50)
             ->orderBy(\DB::raw('RAND()'))
+            ->where('type', 'LIKE', 'elite')
             ->where('is_available', '=', 1)
             ->where('is_checked_socks', '=', 0)
             ->where('is_socks', '=', 0)
