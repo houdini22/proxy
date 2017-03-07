@@ -5,6 +5,7 @@ import MainHeaderComponent from './header/Main';
 class TableComponent extends React.Component {
     componentDidMount() {
         this.currentPage = 1;
+        this.autoRefresh = false;
         this.fetchServers();
     }
 
@@ -98,16 +99,47 @@ class TableComponent extends React.Component {
         this.fetchServers();
     }
 
+    handleButtonAutoRefreshClick(e) {
+        e.preventDefault();
+        this.autoRefresh = !this.autoRefresh;
+        if (this.autoRefresh) {
+            this.autoRefreshInterval = setInterval(() => {
+                this.fetchServers();
+            }, 30 * 1000);
+        } else {
+            clearInterval(this.autoRefreshInterval);
+        }
+        this.forceUpdate();
+    }
+
     render() {
         let currentPage = this.props.state.servers.current_page || 0;
         let lastPage = this.props.state.servers.last_page || 0;
         let servers = this.props.state.servers.data || [];
+        let playButtonClassNames;
+
+        if (this.autoRefresh) {
+            playButtonClassNames = "btn btn-danger btn-xs";
+        } else {
+            playButtonClassNames = "btn btn-success btn-xs";
+        }
+
         return (
             <div className="row">
                 <div className="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                     <div className="panel panel-info panel-table">
                         <div className="panel-heading">
                             <h3 className="panel-title">Servers</h3>
+                            <div className="panel-tools">
+                                <a
+                                    href="#"
+                                    className={playButtonClassNames}
+                                    onClick={this.handleButtonAutoRefreshClick.bind(this)}
+                                >
+                                    <span className="glyphicon glyphicon-play"/>
+                                    Auto-Refresh?
+                                </a>
+                            </div>
                         </div>
                         <div className="panel-body">
                             <table className="proxy-table table table-condensed table-striped">
