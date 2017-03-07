@@ -17,20 +17,28 @@ class StatisticsComponent extends React.Component {
                             <table className="table table-condensed">
                                 <tbody>
                                 <tr>
-                                    <th>Servers available in the past</th>
+                                    <th>Servers online in the past</th>
                                     <td><span
                                         className="label label-info">{statistics.nb_servers_available_in_past}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Servers available today</th>
+                                    <th>Servers online today</th>
                                     <td><span
                                         className="label label-info">{statistics.nb_servers_available_today}</span></td>
                                 </tr>
                                 <tr>
-                                    <th>Servers available past 15 minutes</th>
+                                    <th>Servers online past 15 minutes</th>
                                     <td><span
                                         className="label label-info">{statistics.nb_servers_available_past_15min}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>SOCKS5 servers online</th>
+                                    <td>
+                                        <span className="label label-info">
+                                            {statistics.nb_servers_socks5_online} / {statistics.nb_servers_socks5_available}
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
