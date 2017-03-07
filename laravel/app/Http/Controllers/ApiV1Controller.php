@@ -47,6 +47,17 @@ class ApiV1Controller extends Controller
                 ->get()
                 ->count();
         });
+        $response['nb_servers_socks5_online'] = Cache::remember('nb_servers_socks5_online', $cacheLifetime, function () {
+            return AvailableServer::where('is_socks', '=', 1)
+                ->where('is_available', '=', 1)
+                ->get()
+                ->count();
+        });
+        $response['nb_servers_socks5_available'] = Cache::remember('nb_servers_socks5_available', $cacheLifetime, function () {
+            return AvailableServer::where('is_socks', '=', 1)
+                ->get()
+                ->count();
+        });
 
         return JsonResponse::create($response);
     }
