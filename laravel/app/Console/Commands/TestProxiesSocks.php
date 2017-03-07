@@ -11,7 +11,7 @@ class TestProxiesSocks extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:TestProxiesSocks';
 
     /**
      * The console command description.
