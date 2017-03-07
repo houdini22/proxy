@@ -254,7 +254,7 @@ class TableComponent extends React.Component {
                                                         className="form-control input-sm"
                                                     >
                                                         <option value="all">All</option>
-                                                        <option value="fastest">Fastest (25 kB/seconds)</option>
+                                                        <option value="fastest">Fastest (25+ kB/seconds)</option>
                                                         <option value="fast">Fast (10 - 25 kB/seconds)</option>
                                                         <option value="medium">Medium (2 - 10 kB/seconds)</option>
                                                         <option value="slow">Slow ( > 2 kB/seconds)</option>
@@ -263,6 +263,23 @@ class TableComponent extends React.Component {
                                             </div>
                                             <div className="col-md-4">
 
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div className="filters-buttons">
+                                                    <button
+                                                        className="btn btn-default btn-xs"
+                                                        type="reset"
+                                                        onClick={(e) => {
+                                                            this.filters = {};
+                                                            this.props.fetchServers(this.currentPage, this.filters);
+                                                            this.props.fetchStatistics();
+                                                        }}
+                                                    >
+                                                        Reset
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </fieldset>
