@@ -4,23 +4,13 @@ import MainHeaderComponent from './header/Main';
 
 class TableComponent extends React.Component {
     componentDidMount() {
-        this.currentPage = 1;
         this.autoRefresh = false;
-        this.fetchServers();
+        this.currentPage = 1;
+        this.props.fetchServers(this.currentPage);
     }
 
     componentWillUnmount() {
         clearInterval(this.autoRefreshInterval);
-    }
-
-    fetchServers() {
-        this.props.ajax.get('/servers', {
-            params: {
-                page: this.currentPage
-            }
-        }).then((response) => {
-            this.props.actions.serversReceived(response.data);
-        });
     }
 
     renderRow(obj, i) {
@@ -94,13 +84,15 @@ class TableComponent extends React.Component {
         if (this.currentPage < 1) {
             this.currentPage = 1;
         }
-        this.fetchServers();
+        this.props.fetchServers(this.currentPage);
+        this.props.fetchStatistics();
     }
 
     handleNextPageClick(e) {
         e.preventDefault();
         this.currentPage += 1;
-        this.fetchServers();
+        this.props.fetchServers(this.currentPage);
+        this.props.fetchStatistics();
     }
 
     handleButtonAutoRefreshClick(e) {
@@ -108,7 +100,8 @@ class TableComponent extends React.Component {
         this.autoRefresh = !this.autoRefresh;
         if (this.autoRefresh) {
             this.autoRefreshInterval = setInterval(() => {
-                this.fetchServers();
+                this.props.fetchServers();
+                this.props.fetchStatistics();
             }, 30 * 1000);
         } else {
             clearInterval(this.autoRefreshInterval);
@@ -140,7 +133,7 @@ class TableComponent extends React.Component {
                                     className={playButtonClassNames}
                                     onClick={this.handleButtonAutoRefreshClick.bind(this)}
                                 >
-                                    <span className="glyphicon glyphicon-play"/>
+                                    <span className="glyphicon glyphicon-refresh"/>
                                     Auto-Refresh?
                                 </a>
                             </div>
