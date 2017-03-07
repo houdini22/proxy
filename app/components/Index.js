@@ -15,10 +15,11 @@ class IndexComponent extends React.Component {
         });
     }
 
-    fetchServers(page = 1) {
+    fetchServers(page = 1, filters = {}) {
         this.props.ajax.get('/servers', {
             params: {
-                page: page
+                page,
+                ...filters
             }
         }).then((response) => {
             this.props.actions.serversReceived(response.data);

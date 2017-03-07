@@ -12,7 +12,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #000;
   padding-top: 70px;
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
 .panel {
@@ -39,6 +39,17 @@ body {
 .btn {
   .glyphicon {
     margin-right: 5px;
+  }
+}
+
+form {
+  .form-group {
+    margin-top: 15px;
+    label {
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: bold;
+    }
   }
 }
 
@@ -71,6 +82,7 @@ body {
       th {
         font-weight: bold;
         text-align: center;
+        font-size: 13px;
       }
       td {
         .label {
@@ -80,6 +92,11 @@ body {
     }
     nav {
       text-align: center;
+    }
+    .filters {
+      padding: 0 15px;
+      background: #f9f9f9;
+      margin-bottom: 15px;
     }
   }
 }
