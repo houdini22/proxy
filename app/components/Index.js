@@ -31,15 +31,19 @@ class IndexComponent extends React.Component {
                                             <td><span className="label label-info">{statistics.nb_servers_available_in_past}</span></td>
                                         </tr>
                                         <tr>
-                                            <th>Servers available now</th>
-                                            <td><span className="label label-info">{statistics.nb_servers_available_now}</span></td>
+                                            <th>Servers available today</th>
+                                            <td><span className="label label-info">{statistics.nb_servers_available_today}</span></td>
                                         </tr>
                                         <tr>
-                                            <th>Number of distinct server countries</th>
+                                            <th>Servers available past 15 minutes</th>
+                                            <td><span className="label label-info">{statistics.nb_servers_available_past_15min}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Distinct server countries</th>
                                             <td><span className="label label-info">{statistics.nb_server_countries}</span></td>
                                         </tr>
                                         <tr>
-                                            <th>Number of distinct server cities</th>
+                                            <th>Distinct server cities</th>
                                             <td><span className="label label-info">{statistics.nb_server_cities}</span></td>
                                         </tr>
                                         </tbody>
