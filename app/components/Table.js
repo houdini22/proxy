@@ -4,7 +4,16 @@ import MainHeaderComponent from './header/Main';
 
 class TableComponent extends React.Component {
     componentDidMount() {
-        this.props.ajax('/servers').then((response) => {
+        this.currentPage = 1;
+        this.fetchServers();
+    }
+
+    fetchServers() {
+        this.props.ajax.get('/servers', {
+            params: {
+                page: this.currentPage
+            }
+        }).then((response) => {
             this.props.actions.serversReceived(response.data);
         });
     }
@@ -13,10 +22,10 @@ class TableComponent extends React.Component {
         let speed;
         let speedClassName;
 
-        if (obj.is_checked_speed) {
+        if (obj.is_checked_speed && obj.speed !== null) {
             speed = obj.speed;
             if (speed < 2048) {
-                speedClassName = 'label label-danger';
+                speedClassName = 'label label-warning';
             } else if (speed > 20480) {
                 speedClassName = 'label label-success';
             } else {
@@ -33,7 +42,9 @@ class TableComponent extends React.Component {
         if (obj.ping < 3) {
             pingClassName = 'label label-success';
         } else if (obj.ping > 20) {
-            pingClassName = 'label label-danger';
+            pingClassName = 'label label-warning';
+        } else if (obj.ping > 40) {
+            pingClassName = 'label label-danger'
         } else {
             pingClassName = 'label label-info';
         }
@@ -71,7 +82,24 @@ class TableComponent extends React.Component {
         );
     }
 
+    handlePrevPageClick(e) {
+        e.preventDefault();
+        this.currentPage -= 1;
+        if (this.currentPage < 1) {
+            this.currentPage = 1;
+        }
+        this.fetchServers();
+    }
+
+    handleNextPageClick(e) {
+        e.preventDefault();
+        this.currentPage += 1;
+        this.fetchServers();
+    }
+
     render() {
+        let currentPage = this.props.state.servers.current_page || 0;
+        let lastPage = this.props.state.servers.last_page || 0;
         let servers = this.props.state.servers.data || [];
         return (
             <div className="row">
@@ -81,13 +109,14 @@ class TableComponent extends React.Component {
                             <h3 className="panel-title">Servers</h3>
                         </div>
                         <div className="panel-body">
-                            <table className="proxy-table">
+                            <table className="proxy-table table table-condensed table-striped">
                                 <thead>
                                 <tr>
                                     <th>Address</th>
                                     <th>Type</th>
                                     <th>Ping</th>
                                     <th>Speed</th>
+                                    <th>Ping Ratio</th>
                                     <th>Country</th>
                                     <th>City</th>
                                 </tr>
@@ -100,6 +129,27 @@ class TableComponent extends React.Component {
                                 }
                                 </tbody>
                             </table>
+                            <nav>
+                                <ul className="pagination">
+                                    <li>
+                                        <a href="#" onClick={this.handlePrevPageClick.bind(this)}>
+                                            <span>&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onClick={(e) => {
+                                            e.preventDefault();
+                                        }}>
+                                            <span>{currentPage} / {lastPage}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onClick={this.handleNextPageClick.bind(this)}>
+                                            <span>&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
