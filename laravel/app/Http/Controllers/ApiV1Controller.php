@@ -102,6 +102,26 @@ class ApiV1Controller extends Controller
                 break;
         }
 
+        switch ($request->query('ping')) {
+            case 'fastest':
+                $servers->where('ping', '<', 3);
+                break;
+
+            case 'fast':
+                $servers->where('ping', '>=', 3)
+                    ->where('ping', '<', 10);
+                break;
+
+            case 'medium':
+                $servers->where('ping', '>=', 10)
+                    ->where('ping', '<', 25);
+                break;
+
+            case 'slow':
+                $servers->where('ping', '>=', 25);
+                break;
+        }
+
         $response = $servers->paginate()->toArray();
 
         foreach ($response['data'] as & $server) {
