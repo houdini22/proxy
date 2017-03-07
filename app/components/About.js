@@ -8,7 +8,9 @@ class IndexComponent extends React.Component {
             <div>
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
-                    About
+                    <div className="well">
+                        Copyright by @hud
+                    </div>
                 </div>
             </div>
         );

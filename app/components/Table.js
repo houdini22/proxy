@@ -38,12 +38,12 @@ class TableComponent extends React.Component {
         let pingClassName;
         if (obj.ping < 3) {
             pingClassName = 'label label-success';
-        } else if (obj.ping > 20) {
-            pingClassName = 'label label-warning';
-        } else if (obj.ping > 40) {
-            pingClassName = 'label label-danger'
-        } else {
+        } else if (obj.ping >= 3 && obj.ping < 10) {
             pingClassName = 'label label-info';
+        } else if (obj.ping >= 10 && obj.ping < 25) {
+            pingClassName = 'label label-warning'
+        } else {
+            pingClassName = 'label label-danger';
         }
 
         let pingRatio = obj.ping_success / obj.ping_error;
@@ -71,8 +71,8 @@ class TableComponent extends React.Component {
                 </td>
                 <td>{type}</td>
                 <td><span className={pingClassName}>{obj.ping} sec</span></td>
-                <td><span className={speedClassName}>{speed}</span></td>
                 <td><span className={pingRatioClassName}>{obj.ping_success} / {obj.ping_error}</span></td>
+                <td><span className={speedClassName}>{speed}</span></td>
                 <td>{obj.country}</td>
                 <td>{obj.city}</td>
                 <td>{obj.checked_at}</td>
@@ -122,10 +122,12 @@ class TableComponent extends React.Component {
     handleOnChangeFiltersInput(e) {
         const availability = this.filterAvailability.value;
         const type = this.filterType.value;
+        const ping = this.filterPing.value;
 
         const values = {
             availability,
-            type
+            type,
+            ping
         };
 
         this.filters = values;
@@ -181,7 +183,7 @@ class TableComponent extends React.Component {
                                 <form>
                                     <fieldset>
                                         <div className="row">
-                                            <div className="col-md-4">
+                                            <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label>Availability</label>
                                                     <select
@@ -197,7 +199,7 @@ class TableComponent extends React.Component {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-md-6">
                                                 <div className="form-group">
                                                     <label>Type</label>
                                                     <select
@@ -219,6 +221,42 @@ class TableComponent extends React.Component {
 
                                             </div>
                                         </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <label>Ping</label>
+                                                    <select
+                                                        ref={(input) => {
+                                                            this.filterPing = input;
+                                                        }}
+                                                        onChange={this.handleOnChangeFiltersInput.bind(this)}
+                                                        className="form-control input-sm"
+                                                    >
+                                                        <option value="all">All</option>
+                                                        <option value="fastest">Fastest (0 - 3 seconds)</option>
+                                                        <option value="fast">Fast (3 - 10 seconds)</option>
+                                                        <option value="medium">Medium (10 - 25 seconds)</option>
+                                                        <option value="slow">Slow (25+ seconds)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <label>Speed</label>
+                                                    <select
+                                                        ref={(input) => {
+                                                            this.filterSpeed = input;
+                                                        }}
+                                                        className="form-control"
+                                                    >
+                                                        <option value="all">All</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-4">
+
+                                            </div>
+                                        </div>
                                     </fieldset>
                                 </form>
                             </div>
@@ -228,8 +266,8 @@ class TableComponent extends React.Component {
                                     <th>Address</th>
                                     <th>Type</th>
                                     <th>Ping</th>
-                                    <th>Speed</th>
                                     <th>Ping Ratio</th>
+                                    <th>Speed</th>
                                     <th>Country</th>
                                     <th>City</th>
                                     <th>Checked at</th>
