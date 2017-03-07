@@ -14,7 +14,7 @@ class ApiV1Controller extends Controller
 
     public function getStatistics(Request $request)
     {
-        $cacheLifetime = 29/60;
+        $cacheLifetime = 29 / 60;
         $response = [];
 
         $response['nb_servers_available_in_past'] = Cache::remember('nb_servers_available_in_past', $cacheLifetime, function () {
@@ -69,9 +69,40 @@ class ApiV1Controller extends Controller
                 'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
                 'checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed',
                 'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
-            ])
-            ->paginate();
-        $response = $servers->toArray();
+            ]);
+
+        switch ($request->query('availability', 'online')) {
+            case 'online':
+                $servers->where('is_available', '=', 1);
+                break;
+
+            case 'offline':
+                $servers->where('is_available', '=', 0);
+                break;
+        }
+
+        switch ($request->query('type', 'all')) {
+            case 'http_elite':
+                $servers->where('is_socks', '=', 0)
+                    ->where('type', '=', 'elite');
+                break;
+
+            case 'http_anonymous':
+                $servers->where('is_socks', '=', 0)
+                    ->where('type', '=', 'anonymous');
+                break;
+
+            case 'http_transparent':
+                $servers->where('is_socks', '=', 0)
+                    ->where('type', '=', 'transparent');
+                break;
+
+            case 'socks5_elite':
+                $servers->where('is_socks', '=', 1);
+                break;
+        }
+
+        $response = $servers->paginate()->toArray();
 
         foreach ($response['data'] as & $server) {
             $server['address_img_url'] = url('/api/v1/address/' . md5($server['address'] . $this->_token));
