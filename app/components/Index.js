@@ -24,7 +24,7 @@ class IndexComponent extends React.Component {
                                     <h3 className="panel-title">Statistics</h3>
                                 </div>
                                 <div className="panel-body">
-                                    <table>
+                                    <table className="table table-condensed">
                                         <tbody>
                                         <tr>
                                             <th>Servers available in the past</th>

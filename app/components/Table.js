@@ -25,7 +25,7 @@ class TableComponent extends React.Component {
         if (obj.is_checked_speed && obj.speed !== null) {
             speed = obj.speed;
             if (speed < 2048) {
-                speedClassName = 'label label-danger';
+                speedClassName = 'label label-warning';
             } else if (speed > 20480) {
                 speedClassName = 'label label-success';
             } else {
@@ -42,7 +42,9 @@ class TableComponent extends React.Component {
         if (obj.ping < 3) {
             pingClassName = 'label label-success';
         } else if (obj.ping > 20) {
-            pingClassName = 'label label-danger';
+            pingClassName = 'label label-warning';
+        } else if (obj.ping > 40) {
+            pingClassName = 'label label-danger'
         } else {
             pingClassName = 'label label-info';
         }
@@ -96,6 +98,8 @@ class TableComponent extends React.Component {
     }
 
     render() {
+        let currentPage = this.props.state.servers.current_page || 0;
+        let lastPage = this.props.state.servers.last_page || 0;
         let servers = this.props.state.servers.data || [];
         return (
             <div className="row">
@@ -105,7 +109,7 @@ class TableComponent extends React.Component {
                             <h3 className="panel-title">Servers</h3>
                         </div>
                         <div className="panel-body">
-                            <table className="proxy-table">
+                            <table className="proxy-table table table-condensed table-striped">
                                 <thead>
                                 <tr>
                                     <th>Address</th>
@@ -130,6 +134,13 @@ class TableComponent extends React.Component {
                                     <li>
                                         <a href="#" onClick={this.handlePrevPageClick.bind(this)}>
                                             <span>&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onClick={(e) => {
+                                            e.preventDefault();
+                                        }}>
+                                            <span>{currentPage} / {lastPage}</span>
                                         </a>
                                     </li>
                                     <li>
