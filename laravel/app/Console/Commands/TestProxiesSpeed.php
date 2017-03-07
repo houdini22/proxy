@@ -46,7 +46,7 @@ class TestProxiesSpeed extends Command
         $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url_http'));
         $requests = array();
         $responses = array();
-        $filesize = filesize(public_path() . '/files/test_file');
+        $filesize = filesize(base_path() . '/../public/files/test_file');
         foreach ($servers as $server)
         {
             $request = $client->get(\Config::get('proxy.test_server_speed_path'), array(), array(
