@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class TestProxiesHttpOld extends Command
+class TestOldAvailableServers extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:TestProxiesHttpOld';
+    protected $signature = 'command:TestOldAvailableServers';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class TestProxiesHttpOld extends Command
         ini_set('mysql.connect_timeout', 300);
         ini_set('default_socket_timeout', 300);
 
-        $servers = \App\Server::take(200)
+        $servers = \App\OldAvailableServer::take(100)
             ->orderBy(\DB::raw('RAND()'))
             ->where('test_disabled', '=', 0)
             ->where('is_checked', '=', 0)
@@ -50,6 +50,6 @@ class TestProxiesHttpOld extends Command
         \App\Proxy\Proxy::log('Count: ' . count($servers));
 
         $proxy = new \App\Proxy\Proxy;
-        $proxy->testOldHttp($servers);
+        $proxy->testOldAvailableHttp($servers);
     }
 }
