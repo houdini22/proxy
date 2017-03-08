@@ -56,8 +56,10 @@ class TableComponent extends React.Component {
         let uploadRatioClassName;
         if (pingRatio > 0.75) {
             uploadRatioClassName = 'label label-success';
-        } else if (pingRatio <= 0.75 && pingRatio > 0.25) {
+        } else if (pingRatio <= 0.75 && pingRatio > 0.50) {
             uploadRatioClassName = 'label label-info';
+        } else if (pingRatio <= 0.50 && pingRatio > 0.25) {
+            uploadRatioClassName = 'label label-warning';
         } else {
             uploadRatioClassName = 'label label-danger';
         }
@@ -146,12 +148,14 @@ class TableComponent extends React.Component {
         const type = this.filterType.value;
         const ping = this.filterPing.value;
         const speed = this.filterSpeed.value;
+        const uptime_ratio = this.filterUptimeRatio.value;
 
         const values = {
             availability,
             type,
             ping,
-            speed
+            speed,
+            uptime_ratio
         };
 
         this.filters = values;
@@ -241,9 +245,6 @@ class TableComponent extends React.Component {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
-
-                                            </div>
                                         </div>
                                         <div className="row">
                                             <div className="col-md-6">
@@ -282,8 +283,25 @@ class TableComponent extends React.Component {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
-
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <label>Uptime Ratio</label>
+                                                    <select
+                                                        ref={(input) => {
+                                                            this.filterUptimeRatio = input;
+                                                        }}
+                                                        onChange={this.handleOnChangeFiltersInput.bind(this)}
+                                                        className="form-control input-sm"
+                                                    >
+                                                        <option value="all">All</option>
+                                                        <option value="greatest"> >75% </option>
+                                                        <option value="great"> 50-75%</option>
+                                                        <option value="medium"> 25-50% </option>
+                                                        <option value="low"> 0-25% </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="row">
