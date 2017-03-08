@@ -32,7 +32,7 @@ class TableComponent extends React.Component {
             }
             speed = `${formatBytes(speed, true)}/s`;
         } else {
-            if(obj.speed_checked_at === null) {
+            if (obj.speed_checked_at === null) {
                 speed = "not checked"
             } else {
                 speed = 'error';
@@ -52,14 +52,14 @@ class TableComponent extends React.Component {
             pingClassName = 'label label-danger';
         }
 
-        let pingRatio = obj.ping_success / obj.ping_error;
-        let pingRatioClassName;
+        let pingRatio = (obj.ping_success + obj.speed_success) / (obj.ping_error + obj.ping_success + obj.speed_error + obj.speed_success);
+        let uploadRatioClassName;
         if (pingRatio > 0.75) {
-            pingRatioClassName = 'label label-success';
-        } else if (pingRatio < 0.25) {
-            pingRatioClassName = 'label label-danger';
+            uploadRatioClassName = 'label label-success';
+        } else if (pingRatio <= 0.75 && pingRatio > 0.25) {
+            uploadRatioClassName = 'label label-info';
         } else {
-            pingRatioClassName = 'label label-info';
+            uploadRatioClassName = 'label label-danger';
         }
 
         let type;
@@ -82,8 +82,12 @@ class TableComponent extends React.Component {
                 </td>
                 <td>{type}</td>
                 <td className="text-center"><span className={pingClassName}>{obj.ping}s</span></td>
-                <td className="text-center"><span className={pingRatioClassName}>{obj.ping_success}
-                    / {obj.ping_error}</span></td>
+                <td className="text-center">
+                    <span
+                        className={uploadRatioClassName}>
+                    {obj.ping_success + obj.speed_success} / {obj.ping_error + obj.ping_success + obj.speed_error + obj.speed_success}
+                    </span>
+                </td>
                 <td className="text-center">
                     <OverlayTrigger placement="top" overlay={<Tooltip id="speed-checked-at">{checked}</Tooltip>}>
                         <span className={speedClassName}>{speed} <i className="glyphicon-info-sign glyphicon"/></span>
@@ -308,7 +312,7 @@ class TableComponent extends React.Component {
                                     <th style={{width: "160px"}}>Address</th>
                                     <th style={{width: "120px"}}>Type</th>
                                     <th style={{width: "80px"}}>Ping</th>
-                                    <th style={{width: "90px"}}>Ping Ratio</th>
+                                    <th style={{width: "90px"}}>Uptime Ratio</th>
                                     <th style={{width: "115px"}}>Speed</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">City</th>
