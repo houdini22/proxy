@@ -52,7 +52,7 @@ class TableComponent extends React.Component {
             pingClassName = 'label label-danger';
         }
 
-        let pingRatio = (obj.ping_success + obj.speed_success) / (obj.ping_error + obj.ping_success + obj.speed_error + obj.speed_success);
+        let pingRatio = (obj.ping_success + obj.speed_success) / (obj.speed_error + obj.ping_error);
         let uploadRatioClassName;
         if (pingRatio > 0.75) {
             uploadRatioClassName = 'label label-success';
