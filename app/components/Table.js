@@ -32,7 +32,11 @@ class TableComponent extends React.Component {
             }
             speed = `${formatBytes(speed, true)}/s`;
         } else {
-            speed = 'ERROR';
+            if(obj.speed_checked_at === null) {
+                speed = "not checked"
+            } else {
+                speed = 'error';
+            }
             speedClassName = 'label label-danger';
         }
 
@@ -66,6 +70,11 @@ class TableComponent extends React.Component {
         }
         type += obj.type;
 
+        let checked = `checked ${obj.speed_checked_at}`;
+        if (obj.speed_checked_at === null) {
+            checked = 'not checked yet';
+        }
+
         return (
             <tr key={i}>
                 <td>
@@ -73,17 +82,18 @@ class TableComponent extends React.Component {
                 </td>
                 <td>{type}</td>
                 <td className="text-center"><span className={pingClassName}>{obj.ping}s</span></td>
-                <td className="text-center"><span className={pingRatioClassName}>{obj.ping_success} / {obj.ping_error}</span></td>
+                <td className="text-center"><span className={pingRatioClassName}>{obj.ping_success}
+                    / {obj.ping_error}</span></td>
                 <td className="text-center">
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="speed-checked-at">checked {obj.speed_checked_at}</Tooltip>}>
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="speed-checked-at">{checked}</Tooltip>}>
                         <span className={speedClassName}>{speed} <i className="glyphicon-info-sign glyphicon"/></span>
                     </OverlayTrigger>
                 </td>
-                <td style={{maxWidth: '120px'}} className="hidden-sm hidden-xs">
+                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">
                     {obj.country}
                 </td>
-                <td style={{maxWidth: '120px'}} className="hidden-sm hidden-xs">{obj.city}</td>
-                <td style={{maxWidth: '120px'}} className="hidden-sm hidden-xs">{obj.checked_at}</td>
+                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{obj.city}</td>
+                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{obj.checked_at}</td>
             </tr>
         );
     }
@@ -299,10 +309,10 @@ class TableComponent extends React.Component {
                                     <th style={{width: "120px"}}>Type</th>
                                     <th style={{width: "80px"}}>Ping</th>
                                     <th style={{width: "90px"}}>Ping Ratio</th>
-                                    <th style={{width: "100px"}}>Speed</th>
-                                    <th style={{width: "110px"}} className="hidden-sm hidden-xs">Country</th>
-                                    <th style={{width: "110px"}} className="hidden-sm hidden-xs">City</th>
-                                    <th style={{width: "110px"}} className="hidden-sm hidden-xs">Checked at</th>
+                                    <th style={{width: "115px"}}>Speed</th>
+                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
+                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">City</th>
+                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">Checked at</th>
                                 </tr>
                                 </thead>
                                 <tbody>
