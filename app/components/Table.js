@@ -87,7 +87,7 @@ class TableComponent extends React.Component {
                 <td className="text-center">
                     <span
                         className={uploadRatioClassName}>
-                    {obj.ping_success + obj.speed_success} / {obj.ping_error + obj.ping_success + obj.speed_error + obj.speed_success}
+                    {obj.ping_success + obj.speed_success} / {obj.ping_error + obj.speed_error}
                     </span>
                 </td>
                 <td className="text-center">
