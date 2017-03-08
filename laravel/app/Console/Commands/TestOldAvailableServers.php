@@ -43,6 +43,7 @@ class TestOldAvailableServers extends Command
 
         $servers = \App\OldAvailableServer::take(100)
             ->orderBy(\DB::raw('RAND()'))
+            ->where('is_checked', '=', 0)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));
