@@ -180,6 +180,7 @@ class Proxy
             {
                 $response = (string)$request->getResponse()->getBody();
                 $query = $request->getQuery();
+                self::log($query['ip'] . ':' . $query['port']);
                 if ($server = AvailableServer::find($query['id']))
                 {
                     if (preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $response))
