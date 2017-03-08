@@ -159,6 +159,7 @@ class TableComponent extends React.Component {
         };
 
         this.filters = values;
+        this.currentPage = 1;
 
         this.props.fetchServers(this.currentPage, this.filters);
         this.props.fetchStatistics();
