@@ -297,9 +297,9 @@ class TableComponent extends React.Component {
                                                     >
                                                         <option value="all">All</option>
                                                         <option value="greatest"> >75% </option>
-                                                        <option value="great"> 50-75%</option>
-                                                        <option value="medium"> 25-50% </option>
-                                                        <option value="low"> 0-25% </option>
+                                                        <option value="great"> 50 - 75%</option>
+                                                        <option value="medium"> 25 - 50% </option>
+                                                        <option value="low"> 0 - 25% </option>
                                                     </select>
                                                 </div>
                                             </div>
