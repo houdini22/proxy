@@ -85,8 +85,14 @@ form {
         font-size: 13px;
       }
       td {
+        overflow:hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         .label {
           font-size: 12px;
+          .glyphicon {
+            top: 2px;
+          }
         }
       }
     }

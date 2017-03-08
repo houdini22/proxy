@@ -66,26 +66,24 @@ class TableComponent extends React.Component {
         }
         type += obj.type;
 
-        const tooltip = (
-            <Tooltip id="speed-checked-at">{obj.speed_checked_at}</Tooltip>
-        );
-
         return (
             <tr key={i}>
-                <td style={{width: "160px"}}>
+                <td>
                     <img src={obj.address_img_url}/>
                 </td>
                 <td>{type}</td>
-                <td><span className={pingClassName}>{obj.ping}s</span></td>
-                <td><span className={pingRatioClassName}>{obj.ping_success} / {obj.ping_error}</span></td>
-                <td>
-                    <OverlayTrigger placement="top" overlay={tooltip}>
-                        <span className={speedClassName}>{speed}</span>
+                <td className="text-center"><span className={pingClassName}>{obj.ping}s</span></td>
+                <td className="text-center"><span className={pingRatioClassName}>{obj.ping_success} / {obj.ping_error}</span></td>
+                <td className="text-center">
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="speed-checked-at">checked {obj.speed_checked_at}</Tooltip>}>
+                        <span className={speedClassName}>{speed} <i className="glyphicon-info-sign glyphicon"/></span>
                     </OverlayTrigger>
                 </td>
-                <td>{obj.country}</td>
-                <td>{obj.city}</td>
-                <td>{obj.checked_at}</td>
+                <td style={{maxWidth: '120px'}} className="hidden-sm hidden-xs">
+                    {obj.country}
+                </td>
+                <td style={{maxWidth: '120px'}} className="hidden-sm hidden-xs">{obj.city}</td>
+                <td style={{maxWidth: '120px'}} className="hidden-sm hidden-xs">{obj.checked_at}</td>
             </tr>
         );
     }
@@ -297,14 +295,14 @@ class TableComponent extends React.Component {
                             <table className="proxy-table table table-condensed table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Address</th>
-                                    <th>Type</th>
-                                    <th>Ping</th>
-                                    <th>Ping Ratio</th>
-                                    <th>Speed</th>
-                                    <th>Country</th>
-                                    <th>City</th>
-                                    <th>Checked at</th>
+                                    <th style={{width: "160px"}}>Address</th>
+                                    <th style={{width: "120px"}}>Type</th>
+                                    <th style={{width: "80px"}}>Ping</th>
+                                    <th style={{width: "90px"}}>Ping Ratio</th>
+                                    <th style={{width: "100px"}}>Speed</th>
+                                    <th style={{width: "110px"}} className="hidden-sm hidden-xs">Country</th>
+                                    <th style={{width: "110px"}} className="hidden-sm hidden-xs">City</th>
+                                    <th style={{width: "110px"}} className="hidden-sm hidden-xs">Checked at</th>
                                 </tr>
                                 </thead>
                                 <tbody>
