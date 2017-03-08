@@ -147,21 +147,21 @@ class ApiV1Controller extends Controller
 
         switch($request->query('uptime_ratio')) {
             case 'greatest':
-                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_success + speed_success + ping_error + speed_error))'), '>', 0.75);
+                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '>', 0.75);
                 break;
 
             case 'great':
-                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_success + speed_success + ping_error + speed_error))'), '<=', 0.75)
-                    ->where(\DB::raw('((ping_success + speed_success) / (ping_success + speed_success + ping_error + speed_error))'), '>', 0.5);
+                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '<=', 0.75)
+                    ->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '>', 0.5);
                 break;
 
             case 'medium':
-                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_success + speed_success + ping_error + speed_error))'), '<=', 0.5)
-                    ->where(\DB::raw('((ping_success + speed_success) / (ping_success + speed_success + ping_error + speed_error))'), '>', 0.25);
+                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '<=', 0.5)
+                    ->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '>', 0.25);
                 break;
 
             case 'low':
-                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_success + speed_success + ping_error + speed_error))'), '<=', 0.25);
+                $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '<=', 0.25);
                 break;
         }
 
