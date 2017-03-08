@@ -1,5 +1,6 @@
 import React from 'react';
 import {formatBytes} from '../helpers/number-helper';
+import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 class TableComponent extends React.Component {
     componentDidMount() {
@@ -29,7 +30,7 @@ class TableComponent extends React.Component {
             } else {
                 speedClassName = 'label label-success';
             }
-            speed = `${formatBytes(speed, true)} / sec`;
+            speed = `${formatBytes(speed, true)}/s`;
         } else {
             speed = 'ERROR';
             speedClassName = 'label label-danger';
@@ -65,15 +66,23 @@ class TableComponent extends React.Component {
         }
         type += obj.type;
 
+        const tooltip = (
+            <Tooltip id="speed-checked-at">{obj.speed_checked_at}</Tooltip>
+        );
+
         return (
             <tr key={i}>
                 <td style={{width: "160px"}}>
                     <img src={obj.address_img_url}/>
                 </td>
                 <td>{type}</td>
-                <td><span className={pingClassName}>{obj.ping} sec</span></td>
+                <td><span className={pingClassName}>{obj.ping}s</span></td>
                 <td><span className={pingRatioClassName}>{obj.ping_success} / {obj.ping_error}</span></td>
-                <td><span className={speedClassName}>{speed}</span></td>
+                <td>
+                    <OverlayTrigger placement="top" overlay={tooltip}>
+                        <span className={speedClassName}>{speed}</span>
+                    </OverlayTrigger>
+                </td>
                 <td>{obj.country}</td>
                 <td>{obj.city}</td>
                 <td>{obj.checked_at}</td>
