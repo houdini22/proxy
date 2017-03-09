@@ -207,7 +207,7 @@ class ApiV1Controller extends Controller
                 $background_color = imagecolorallocate($im, 255, 255, 255);
                 imagefill($im, 0, 0, $background_color);
 
-                for ($i = 0; $i < 2; $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     $line_color = imagecolorallocate($im, rand(100, 255), rand(100, 255), rand(100, 255));
                     imageline($im, 0, rand() % 23, 160, rand() % 23, $line_color);
                 }
