@@ -51,8 +51,8 @@ class TestProxiesSpeed extends Command
         {
             $request = $client->get(\Config::get('proxy.test_server_speed_path'), array(), array(
                 'proxy' => "tcp://{$server->address}",
-                'timeout' => 50,
-                'connect_timeout' => 10
+                'timeout' => 40,
+                'connect_timeout' => 20
             ));
             $start = microtime(true);
 
