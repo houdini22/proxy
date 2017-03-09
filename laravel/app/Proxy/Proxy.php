@@ -366,6 +366,8 @@ class Proxy
             {
                 $model = new \Server;
                 $model->address = $address['ip'] . ':' . $address['port'];
+                $model->ip = $address['ip'];
+                $model->port = $address['port'];
                 $model->source = $source;
                 try
                 {
