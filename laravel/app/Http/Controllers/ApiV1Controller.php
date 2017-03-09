@@ -203,10 +203,23 @@ class ApiV1Controller extends Controller
             $pathDisk = base_path() . '/../public/files/addresses/' . $token . '.png';
             if (!file_exists($pathDisk)) {
                 $im = imagecreatetruecolor(160, 23);
+
                 $background_color = imagecolorallocate($im, 255, 255, 255);
                 imagefill($im, 0, 0, $background_color);
+
+                for ($i = 0; $i < 2; $i++) {
+                    $line_color = imagecolorallocate($im, rand(100, 255), rand(100, 255), rand(100, 255));
+                    imageline($im, 0, rand() % 23, 160, rand() % 23, $line_color);
+                }
+
+                for ($i = 0; $i < 700; $i++) {
+                    $pixel_color = imagecolorallocate($im, rand(100, 255), rand(100, 255), rand(100, 255));
+                    imagesetpixel($im, rand() % 160, rand() % 23, $pixel_color);
+                }
+
                 $text_color = imagecolorallocate($im, 0, 0, 0);
                 imagestring($im, 3, 5, 5, $server->address, $text_color);
+
                 imagepng($im, $pathDisk);
             }
             return response()->file($pathDisk);
