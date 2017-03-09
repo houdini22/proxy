@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatBytes} from '../helpers/number-helper';
+import {formatBytes} from '../../helpers/number-helper';
 import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 class TableComponent extends React.Component {
@@ -78,7 +78,7 @@ class TableComponent extends React.Component {
         }
 
         return (
-            <tr key={i}>
+            <tr key={obj.address_img_url}>
                 <td>
                     <img src={obj.address_img_url}/>
                 </td>
@@ -149,13 +149,15 @@ class TableComponent extends React.Component {
         const ping = this.filterPing.value;
         const speed = this.filterSpeed.value;
         const uptime_ratio = this.filterUptimeRatio.value;
+        const country = this.filterCountry.value;
 
         const values = {
             availability,
             type,
             ping,
             speed,
-            uptime_ratio
+            uptime_ratio,
+            country
         };
 
         this.filters = values;
@@ -169,6 +171,7 @@ class TableComponent extends React.Component {
         let currentPage = this.props.state.servers.current_page || 0;
         let lastPage = this.props.state.servers.last_page || 0;
         let servers = this.props.state.servers.data || [];
+        let countries = this.props.state.statistics.server_countries || [];
 
         let playButtonClassNames;
         if (this.autoRefresh) {
@@ -301,6 +304,25 @@ class TableComponent extends React.Component {
                                                         <option value="great"> 50 - 75%</option>
                                                         <option value="medium"> 25 - 50% </option>
                                                         <option value="low"> 0 - 25% </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <label>Country</label>
+                                                    <select
+                                                        ref={(input) => {
+                                                            this.filterCountry = input;
+                                                        }}
+                                                        onChange={this.handleOnChangeFiltersInput.bind(this)}
+                                                        className="form-control input-sm"
+                                                    >
+                                                        <option value="all">All</option>
+                                                        {
+                                                            countries.map((obj, i) => {
+                                                                return <option key={i} value={obj.country}>{obj.country} ({obj.count})</option>;
+                                                            })
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>

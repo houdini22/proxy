@@ -58,6 +58,18 @@ class ApiV1Controller extends Controller
                 ->get()
                 ->count();
         });
+        $response['server_countries'] = Cache::remember('server_countries', $cacheLifetime, function () {
+            $servers = AvailableServer::select(\DB::raw('count(*) as count'), 'country')
+                ->groupBy('country')
+                ->orderBy('country', 'ASC')
+                ->whereNotNull('country')
+                ->get();
+            $result = [];
+            foreach ($servers as $s) {
+                $result[] = ['country' => $s->country, 'count' => $s->count];
+            }
+            return $result;
+        });
 
         return JsonResponse::create($response);
     }
@@ -124,7 +136,7 @@ class ApiV1Controller extends Controller
 
         switch ($request->query('speed')) {
             case 'slow':
-                $servers->where(function($query) {
+                $servers->where(function ($query) {
                     $query->where('speed', '<', 2048)
                         ->orWhereNull('speed');
                 });
@@ -145,7 +157,7 @@ class ApiV1Controller extends Controller
                 break;
         }
 
-        switch($request->query('uptime_ratio')) {
+        switch ($request->query('uptime_ratio')) {
             case 'greatest':
                 $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '>', 0.75);
                 break;
@@ -163,6 +175,11 @@ class ApiV1Controller extends Controller
             case 'low':
                 $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '<=', 0.25);
                 break;
+        }
+
+        $country = $request->query('country', 'all');
+        if ($country !== 'all') {
+            $servers->where('country', '=', $country);
         }
 
         $response = $servers->paginate()->toArray();
