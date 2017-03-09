@@ -72,6 +72,8 @@ abstract class AbstractService
             if ($this->validateAddress($address['ip'], $address['port'])) {
                 $model = new \App\Server;
                 $model->address = $address['ip'] . ':' . $address['port'];
+                $model->ip = $address['ip'];
+                $model->port = $address['port'];
                 $model->source = $this->getSource();
                 try {
                     $model->save();
