@@ -69,7 +69,7 @@ class TestProxiesSpeed extends Command
                 $server->speed = round($filesize / $time);
                 $server->speed_success++;
 
-                \App\Proxy\Proxy::log("Speed: " . $server->speed);
+                \App\Proxy\Proxy::log("Speed: {$server->address}: {$server->speed}");
             }
             catch (\Exception $e)
             {
@@ -82,14 +82,14 @@ class TestProxiesSpeed extends Command
                     $server->speed = round($matches[1] / $time);
                     $server->speed_success++;
 
-                    \App\Proxy\Proxy::log("Speed: " . $server->speed);
+                    \App\Proxy\Proxy::log("Speed {$server->address}: {$server->speed}");
                 }
                 else
                 {
                     $server->speed = NULL;
                     $server->speed_error++;
 
-                    \App\Proxy\Proxy::log("ERROR: " . $server->address);
+                    \App\Proxy\Proxy::log("ERROR: {$server->address}");
                 }
             }
             $server->save();
