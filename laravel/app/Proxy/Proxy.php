@@ -355,36 +355,6 @@ class Proxy
         return preg_match('/^(\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b)\:(\d+)$/', $ip . ':' . $port);
     }
 
-    public static function addServers(array $servers, $source)
-    {
-        foreach ($servers as $address)
-        {
-            $address['ip'] = trim($address['ip']);
-            $address['port'] = trim($address['port']);
-
-            if (self::validateAddress($address['ip'], $address['port']))
-            {
-                $model = new \Server;
-                $model->address = $address['ip'] . ':' . $address['port'];
-                $model->ip = $address['ip'];
-                $model->port = $address['port'];
-                $model->source = $source;
-                try
-                {
-                    $model->save();
-                    if (TRUE)
-                    {
-                        \App\Proxy\Proxy::log("Adding proxy: {$address['ip']}:{$address['port']}");
-                    }
-                }
-                catch (\Exception $e)
-                {
-                    var_dump($e->getMessage());
-                }
-            }
-        }
-    }
-
     public function fetch()
     {
         foreach($this->services as $key => $service)
