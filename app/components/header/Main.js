@@ -19,7 +19,7 @@ class MainHeaderComponent extends React.Component {
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">
                             <li className={this.className('/')}><Link to="/">Home</Link></li>
-                            <li className={this.className('/about')}><Link to="/about">About</Link></li>
+                            <li className={this.className('about')}><Link to="/about">About</Link></li>
                         </ul>
                     </div>
                 </div>

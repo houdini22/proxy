@@ -1,8 +1,8 @@
 import React from 'react';
 
 import MainHeaderComponent from './header/Main';
-import TableComponent from './Table';
-import StatisticsComponent from './Statistics';
+import TableComponent from './index/Table';
+import StatisticsComponent from './index/Statistics';
 
 class IndexComponent extends React.Component {
     componentDidMount() {

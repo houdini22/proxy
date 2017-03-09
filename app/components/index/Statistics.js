@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainHeaderComponent from './header/Main';
+import MainHeaderComponent from '../header/Main';
 
 class StatisticsComponent extends React.Component {
     render() {
@@ -42,11 +42,11 @@ class StatisticsComponent extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Distinct server countries</th>
+                                    <th>Servers countries</th>
                                     <td><span className="label label-info">{statistics.nb_server_countries}</span></td>
                                 </tr>
                                 <tr>
-                                    <th>Distinct server cities</th>
+                                    <th>Servers cities</th>
                                     <td><span className="label label-info">{statistics.nb_server_cities}</span></td>
                                 </tr>
                                 </tbody>
