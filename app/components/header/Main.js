@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
+import {LinkContainer, IndexLinkContainer} from 'react-router-bootstrap';
+import {NavDropdown, Nav, MenuItem, Navbar, NavItem} from 'react-bootstrap';
 
 class MainHeaderComponent extends React.Component {
     className(path) {
@@ -11,19 +13,32 @@ class MainHeaderComponent extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-                <div className="container">
-                    <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">ProxyAggregator</Link>
-                    </div>
-                    <div id="navbar" className="navbar-collapse collapse">
-                        <ul className="nav navbar-nav">
-                            <li className={this.className('/')}><Link to="/">Home</Link></li>
-                            <li className={this.className('about')}><Link to="/about">About</Link></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <Navbar inverse fixedTop>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <Link to="/">ProxyDatabase.net</Link>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <Nav className="nav navbar-nav">
+                        <IndexLinkContainer to="/">
+                            <NavItem>Home</NavItem>
+                        </IndexLinkContainer>
+                        <LinkContainer to="/about">
+                            <NavItem>About</NavItem>
+                        </LinkContainer>
+                    </Nav>
+                    <Nav pullRight>
+                        <NavDropdown eventKey="1" title="Guest" id="account-dropdown">
+                            <MenuItem header>Logged as: Guest</MenuItem>
+                            <LinkContainer to="/register">
+                                <MenuItem eventKey="1.1">Register</MenuItem>
+                            </LinkContainer>
+                        </NavDropdown>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
         );
     }
 }
