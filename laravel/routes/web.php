@@ -66,8 +66,8 @@ Route::get('/proxy_test_old', function (Request $request) {
         }
         $server->checked_at = $oldServer->checked_at;
         $server->last_availability = date('Y-m-d H:i:s');
-        $server->ping_error = $oldServer->ping_error - 1;
-        $server->ping_success = $oldServer->ping_success + 1;
+        $server->ping_error = $oldServer->ping_error;
+        $server->ping_success = $oldServer->ping_success;
         $server->address = $oldServer->address;
         $server->speed = $server->is_checked_speed = 0;
         $server->save();
