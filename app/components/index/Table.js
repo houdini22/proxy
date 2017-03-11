@@ -77,6 +77,13 @@ class TableComponent extends React.Component {
             checked = 'not checked yet';
         }
 
+        let tooltip;
+        if(obj.speed === null) {
+            tooltip = <Tooltip id="speed-tooltip">[{obj.last_speed_error_status_code}]: {obj.last_speed_error_message}</Tooltip>;
+        } else {
+            tooltip = <Tooltip id="speed-tooltip">{checked}</Tooltip>;
+        }
+
         return (
             <tr key={obj.address_img_url}>
                 <td>
@@ -91,7 +98,7 @@ class TableComponent extends React.Component {
                     </span>
                 </td>
                 <td className="text-center">
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="speed-checked-at">{checked}</Tooltip>}>
+                    <OverlayTrigger placement="top" overlay={tooltip}>
                         <span className={speedClassName}>{speed} <i className="glyphicon-info-sign glyphicon"/></span>
                     </OverlayTrigger>
                 </td>
@@ -300,10 +307,10 @@ class TableComponent extends React.Component {
                                                         className="form-control input-sm"
                                                     >
                                                         <option value="all">All</option>
-                                                        <option value="greatest"> >75% </option>
+                                                        <option value="greatest"> >75%</option>
                                                         <option value="great"> 50 - 75%</option>
-                                                        <option value="medium"> 25 - 50% </option>
-                                                        <option value="low"> 0 - 25% </option>
+                                                        <option value="medium"> 25 - 50%</option>
+                                                        <option value="low"> 0 - 25%</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -320,7 +327,8 @@ class TableComponent extends React.Component {
                                                         <option value="all">All</option>
                                                         {
                                                             countries.map((obj, i) => {
-                                                                return <option key={i} value={obj.country}>{obj.country} ({obj.count})</option>;
+                                                                return <option key={i} value={obj.country}>{obj.country}
+                                                                    ({obj.count})</option>;
                                                             })
                                                         }
                                                     </select>

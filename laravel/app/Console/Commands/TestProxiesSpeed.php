@@ -47,8 +47,7 @@ class TestProxiesSpeed extends Command
         $requests = array();
         $responses = array();
         $filesize = filesize(base_path() . '/../public/files/test_file');
-        foreach ($servers as $server)
-        {
+        foreach ($servers as $server) {
             $request = $client->get(\Config::get('proxy.test_server_speed_path'), array(), array(
                 'proxy' => "tcp://{$server->address}",
                 'timeout' => 40,
@@ -59,37 +58,46 @@ class TestProxiesSpeed extends Command
             $server->is_checked_speed = 1;
             $server->speed_checked_at = date('Y-m-d H:i:s');
 
-            try
-            {
+            try {
                 $response = $client->send($request);
-                $body = (string) $response->getBody();
+                $body = (string)$response->getBody();
 
                 $time = microtime(TRUE) - $startTime;
 
                 $server->speed = round($filesize / $time);
                 $server->speed_success++;
+                $server->last_speed_error_status_code = $server->last_speed_error_message = NULL;
 
                 \App\Proxy\Proxy::log("Speed: {$server->address}: {$server->speed}");
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 \App\Proxy\Proxy::log($e->getMessage());
+
                 preg_match("#milliseconds with (\d+) out of $filesize#", $e->getMessage(), $matches);
-                if ( ! empty($matches[1]))
-                {
+
+                if (!empty($matches[1])) {
                     $time = microtime(TRUE) - $startTime;
 
                     $server->speed = round($matches[1] / $time);
                     $server->speed_success++;
 
+                    $server->last_speed_error_status_code = $server->last_speed_error_message = NULL;
+
                     \App\Proxy\Proxy::log("Speed {$server->address}: {$server->speed}");
-                }
-                else
-                {
+                } else {
                     $server->speed = NULL;
                     $server->speed_error++;
 
                     \App\Proxy\Proxy::log("ERROR: {$server->address}");
+                }
+
+                preg_match('#\[status code\]\s(\d+)#', $e->getMessage(), $matches);
+
+                if (!empty($matches[1])) {
+                    $server->last_speed_error_status_code = $matches[1];
+                }
+                preg_match('#\[curl\]\s([a-zA-Z0-9\s\:\.]+)#', $e->getMessage(), $matches);
+                if (!empty($matches[1])) {
+                    $server->last_speed_error_message = $matches[1];
                 }
             }
             $server->save();
