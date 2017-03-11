@@ -13,7 +13,7 @@ class StatisticsComponent extends React.Component {
                         <h3 className="panel-title">Statistics</h3>
                     </div>
                     <div className="panel-body">
-                        <table className="table table-condensed">
+                        <table className="table table-condensed table-striped">
                             <tbody>
                             <tr>
                                 <th>Servers online in the past</th>
