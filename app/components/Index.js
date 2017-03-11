@@ -3,6 +3,7 @@ import React from 'react';
 import MainHeaderComponent from './header/Main';
 import TableComponent from './index/Table';
 import StatisticsComponent from './index/Statistics';
+import PromoBoxComponent from './index/PromoBox';
 
 class IndexComponent extends React.Component {
     componentDidMount() {
@@ -31,7 +32,10 @@ class IndexComponent extends React.Component {
             <div className="page page-index">
                 <MainHeaderComponent {...this.props} />
                 <div className="container">
-                    <StatisticsComponent {...this.props}/>
+                    <div className="row">
+                        <StatisticsComponent {...this.props}/>
+                        <PromoBoxComponent {...this.props}/>
+                    </div>
                     <TableComponent
                         {...this.props}
                         fetchStatistics={this.fetchStatistics.bind(this)}
