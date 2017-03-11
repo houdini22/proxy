@@ -39,6 +39,9 @@ body {
   .glyphicon {
     margin-right: 5px;
   }
+  &.btn-xs {
+    font-size: 11px;
+  }
 }
 
 form {
@@ -54,6 +57,28 @@ form {
 
 .page.page-index {
   min-width: 560px;
+  & > .container > .flex-parent {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    & > .flex-child {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      margin: 0 15px;
+      width: calc(50% - 30px);
+      position: relative;
+
+      .panel {
+        width: 100%;
+      }
+    }
+  }
   .container .panel-statistics {
     table {
       margin: 0;
@@ -111,20 +136,23 @@ form {
     }
   }
   .container .panel-promo {
+    position: relative;
     .panel-body {
-      position: relative;
       .row {
         padding: 0 15px;
         .left-column {
-          font-size: 100px;
-          width: 110px;
+          font-size: 150px;
+          width: 130px;
         }
         .right-column {
-          width: calc(100% - 110px);
+          width: calc(100% - 150px);
           .btn-container {
             position: absolute;
             bottom: 15px;
             right: 15px;
+          }
+          p:not(.btn-container) {
+            margin-bottom: 7px;
           }
         }
       }
