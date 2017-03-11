@@ -205,7 +205,7 @@ class TableComponent extends React.Component {
         return (
             <div className="row">
                 <div className="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                    <div className="panel panel-info panel-table">
+                    <div className="panel panel-primary panel-table">
                         <div className="panel-heading">
                             <h3 className="panel-title">Servers</h3>
                             <div className="panel-tools">
@@ -349,7 +349,7 @@ class TableComponent extends React.Component {
                                             <div className="col-md-12">
                                                 <div className="filters-buttons">
                                                     <button
-                                                        className="btn btn-default btn-xs"
+                                                        className="btn btn-primary btn-xs"
                                                         type="reset"
                                                         onClick={(e) => {
                                                             this.filters = {};

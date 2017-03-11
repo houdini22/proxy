@@ -1,7 +1,8 @@
 import {render} from 'react-dom';
 
 import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/css/bootstrap-theme.css";
+//import "bootstrap/dist/css/bootstrap-theme.css";
+import "bootswatch/darkly/bootstrap.min.css";
 import "./scss/screen.scss";
 
 import React from 'react';

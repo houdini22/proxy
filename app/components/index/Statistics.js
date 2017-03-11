@@ -9,7 +9,7 @@ class StatisticsComponent extends React.Component {
         return (
             <div className="row">
                 <div className="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                    <div className="panel panel-info panel-statistics">
+                    <div className="panel panel-primary panel-statistics">
                         <div className="panel-heading">
                             <h3 className="panel-title">Statistics</h3>
                         </div>
