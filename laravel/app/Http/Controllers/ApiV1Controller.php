@@ -6,7 +6,7 @@ use App\AvailableServer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Psy\Util\Json;
+use Intervention\Image\Facades\Image;
 
 class ApiV1Controller extends Controller
 {
@@ -194,7 +194,7 @@ class ApiV1Controller extends Controller
         return JsonResponse::create($response);
     }
 
-    public function getAddress(Request $request)
+    /*public function getAddress(Request $request)
     {
         $token = $request->route('token');
         $server = AvailableServer::where(\DB::raw('md5(CONCAT(address, "' . $this->_token . '"))'), $token)->first();
@@ -225,6 +225,40 @@ class ApiV1Controller extends Controller
             return response()->file($pathDisk);
         } else {
             dd($server);
+        }
+    }*/
+
+    public function getAddress(Request $request)
+    {
+        $token = $request->route('token');
+        $server = AvailableServer::where(\DB::raw('md5(CONCAT(address, "' . $this->_token . '"))'), $token)->first();
+
+        if ($server) {
+            $pathDisk = base_path() . '/../public/files/addresses/' . $token . '.png';
+            if (!file_exists($pathDisk)) {
+                $img = Image::canvas(160, 23, [0, 0, 0, 0]);
+
+                for ($i = 0; $i < 5; $i++) {
+                    $img->line(0, rand() % 23, 160, rand() % 23, function ($draw) {
+                        $draw->color([rand(100, 255), rand(100, 255), rand(100, 255), 50]);
+                    });
+                }
+
+                for ($i = 0; $i < 700; $i++) {
+                    $img->pixel([rand(100, 255), rand(100, 255), rand(100, 255), 50], rand() % 160, rand() % 23);
+                }
+
+                $img->text($server->address, 80, 12, function ($font) {
+                    $font->file(base_path('/resources/fonts/Consolas Bold.ttf'));
+                    $font->size(13);
+                    $font->color([255, 255, 255]);
+                    $font->align('center');
+                    $font->valign('middle');
+                });
+
+                $img->save($pathDisk);
+            }
+            return response()->file($pathDisk);
         }
     }
 }

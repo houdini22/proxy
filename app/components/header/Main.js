@@ -13,7 +13,7 @@ class MainHeaderComponent extends React.Component {
 
     render() {
         return (
-            <Navbar inverse fixedTop>
+            <Navbar fixedTop>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to="/">ProxyDatabase.net</Link>
