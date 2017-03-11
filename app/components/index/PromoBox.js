@@ -7,7 +7,7 @@ class PromoBoxComponent extends React.Component {
             <div className="flex-child">
                 <div className="panel panel-warning panel-promo">
                     <div className="panel-heading">
-                        <h3 className="panel-title">Get 33% off price by registering right now!</h3>
+                        <h3 className="panel-title">Get <strong>33% off</strong> price!</h3>
                     </div>
                     <div className="panel-body">
                         <div>
