@@ -60,6 +60,13 @@ form {
   }
 }
 
+.alert {
+  .glyphicon {
+    margin-right: 10px;
+    top: 2px;
+  }
+}
+
 .page.page-index {
   min-width: 560px;
   & > .container > .flex-parent {
@@ -145,15 +152,16 @@ form {
     .panel-body {
       .row {
         padding: 0 15px;
-        .percent-row {
-          font-size: 100px;
+        &.percent-row {
+          font-size: 72px;
         }
-        .text-row {
+        &.text-row {
           margin-bottom: 25px;
           .btn-container {
             position: absolute;
             bottom: 15px;
             right: 15px;
+            margin: 0;
           }
           p:not(.btn-container) {
             margin-bottom: 7px;
