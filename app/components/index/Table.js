@@ -78,8 +78,18 @@ class TableComponent extends React.Component {
         }
 
         let tooltip;
-        if(obj.speed === null) {
-            tooltip = <Tooltip id="speed-tooltip">[{obj.last_speed_error_status_code}]: {obj.last_speed_error_message}</Tooltip>;
+        if (obj.speed === null) {
+            let text = '';
+            if (obj.last_speed_error_status_code !== null) {
+                text = `Status code: [${obj.last_speed_error_status_code}] `;
+            }
+            if (obj.last_speed_error_message !== null) {
+                text += `Message: ${obj.last_speed_error_message}`;
+            }
+            if(text.length === 0) {
+                text = 'No error message specified.';
+            }
+            tooltip = <Tooltip id="speed-tooltip">{text}</Tooltip>;
         } else {
             tooltip = <Tooltip id="speed-tooltip">{checked}</Tooltip>;
         }
