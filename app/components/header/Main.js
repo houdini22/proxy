@@ -35,6 +35,9 @@ class MainHeaderComponent extends React.Component {
                             <LinkContainer to="/register">
                                 <MenuItem eventKey="1.1">Register</MenuItem>
                             </LinkContainer>
+                            <LinkContainer to="/login">
+                                <MenuItem eventKey="1.2">Log in</MenuItem>
+                            </LinkContainer>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

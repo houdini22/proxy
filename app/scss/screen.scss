@@ -110,4 +110,24 @@ form {
       }
     }
   }
+  .container .panel-promo {
+    .panel-body {
+      position: relative;
+      .row {
+        padding: 0 15px;
+        .left-column {
+          font-size: 100px;
+          width: 110px;
+        }
+        .right-column {
+          width: calc(100% - 110px);
+          .btn-container {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+          }
+        }
+      }
+    }
+  }
 }
