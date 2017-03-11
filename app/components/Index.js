@@ -32,7 +32,7 @@ class IndexComponent extends React.Component {
             <div className="page page-index">
                 <MainHeaderComponent {...this.props} />
                 <div className="container">
-                    <div className="row">
+                    <div className="row flex-parent">
                         <StatisticsComponent {...this.props}/>
                         <PromoBoxComponent {...this.props}/>
                     </div>

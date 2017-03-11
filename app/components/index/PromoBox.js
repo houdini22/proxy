@@ -4,8 +4,8 @@ import {Link} from 'react-router';
 class PromoBoxComponent extends React.Component {
     render() {
         return (
-            <div className="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                <div className="panel panel-primary panel-promo">
+            <div className="flex-child">
+                <div className="panel panel-warning panel-promo">
                     <div className="panel-heading">
                         <h3 className="panel-title">Promotion! Get 33% off by registering now!</h3>
                     </div>
