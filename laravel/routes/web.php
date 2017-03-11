@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'api'], function () {
+Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/statistics', 'ApiV1Controller@getStatistics');
         Route::get('/servers', 'ApiV1Controller@getServers');

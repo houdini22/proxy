@@ -12,16 +12,6 @@ class ApiV1Controller extends Controller
 {
     protected $_token = '*H&*OUNAuibfiu*H*&A*BbbNBTYT';
 
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if ($request->headers->get('referer') !== env('APP_REFERER')) {
-                return redirect('/');
-            }
-            return $next($request);
-        });
-    }
-
     public function getStatistics(Request $request)
     {
         $cacheLifetime = 29 / 60;
