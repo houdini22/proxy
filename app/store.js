@@ -1,8 +1,8 @@
 import {createStore, compose} from 'redux';
 import {syncHistoryWithStore} from 'react-router-redux';
 import rootReducer from './reducers/index';
-import { createHistory } from 'history'
-import { useRouterHistory } from 'react-router'
+import {createHistory} from 'history'
+import {useRouterHistory} from 'react-router'
 
 const browserHistory = useRouterHistory(createHistory)({
     basename: '/'

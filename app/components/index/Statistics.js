@@ -37,7 +37,8 @@ class StatisticsComponent extends React.Component {
                                     <th>SOCKS5 servers online</th>
                                     <td>
                                         <span className="label label-info">
-                                            {statistics.nb_servers_socks5_online} / {statistics.nb_servers_socks5_available}
+                                            {statistics.nb_servers_socks5_online}
+                                            / {statistics.nb_servers_socks5_available}
                                         </span>
                                     </td>
                                 </tr>
