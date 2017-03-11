@@ -1,4 +1,4 @@
-@import "_reset.scss";
+//@import "_reset.scss";
 
 body, html {
   width: 100%;
@@ -145,12 +145,10 @@ form {
     .panel-body {
       .row {
         padding: 0 15px;
-        .left-column {
-          font-size: 150px;
-          width: 130px;
+        .percent-row {
+          font-size: 100px;
         }
-        .right-column {
-          width: calc(100% - 150px);
+        .text-row {
           margin-bottom: 25px;
           .btn-container {
             position: absolute;
