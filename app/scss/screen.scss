@@ -95,12 +95,18 @@ form {
     table {
       margin: 0;
       width: 100%;
-      th {
-        width: 75%;
-      }
-      td {
-        width: 25%;
-        text-align: right;
+      tr {
+        td, th {
+          min-height: 40px;
+          line-height: 40px;
+        }
+        th {
+          width: 75%;
+        }
+        td {
+          width: 25%;
+          text-align: right;
+        }
       }
     }
     .label {
