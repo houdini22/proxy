@@ -4,6 +4,13 @@ import {LinkContainer, IndexLinkContainer} from 'react-router-bootstrap';
 import {NavDropdown, Nav, MenuItem, Navbar, NavItem} from 'react-bootstrap';
 
 class MainHeaderComponent extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            displayUserMenu: false
+        };
+    }
+
     className(path) {
         if (this.props.state.currentPath === path) {
             return "active";
@@ -18,17 +25,30 @@ class MainHeaderComponent extends React.Component {
             user.email = 'Guest';
         }
 
-        let accountLink = (
-            <LinkContainer to="/profile">
-                <MenuItem eventKey="1.1">Profile</MenuItem>
-            </LinkContainer>
+        let userFooter = (
+            <li className="user-footer">
+                <div className="pull-left">
+                    <Link to="/profile" className="btn btn-xs btn-primary">Profile</Link>
+                </div>
+                <div className="pull-right">
+                    <Link to="/logout" className="btn btn-xs btn-primary">Sign out</Link>
+                </div>
+            </li>
         );
+
         if (!isLoggedIn) {
-            accountLink = (
-                <LinkContainer to="/account">
-                    <MenuItem eventKey="1.1">Account</MenuItem>
-                </LinkContainer>
+            userFooter = (
+                <li className="user-footer">
+                    <div className="pull-right">
+                        <Link to="/account" className="btn btn-xs btn-primary">Account</Link>
+                    </div>
+                </li>
             );
+        }
+
+        let memberSince = <small>Member since {user.created_at}</small>;
+        if (!isLoggedIn) {
+            memberSince = '';
         }
 
         return (
@@ -49,13 +69,32 @@ class MainHeaderComponent extends React.Component {
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavDropdown eventKey="1"
-                                     title={<span className="has-icon"><i
-                                         className="fa fa-user-o"/> {user.email}</span>}
-                                     id="account-dropdown">
-                            <MenuItem header> Logged as: {user.email}</MenuItem>
-                            {accountLink}
-                        </NavDropdown>
+                        <li className="dropdown user user-menu open">
+                            <a id="account-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true"
+                               onClick={(e) => {
+                                   e.preventDefault();
+                                   this.setState({
+                                       displayUserMenu: !this.state.displayUserMenu
+                                   });
+                               }}
+                               aria-expanded="true" href="#">
+                                <span className="has-icon">
+                                    <i className="fa fa-user-o"/>
+                                </span>
+                                <span>{user.email}</span>
+                                <span className="caret"/>
+                            </a>
+                            <ul className="dropdown-menu"
+                                style={{display: this.state.displayUserMenu ? 'block' : 'none'}}>
+                                <li className="user-header">
+                                    <p>
+                                        {user.email}
+                                        {memberSince}
+                                    </p>
+                                </li>
+                                {userFooter}
+                            </ul>
+                        </li>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
