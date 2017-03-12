@@ -80,7 +80,7 @@ class ApiV1Controller extends Controller
             ->select([
                 'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
                 'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
-                'ping_socks_error', 'ping_socks_success',
+                'ping_socks_error', 'ping_socks_success', 'is_available',
                 'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
             ]);
 
