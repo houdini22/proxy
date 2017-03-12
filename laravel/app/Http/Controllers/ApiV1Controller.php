@@ -76,7 +76,7 @@ class ApiV1Controller extends Controller
 
     public function getServers(Request $request)
     {
-        $servers = AvailableServer::orderBy('id', 'DESC')
+        $servers = AvailableServer::orderBy(\DB::raw('IF(is_socks=0, checked_at, socks_checked_at)'), 'DESC')
             ->select([
                 'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
                 'checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
