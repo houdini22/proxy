@@ -315,9 +315,14 @@ class ApiV1Controller extends Controller
             if ($user) {
                 if (Activation::complete($user, $request->route('code', 'b'))) {
                     Mail::to($user->email)->send(new AccountConfirmed());
-                    return redirect('/account?confirmed=1');
+                    return redirect()->route('index', [
+                        'confirmed' => 1,
+                        'email' => $user->email
+                    ]);
                 } else {
-                    return redirect('/account?confirmed=0');
+                    return redirect()->route('index', [
+                        'confirmed' => 0
+                    ]);
                 }
             }
         }

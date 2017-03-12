@@ -69,15 +69,22 @@ class LoginComponent extends React.Component {
             );
         }
 
-        let alertConfirmed = '';
         let query = this.props.router.location.query || {};
-        if(query.confirmed === "1") {
+
+        let alertConfirmed = '';
+        if (query.confirmed === "1") {
             alertConfirmed = (
                 <div className="alert alert-success">
                     <p>Your account is confirmed now.</p>
                 </div>
             );
         }
+
+        let login = '';
+        if (query.email) {
+            login = query.email;
+        }
+
         return (
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="panel panel-primary panel-register">
