@@ -56,6 +56,7 @@ class TableComponent extends React.Component {
         if (obj.is_socks) {
             pingRatio = (obj.ping_socks_success + obj.speed_success) / (obj.ping_socks_error + obj.speed_error);
         }
+
         let uploadRatioClassName;
         if (pingRatio > 0.75) {
             uploadRatioClassName = 'label label-success';
