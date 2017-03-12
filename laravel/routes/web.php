@@ -116,6 +116,7 @@ Route::get('/proxy_test_http_online', function (Request $request) {
         $oldServer->last_availability = date('Y-m-d H:i:s');
         $oldServer->ping_error -= 1;
         $oldServer->ping_success += 1;
+        $oldServer->is_checked_speed = 0;
 
         if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
             $oldServer->type = 'elite';
