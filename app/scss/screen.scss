@@ -68,8 +68,16 @@ form {
   }
 }
 
+.page .page-header {
+  margin-top: 0;
+}
+
 body .tooltip {
   text-transform: none;
+}
+
+.captcha {
+  cursor: pointer;
 }
 
 .page.page-index {

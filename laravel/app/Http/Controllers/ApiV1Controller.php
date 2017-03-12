@@ -263,4 +263,16 @@ class ApiV1Controller extends Controller
             return response()->file($pathDisk);
         }
     }
+
+    public function postRegister(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email',
+            'email_repeat' => 'required|same:email',
+            'password' => 'required',
+            'password_repeat' => 'required|same:password',
+            'captcha' => 'required|captcha'
+        ];
+        $this->validate($request, $rules);
+    }
 }
