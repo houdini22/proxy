@@ -35,8 +35,6 @@ Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
 });
 
 Route::get('/proxy_test_old', function (Request $request) {
-    echo 'proxy_test::';
-
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
     if ($oldServer->first_ping === '0000-00-00 00:00:00') {
@@ -73,9 +71,8 @@ Route::get('/proxy_test_old', function (Request $request) {
         }
         $server->checked_at = $oldServer->checked_at;
         $server->last_availability = date('Y-m-d H:i:s');
-        $server->ping_error = $oldServer->ping_error;
-        $server->ping_success = $oldServer->ping_success;
-        $server->speed = $server->is_checked_speed = 0;
+        $server->ping_success = 1;
+        $server->is_checked_speed = 0;
         $server->save();
 
         $json['id'] = $server->id;
@@ -110,6 +107,7 @@ Route::get('/proxy_test_old', function (Request $request) {
             }
         }
     }
+    echo 'proxy_test::';
     echo json_encode($json);
     echo '::proxy_test';
 });
