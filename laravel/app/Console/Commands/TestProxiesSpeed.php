@@ -99,10 +99,14 @@ class TestProxiesSpeed extends Command
 
                     if (!empty($matches[1])) {
                         $server->last_speed_error_status_code = $matches[1];
+                    } else {
+                        $server->last_speed_error_status_code = '';
                     }
                     preg_match('#\[curl\]\s([a-zA-Z0-9\s\:\.]+)#', $e->getMessage(), $matches);
                     if (!empty($matches[1])) {
                         $server->last_speed_error_message = $matches[1];
+                    } else {
+                        $server->last_speed_error_message = '';
                     }
 
                     \App\Proxy\Proxy::log("ERROR: {$server->address} NULL {$server->is_socks}");
