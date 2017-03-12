@@ -68,6 +68,10 @@ form {
   }
 }
 
+body .tooltip {
+  text-transform: none;
+}
+
 .page.page-index {
   min-width: 560px;
   & > .container > .flex-parent {
