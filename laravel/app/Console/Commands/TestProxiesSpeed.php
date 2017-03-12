@@ -95,17 +95,17 @@ class TestProxiesSpeed extends Command
                     $server->speed = NULL;
                     $server->speed_error++;
 
+                    preg_match('#\[status code\]\s(\d+)#', $e->getMessage(), $matches);
+
+                    if (!empty($matches[1])) {
+                        $server->last_speed_error_status_code = $matches[1];
+                    }
+                    preg_match('#\[curl\]\s([a-zA-Z0-9\s\:\.]+)#', $e->getMessage(), $matches);
+                    if (!empty($matches[1])) {
+                        $server->last_speed_error_message = $matches[1];
+                    }
+
                     \App\Proxy\Proxy::log("ERROR: {$server->address} NULL {$server->is_socks}");
-                }
-
-                preg_match('#\[status code\]\s(\d+)#', $e->getMessage(), $matches);
-
-                if (!empty($matches[1])) {
-                    $server->last_speed_error_status_code = $matches[1];
-                }
-                preg_match('#\[curl\]\s([a-zA-Z0-9\s\:\.]+)#', $e->getMessage(), $matches);
-                if (!empty($matches[1])) {
-                    $server->last_speed_error_message = $matches[1];
                 }
             }
             $server->save();
