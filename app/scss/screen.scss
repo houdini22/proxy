@@ -182,3 +182,12 @@ body .tooltip {
     }
   }
 }
+
+.page.page-not-found {
+  width: 100%;
+  height: calc(100vh - 70px);
+  line-height: calc(100vh - 70px);
+  text-align: center;
+  font-size: 72px;
+  font-weight: bold;
+}
