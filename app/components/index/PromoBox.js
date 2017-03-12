@@ -15,7 +15,7 @@ class PromoBoxComponent extends React.Component {
                                 <span className="text-success">-33%</span>
                             </div>
                             <div className="row text-row">
-                                <p>Soon we will provide a <strong>premium</strong> features such as:</p>
+                                <h4>Soon we will provide a <strong>premium</strong> features such as:</h4>
                                 <ul>
                                     <li>No limit of pages</li>
                                     <li>No limit of filters</li>
