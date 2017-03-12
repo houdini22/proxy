@@ -188,7 +188,7 @@ Route::get('/proxy_test_socks', function (Request $request) {
     if ($server) {
         $server->ping_socks_error -= 1;
         $server->ping_socks_success += 1;
-        $server->is_checked_socks = $server->is_available = $server->was_available = 1;
+        $server->is_available = $server->was_available = 1;
         $server->ping = microtime(true) - (float)$request->query('start');
         $server->last_availability = date('Y-m-d H:i:s');
         $server->is_checked_speed = 0;
