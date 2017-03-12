@@ -66,13 +66,8 @@ class TableRowComponent extends React.Component {
         }
         type += rowData.type;
 
-        let checked = `checked ${rowData.speed_checked_at}`;
-        if (rowData.speed_checked_at === null) {
-            checked = 'not checked yet';
-        }
-
         let tooltip;
-        if (rowData.speed === null) {
+        if (rowData.last_speed_error_status_code !== null || rowData.last_speed_error_message !== null) {
             let tooltipText = '';
             if (rowData.last_speed_error_status_code !== null) {
                 tooltipText = `Status code: [${rowData.last_speed_error_status_code}] `;
@@ -84,17 +79,19 @@ class TableRowComponent extends React.Component {
                 tooltipText = 'No error message specified.';
             }
             tooltip = <Tooltip id="speed-tooltip">{tooltipText}</Tooltip>;
+        } else if (rowData.speed === null) {
+            tooltip = <Tooltip id="speed-tooltip">not checked yet</Tooltip>;
         } else {
-            tooltip = <Tooltip id="speed-tooltip">{checked}</Tooltip>;
+            tooltip = <Tooltip id="speed-tooltip">{`checked ${rowData.speed_checked_at}`}</Tooltip>;
         }
 
         let uptimeRatioText = `${rowData.ping_success + rowData.speed_success} / ${rowData.ping_error + rowData.speed_error}`;
-        if(rowData.is_socks) {
+        if (rowData.is_socks) {
             uptimeRatioText = `${rowData.ping_socks_success + rowData.speed_success} / ${rowData.ping_socks_error + rowData.speed_error}`;
         }
 
         let checked_at = rowData.checked_at;
-        if(rowData.is_socks) {
+        if (rowData.is_socks) {
             checked_at = rowData.socks_checked_at;
         }
 
