@@ -52,7 +52,7 @@ class MainHeaderComponent extends React.Component {
             userFooter = (
                 <li className="user-footer">
                     <div className="pull-right">
-                        <Link to="/account" className="btn btn-xs btn-primary">Account</Link>
+                        <Link to="/account" className="btn btn-xs btn-primary"><i className="fa fa-sign-in"/> Login or Register</Link>
                     </div>
                 </li>
             );
