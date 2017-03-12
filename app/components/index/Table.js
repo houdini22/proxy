@@ -93,7 +93,7 @@ class TableComponent extends React.Component {
             playButtonClassNames = "btn btn-success btn-xs";
         }
 
-        let filterButtonClassNames = "btn btn-primary btn-xs";
+        let filterButtonClassNames = "btn btn-default btn-xs";
         if (this.filtersOpened) {
             filterButtonClassNames += " active";
         }

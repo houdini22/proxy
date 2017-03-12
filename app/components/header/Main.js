@@ -39,11 +39,13 @@ class MainHeaderComponent extends React.Component {
         let userFooter = (
             <li className="user-footer">
                 <div className="pull-left">
-                    <Link to="/profile" className="btn btn-xs btn-primary">Profile</Link>
+                    <Link to="/profile" className="btn btn-xs btn-default">
+                        <i className="fa fa-user-o"/> Profile
+                    </Link>
                 </div>
                 <div className="pull-right">
-                    <a href="#" className="btn btn-xs btn-primary" onClick={this.handleClickSignOut.bind(this)}>
-                        <i className="fa fa-sign-out"/>Sign out
+                    <a href="#" className="btn btn-xs btn-default" onClick={this.handleClickSignOut.bind(this)}>
+                        <i className="fa fa-sign-out"/> Sign out
                     </a>
                 </div>
             </li>
@@ -53,7 +55,7 @@ class MainHeaderComponent extends React.Component {
             userFooter = (
                 <li className="user-footer">
                     <div className="pull-right">
-                        <Link to="/account" className="btn btn-xs btn-primary"><i className="fa fa-sign-in"/> Login or Register</Link>
+                        <Link to="/account" className="btn btn-xs btn-default"><i className="fa fa-sign-in"/> Login or Register</Link>
                     </div>
                 </li>
             );
