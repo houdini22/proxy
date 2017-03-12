@@ -12,7 +12,7 @@ class PromoBoxComponent extends React.Component {
                     <div className="panel-body">
                         <div>
                             <div className="row text-center percent-row">
-                                <span className="text-success">-33%</span>
+                                <span className="text-success">-50%</span>
                             </div>
                             <div className="row text-row">
                                 <h4>Soon we will provide a <strong>premium</strong> features such as:</h4>
@@ -23,7 +23,7 @@ class PromoBoxComponent extends React.Component {
                                     <li>Export any table to *.txt or CSV format!</li>
                                 </ul>
                                 <div className="alert alert-success"><i className="glyphicon-info-sign glyphicon"/>
-                                    Register right now to get 33% off for first 3 months.</div>
+                                    Register right now to get 50% off for first 1 month.</div>
                                 <p className="btn-container">
                                     <Link to="/register" className="btn btn-xs btn-primary">Register now</Link>
                                 </p>
