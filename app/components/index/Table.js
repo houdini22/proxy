@@ -103,7 +103,9 @@ class TableComponent extends React.Component {
                 <div className="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                     <div className="panel panel-primary panel-table">
                         <div className="panel-heading">
-                            <h3 className="panel-title">Servers</h3>
+                            <h3 className="panel-title">
+                                <i className="fa fa-server"/> Servers
+                            </h3>
                             <div className="panel-tools">
                                 <a
                                     href="#"
