@@ -17,6 +17,7 @@ import AboutComponent from './components/About';
 import NotFoundComponent from './components/NotFound';
 import AppComponent from './components/__App';
 import AccountComponent from './components/Account';
+import ProfileComponent from './components/Profile';
 
 const router = (
     <Provider store={store}>
@@ -25,6 +26,7 @@ const router = (
                 <IndexRoute component={IndexComponent}/>
                 <Route path="/about" component={AboutComponent}/>
                 <Route path="/account" component={AccountComponent}/>
+                <Route path="/profile" component={ProfileComponent}/>
                 <Route path="*" component={NotFoundComponent}/>
             </Route>
         </Router>

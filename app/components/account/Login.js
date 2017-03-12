@@ -27,9 +27,9 @@ class LoginComponent extends React.Component {
         const data = getFormData(e);
         this.props.ajax.post('/login', data)
             .then((response) => {
-                this.setState({
-                    user: response.data
-                });
+                // action here
+                this.props.actions.sessionChanged(true, response.data);
+                this.props.router.push('/profile');
             })
             .catch((error) => {
                 this.setState({

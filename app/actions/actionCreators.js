@@ -13,3 +13,11 @@ export function serversReceived(servers) {
         servers
     };
 }
+
+export function sessionChanged(isLoggedIn, user) {
+    return {
+        type: 'LOGGED_IN',
+        isLoggedIn,
+        user
+    };
+}

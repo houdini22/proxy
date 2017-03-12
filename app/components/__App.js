@@ -15,7 +15,8 @@ function mapStateToProps(state) {
         state: {
             currentPath: state.currentPath,
             statistics: state.statistics,
-            servers: state.servers
+            servers: state.servers,
+            session: state.session
         },
         store,
         ajax
