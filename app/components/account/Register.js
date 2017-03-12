@@ -43,6 +43,7 @@ class RegisterComponent extends React.Component {
     getNewCaptcha() {
         this.captchaImage.setAttribute("src", "");
         this.captchaImage.setAttribute("src", this.props.router.createHref('/captcha/' + (new Date()).getTime()));
+        this.inputCaptcha.value = "";
     }
 
     getValidationState(field) {
@@ -196,6 +197,9 @@ class RegisterComponent extends React.Component {
                                         type="text"
                                         placeholder="Enter code from image"
                                         name="captcha"
+                                        ref={(input) => {
+                                            this.inputCaptcha = input;
+                                        }}
                                     />
                                     {this.getValidationError('captcha')}
                                 </Col>
