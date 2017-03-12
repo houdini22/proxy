@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AvailableServer;
+use App\Date;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -21,7 +22,7 @@ class ApiV1Controller extends Controller
             return AvailableServer::count();
         });
         $response['nb_servers_available_today'] = Cache::remember('nb_servers_available_today', $cacheLifetime, function () {
-            return AvailableServer::where(\DB::raw('DATE(last_availability)'), '=', date('Y-m-d'))
+            return AvailableServer::where('last_availability', '>', date('Y-m-d H:i:s', time() - Date::DAY))
                 ->count();
         });
         $response['nb_server_countries'] = Cache::remember('nb_server_countries', $cacheLifetime, function () {
