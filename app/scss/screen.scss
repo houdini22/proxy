@@ -200,8 +200,10 @@ body .tooltip {
   font-weight: bold;
 }
 
-.page.page-register {
+.page.page-account {
   .container {
-
+    img.captcha {
+      height: 36px;
+    }
   }
 }
