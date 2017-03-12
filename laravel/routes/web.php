@@ -165,3 +165,7 @@ Route::get('/proxy_test_socks', function (Request $request) {
     echo json_encode($json);
     echo '::proxy_test';
 });
+
+\Illuminate\Support\Facades\Event::listen('404', function() {
+    return view('welcome');
+});
