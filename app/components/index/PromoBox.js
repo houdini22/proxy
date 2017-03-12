@@ -26,7 +26,7 @@ class PromoBoxComponent extends React.Component {
                                     Register right now to get 50% off for first 1 month.
                                 </div>
                                 <p className="btn-container">
-                                    <Link to="/account" className="btn btn-xs btn-primary">Register now</Link>
+                                    <Link to="/account" className="btn btn-xs btn-default"><i className="fa fa-sign-in"/> Register now</Link>
                                 </p>
                             </div>
                         </div>
