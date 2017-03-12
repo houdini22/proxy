@@ -83,19 +83,24 @@ class TableComponent extends React.Component {
 
         let tooltip;
         if (obj.speed === null) {
-            let text = '';
+            let tooltipText = '';
             if (obj.last_speed_error_status_code !== null) {
-                text = `Status code: [${obj.last_speed_error_status_code}] `;
+                tooltipText = `Status code: [${obj.last_speed_error_status_code}] `;
             }
             if (obj.last_speed_error_message !== null) {
-                text += `Message: ${obj.last_speed_error_message}`;
+                tooltipText += `Message: ${obj.last_speed_error_message}`;
             }
-            if (text.length === 0) {
-                text = 'No error message specified.';
+            if (tooltipText.length === 0) {
+                tooltipText = 'No error message specified.';
             }
-            tooltip = <Tooltip id="speed-tooltip">{text}</Tooltip>;
+            tooltip = <Tooltip id="speed-tooltip">{tooltipText}</Tooltip>;
         } else {
             tooltip = <Tooltip id="speed-tooltip">{checked}</Tooltip>;
+        }
+
+        let uptimeRatioText = `${obj.ping_success + obj.speed_success} / ${obj.ping_error + obj.speed_error}`;
+        if(obj.is_socks) {
+            uptimeRatioText = `${obj.ping_socks_success + obj.speed_success} / ${obj.ping_socks_error + obj.speed_error}`;
         }
 
         return (
@@ -108,7 +113,7 @@ class TableComponent extends React.Component {
                 <td className="text-center">
                     <span
                         className={uploadRatioClassName}>
-                    {obj.ping_success + obj.speed_success} / {obj.ping_error + obj.speed_error}
+                        {uptimeRatioText}
                     </span>
                 </td>
                 <td className="text-center">
