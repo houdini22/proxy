@@ -242,18 +242,18 @@ class ApiV1Controller extends Controller
 
                 for ($i = 0; $i < 5; $i++) {
                     $img->line(0, rand() % 23, 160, rand() % 23, function ($draw) {
-                        $draw->color([rand(100, 255), rand(100, 255), rand(100, 255), 50]);
+                        $draw->color([rand(100, 255), rand(100, 255), rand(100, 255), 25]);
                     });
                 }
 
                 for ($i = 0; $i < 700; $i++) {
-                    $img->pixel([rand(100, 255), rand(100, 255), rand(100, 255), 50], rand() % 160, rand() % 23);
+                    $img->pixel([rand(100, 255), rand(100, 255), rand(100, 255), 25], rand() % 160, rand() % 23);
                 }
 
                 $img->text($server->address, 80, 12, function ($font) {
                     $font->file(base_path('/resources/fonts/Consolas Bold.ttf'));
                     $font->size(13);
-                    $font->color([255, 255, 255]);
+                    $font->color('#3e3f3a');
                     $font->align('center');
                     $font->valign('middle');
                 });

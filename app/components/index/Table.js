@@ -108,12 +108,16 @@ class TableComponent extends React.Component {
             checked_at = obj.socks_checked_at;
         }
 
+        let onlineText = obj.is_available ? 'online' : 'offline';
+        let onlineTextClassName = obj.is_available ? 'label label-success' : 'label label-danger';
+
         return (
             <tr key={obj.address_img_url}>
                 <td style={{textAlign: 'center'}}>
                     <img src={obj.address_img_url}/>
                 </td>
                 <td>{type}</td>
+                <td><span className={onlineTextClassName}>{onlineText}</span></td>
                 <td className="text-center"><span className={pingClassName}>{obj.ping}s</span></td>
                 <td className="text-center">
                     <span
@@ -385,9 +389,10 @@ class TableComponent extends React.Component {
                                 <tr>
                                     <th style={{width: "160px"}}>Address</th>
                                     <th style={{width: "120px"}}>Type</th>
-                                    <th style={{width: "80px"}}>Ping</th>
-                                    <th style={{width: "90px"}}>Uptime Ratio</th>
-                                    <th style={{width: "115px"}}>Speed</th>
+                                    <th style={{width: "60px"}}>Online</th>
+                                    <th style={{width: "65px"}}>Ping</th>
+                                    <th style={{width: "65px"}}>Uptime Ratio</th>
+                                    <th style={{width: "100px"}}>Speed</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">City</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Checked at</th>
