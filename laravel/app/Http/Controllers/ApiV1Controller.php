@@ -310,19 +310,22 @@ class ApiV1Controller extends Controller
     public function getConfirmAccount(Request $request)
     {
         $user = \App\User::where('token', '=', $request->route('token', 'a'))->first();
-        if($user) {
+        if ($user) {
             $user = Sentinel::findById($user->id);
-            if($user) {
-                if (Activation::complete($user, $request->route('code', 'b')))
-                {
+            if ($user) {
+                if (Activation::complete($user, $request->route('code', 'b'))) {
                     Mail::to($user->email)->send(new AccountConfirmed());
-                }
-                else
-                {
-                    // Activation not found or not completed.
+                    return redirect('/account?confirm=1');
+                } else {
+                    return redirect('/account?confirm=0');
                 }
             }
         }
+        return redirect('/error');
     }
 
+    public function postLogin(Request $request)
+    {
+
+    }
 }
