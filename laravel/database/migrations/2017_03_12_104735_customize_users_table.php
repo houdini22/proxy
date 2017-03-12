@@ -14,7 +14,7 @@ class CustomizeUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('newsletter');
+            $table->boolean('newsletter')->default(0);
         });
     }
 

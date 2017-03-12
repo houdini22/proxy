@@ -19,6 +19,10 @@ body {
     position: relative;
     .panel-title {
       font-size: 13px;
+      .fa, .glyphicon {
+        font-size: 20px;
+        margin-right: 7px;
+      }
     }
     .panel-tools {
       position: absolute;
@@ -62,7 +66,7 @@ form {
 }
 
 .alert {
-  .glyphicon {
+  .glyphicon, .fa {
     margin-right: 10px;
     top: 2px;
   }

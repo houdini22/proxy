@@ -57,83 +57,57 @@ class LoginComponent extends React.Component {
     render() {
         return (
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div className="well">
-                    <h3 className="page-header">Log in</h3>
-                    <Form horizontal onSubmit={this.onSubmit.bind(this)}>
-                        <FormGroup controlId="formHorizontalEmail" className="form-group-sm"
-                                   validationState={this.getValidationState('email')}>
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Email
-                            </Col>
-                            <Col sm={10}>
-                                <InputGroup className="input-group-sm">
-                                    <InputGroup.Addon><i className="fa fa-envelope"/></InputGroup.Addon>
-                                    <FormControl
-                                        type="email"
-                                        placeholder="Email"
-                                        name="email"
-                                    />
-                                </InputGroup>
-                                {this.getValidationError('email')}
-                            </Col>
-                        </FormGroup>
+                <div className="panel panel-primary panel-register">
+                    <div className="panel-heading">
+                        <h3 className="panel-title"><i className="fa fa-user-plus"/>Log in</h3>
+                    </div>
+                    <div className="panel-body">
+                        <Form horizontal onSubmit={this.onSubmit.bind(this)}>
+                            <FormGroup controlId="formHorizontalEmail" className="form-group-sm"
+                                       validationState={this.getValidationState('email')}>
+                                <Col componentClass={ControlLabel} sm={2}>
+                                    Email
+                                </Col>
+                                <Col sm={10}>
+                                    <InputGroup className="input-group-sm">
+                                        <InputGroup.Addon><i className="fa fa-envelope"/></InputGroup.Addon>
+                                        <FormControl
+                                            type="email"
+                                            placeholder="Email"
+                                            name="email"
+                                        />
+                                    </InputGroup>
+                                    {this.getValidationError('email')}
+                                </Col>
+                            </FormGroup>
 
-                        <FormGroup controlId="formHorizontalPassword" className="form-group-sm"
-                                   validationState={this.getValidationState('password')}>
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Password
-                            </Col>
-                            <Col sm={10}>
-                                <InputGroup className="input-group-sm">
-                                    <InputGroup.Addon><i className="fa fa-lock"/></InputGroup.Addon>
-                                    <FormControl
-                                        type="password"
-                                        placeholder="Password"
-                                        name="password"
-                                    />
-                                </InputGroup>
-                                {this.getValidationError('password')}
-                            </Col>
-                        </FormGroup>
+                            <FormGroup controlId="formHorizontalPassword" className="form-group-sm"
+                                       validationState={this.getValidationState('password')}>
+                                <Col componentClass={ControlLabel} sm={2}>
+                                    Password
+                                </Col>
+                                <Col sm={10}>
+                                    <InputGroup className="input-group-sm">
+                                        <InputGroup.Addon><i className="fa fa-lock"/></InputGroup.Addon>
+                                        <FormControl
+                                            type="password"
+                                            placeholder="Password"
+                                            name="password"
+                                        />
+                                    </InputGroup>
+                                    {this.getValidationError('password')}
+                                </Col>
+                            </FormGroup>
 
-                        {
-                            /*
-                             <FormGroup validationState={this.getValidationState('captcha')} className="form-group-sm">
-                             <Col sm={2} componentClass={ControlLabel}>
-                             I'm not a robot
-                             </Col>
-                             <Col sm={10}>
-                             <p>
-                             <img
-                             className="captcha"
-                             src={this.props.router.createHref('/captcha/' + (new Date()).getTime())}
-                             ref={(e) => {
-                             this.captchaImage = e;
-                             }}
-                             onClick={() => {
-                             this.getNewCaptcha()
-                             }}
-                             alt=""/>
-                             </p>
-                             <FormControl
-                             type="text"
-                             placeholder="Enter code from image"
-                             name="captcha"
-                             />
-                             {this.getValidationError('captcha')}
-                             </Col>
-                             </FormGroup>
-                             */
-                        }
-
-                        <FormGroup className="form-group-sm">
-                            <Col smOffset={2} sm={10}>
-                                <Button type="submit" className="btn-sm">
-                                    Login
-                                </Button>
-                            </Col>
-                        </FormGroup>
-                    </Form>
+                            <FormGroup className="form-group-sm">
+                                <Col smOffset={2} sm={10}>
+                                    <Button type="submit" className="btn-sm">
+                                        Login
+                                    </Button>
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                    </div>
                 </div>
             </div>
         );

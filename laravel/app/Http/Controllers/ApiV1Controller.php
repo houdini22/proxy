@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\AvailableServer;
 use App\Date;
+use App\Mail\ConfirmAccount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
 
 class ApiV1Controller extends Controller
 {
@@ -77,13 +81,12 @@ class ApiV1Controller extends Controller
 
     public function getServers(Request $request)
     {
-        $servers = AvailableServer::orderBy(\DB::raw('IF(is_socks=0, checked_at, socks_checked_at)'), 'DESC')
-            ->select([
-                'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
-                'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
-                'ping_socks_error', 'ping_socks_success', 'is_available',
-                'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
-            ]);
+        $servers = AvailableServer::select([
+            'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
+            'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
+            'ping_socks_error', 'ping_socks_success', 'is_available',
+            'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
+        ]);
 
         switch ($request->query('availability', 'online')) {
             case 'online':
@@ -184,7 +187,9 @@ class ApiV1Controller extends Controller
             $servers->where('country', '=', $country);
         }
 
-        $response = $servers->paginate()->toArray();
+        $servers->orderBy(\DB::raw('IF(is_socks = 0, checked_at, socks_checked_at)'), 'DESC');
+
+        $response = $servers->limit(30)->paginate()->toArray();
 
         foreach ($response['data'] as & $server) {
             $server['address_img_url'] = url('/api/v1/address/' . md5($server['address'] . $this->_token));
@@ -269,12 +274,33 @@ class ApiV1Controller extends Controller
     public function postRegister(Request $request)
     {
         $rules = [
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'email_repeat' => 'required|same:email',
             'password' => 'required',
             'password_repeat' => 'required|same:password',
             'captcha' => 'required|captcha'
         ];
-        $this->validate($request, $rules);
+        $this->validate($request, $rules, [
+            'captcha' => 'Captcha code is incorrect.'
+        ]);
+
+        $credentials = [
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+        ];
+
+        $user = Sentinel::register($credentials);
+        $user->newsletter = (bool) $request->get('newsletter', false);
+        $user->save();
+
+        $activation = Activation::create($user);
+
+        Mail::to($user->email)->send(new ConfirmAccount($activation->getCode()));
+
+        $response = [
+            'message' => 'ok'
+        ];
+
+        return JsonResponse::create($response);
     }
 }
