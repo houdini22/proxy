@@ -4,6 +4,7 @@ return array(
     'check_server_url_http' => 'http://195.154.179.219',
     'check_server_url_socks' => 'http://195.154.179.219:8080',
     'test_server_old_http_path' => '/proxy/proxy_test_old',
+    'test_server_online_http_path' => '/proxy/proxy_test_http_online',
     'test_server_socks_http_path' => '/proxy/proxy_test_socks',
     'test_server_speed_path' => '/proxy/files/test_file',
 	'services' => array(
