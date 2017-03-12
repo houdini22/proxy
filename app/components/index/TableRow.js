@@ -67,7 +67,13 @@ class TableRowComponent extends React.Component {
         type += rowData.type;
 
         let tooltip;
-        if (rowData.last_speed_error_status_code !== null || rowData.last_speed_error_message !== null) {
+        if (rowData.last_speed_error_status_code === null && rowData.last_speed_error_message === null) {
+            if (!rowData.speed) {
+                tooltip = <Tooltip id="speed-tooltip">not checked yet</Tooltip>;
+            } else {
+                tooltip = <Tooltip id="speed-tooltip">checked {rowData.speed_checked_at}</Tooltip>;
+            }
+        } else {
             let tooltipText = '';
             if (rowData.last_speed_error_status_code !== null) {
                 tooltipText = `Status code: [${rowData.last_speed_error_status_code}] `;
@@ -79,10 +85,6 @@ class TableRowComponent extends React.Component {
                 tooltipText = 'No error message specified.';
             }
             tooltip = <Tooltip id="speed-tooltip">{tooltipText}</Tooltip>;
-        } else if (rowData.speed === null) {
-            tooltip = <Tooltip id="speed-tooltip">not checked yet</Tooltip>;
-        } else {
-            tooltip = <Tooltip id="speed-tooltip">{`checked ${rowData.speed_checked_at}`}</Tooltip>;
         }
 
         let uptimeRatioText = `${rowData.ping_success + rowData.speed_success} / ${rowData.ping_error + rowData.speed_error}`;
