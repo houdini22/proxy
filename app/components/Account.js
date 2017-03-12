@@ -11,7 +11,7 @@ class AccountComponent extends React.Component {
 
     render() {
         return (
-            <div className="page page-register">
+            <div className="page page-account">
                 <MainHeaderComponent {...this.props} />
                 <div className="container">
                     <div className="row">

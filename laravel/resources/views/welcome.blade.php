@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ProxyAggregator</title>
+    <title>ProxyDatabase.net</title>
 </head>
 <body>
 <div id="main"></div>
