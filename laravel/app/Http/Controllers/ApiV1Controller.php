@@ -290,17 +290,22 @@ class ApiV1Controller extends Controller
         ];
 
         $user = Sentinel::register($credentials);
-        $user->newsletter = (bool) $request->get('newsletter', false);
+        $user->newsletter = (bool)$request->get('newsletter', false);
         $user->save();
 
         $activation = Activation::create($user);
 
-        Mail::to($user->email)->send(new ConfirmAccount($activation->getCode()));
+        Mail::to($user->email)->send(new ConfirmAccount($activation->getCode(), $user->token));
 
         $response = [
             'message' => 'ok'
         ];
 
         return JsonResponse::create($response);
+    }
+
+    public function getConfirmAccount(Request $request)
+    {
+
     }
 }

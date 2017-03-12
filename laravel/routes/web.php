@@ -28,6 +28,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'web'], function () {
         Route::get('/servers', 'ApiV1Controller@getServers');
         Route::get('/address/{token}', 'ApiV1Controller@getAddress');
         Route::post('/register', 'ApiV1Controller@postRegister');
+        Route::get('/confirm_account/{token}/{code}', 'ApiV1Controller@getConfirmAccount');
     });
     Route::get('/', function () {
         return "API";

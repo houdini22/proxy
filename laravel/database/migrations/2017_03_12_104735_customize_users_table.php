@@ -15,6 +15,7 @@ class CustomizeUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('newsletter')->default(0);
+            $table->string('token', 32)->nullable();
         });
     }
 

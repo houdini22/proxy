@@ -14,14 +14,17 @@ class ConfirmAccount extends Mailable
 
     protected $_code = NULL;
 
+    protected $_token = NULL;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($code)
+    public function __construct($code, $token)
     {
         $this->_code = $code;
+        $this->_token = $token;
     }
 
     /**
@@ -34,6 +37,6 @@ class ConfirmAccount extends Mailable
         return $this
             ->from('no-reply@proxydatabase.net')
             ->view('emails.confirm_account')
-            ->with('url', url('/confirm_account/' . $this->_code));
+            ->with('url', url('/api/v1/confirm_account/' . $this->_token . '/' . $this->_code));
     }
 }
