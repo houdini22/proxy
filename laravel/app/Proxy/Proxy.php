@@ -248,7 +248,7 @@ class Proxy
         foreach ($servers as $server)
         {
             $requests[] = $client->get(
-                \Config::get('proxy.test_server_old_http_path'),
+                \Config::get('proxy.proxy_test_http_online'),
                 array(),
                 array(
                     'proxy'           => "tcp://{$server->address}",
