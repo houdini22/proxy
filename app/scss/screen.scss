@@ -114,7 +114,8 @@ body {
   }
   .btn {
     text-transform: none;
-    .glyphicon {
+    font-size: 13px;
+    .glyphicon, .fa {
       margin-right: 5px;
     }
     &.btn-xs {

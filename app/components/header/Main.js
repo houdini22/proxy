@@ -42,8 +42,9 @@ class MainHeaderComponent extends React.Component {
                     <Link to="/profile" className="btn btn-xs btn-primary">Profile</Link>
                 </div>
                 <div className="pull-right">
-                    <a href="#" className="btn btn-xs btn-primary" onClick={this.handleClickSignOut.bind(this)}>Sign
-                        out</a>
+                    <a href="#" className="btn btn-xs btn-primary" onClick={this.handleClickSignOut.bind(this)}>
+                        <i className="fa fa-sign-out"/>Sign out
+                    </a>
                 </div>
             </li>
         );
