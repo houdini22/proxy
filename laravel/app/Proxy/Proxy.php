@@ -259,6 +259,7 @@ class Proxy
             );
 
             $server->is_checked = 1;
+            $server->is_available = 0;
             $server->checked_at = date('Y-m-d H:i:s');
             $server->ping_error++;
             $server->save();
