@@ -193,6 +193,7 @@ Route::get('/proxy_test_socks', function (Request $request) {
         $server->last_availability = date('Y-m-d H:i:s');
         $server->is_checked_speed = 0;
         $server->speed = NULL;
+        $server->save();
 
         $client = new \Guzzle\Http\Client('http://ip-api.com/');
         $request = $client->get("/php/" . $request->query('ip'), array(), array(
