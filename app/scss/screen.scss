@@ -104,26 +104,37 @@ body .tooltip {
       }
     }
   }
-  .container .panel-statistics {
-    table {
-      margin: 0;
-      width: 100%;
-      tr {
-        td, th {
-          min-height: 40px;
-          line-height: 40px;
+  .container {
+    .panel-statistics {
+      position: relative;
+      .panel-body {
+        table {
+          margin: 0;
+          width: 100%;
+          tr {
+            td, th {
+              min-height: 30px;
+              line-height: 30px;
+            }
+            th {
+              width: 75%;
+            }
+            td {
+              width: 25%;
+              text-align: right;
+            }
+          }
         }
-        th {
-          width: 75%;
-        }
-        td {
-          width: 25%;
-          text-align: right;
+        .label {
+          font-size: 12px;
         }
       }
-    }
-    .label {
-      font-size: 12px;
+      .btn-container {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        margin: 0;
+      }
     }
   }
   .container .panel-table {
