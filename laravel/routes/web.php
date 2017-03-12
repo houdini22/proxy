@@ -111,7 +111,7 @@ Route::get('/proxy_test_http_online', function (Request $request) {
     $oldServer = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $json = [];
 
-    if($oldServer) {
+    if ($oldServer) {
         $oldServer->is_available = $oldServer->was_available = 1;
         $oldServer->last_availability = date('Y-m-d H:i:s');
         $oldServer->ping_error -= 1;
