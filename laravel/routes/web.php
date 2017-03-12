@@ -22,6 +22,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'web'], function () {
         Route::post('/register', 'ApiV1Controller@postRegister');
         Route::get('/confirm_account/{token}/{code}', 'ApiV1Controller@getConfirmAccount');
         Route::post('/login', 'ApiV1Controller@postLogin');
+        Route::get('/logout', 'ApiV1Controller@getLogout');
     });
     Route::get('/', function () {
         return "API";
