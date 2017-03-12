@@ -22,7 +22,7 @@ class StatisticsComponent extends React.Component {
                                 </td>
                             </tr>
                             <tr>
-                                <th>Servers online today</th>
+                                <th>Servers online past 24h</th>
                                 <td><span
                                     className="label label-info">{statistics.nb_servers_available_today}</span></td>
                             </tr>
