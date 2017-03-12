@@ -34,7 +34,7 @@ class TableComponent extends React.Component {
 
     handleButtonAutoRefreshClick(e) {
         e.preventDefault();
-        let run = function() {
+        let run = () => {
             this.props.fetchServers(this.currentPage, this.filters);
             this.props.fetchStatistics();
         };
