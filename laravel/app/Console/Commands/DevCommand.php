@@ -37,16 +37,6 @@ class DevCommand extends Command
      */
     public function handle()
     {
-        $servers = \App\AvailableServer::get();
-        $i = 0;
-        foreach ($servers as $s) {
-            $old = \App\Server::where('address', '=', $s->address)->first();
-            $old->test_disabled = 1;
-            $old->was_available = 1;
-            $old->is_socks = $s->is_socks;
-            $old->save();
-            $i += 1;
-            echo $i . '/' . count($servers);
-        }
+
     }
 }
