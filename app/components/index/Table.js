@@ -257,7 +257,7 @@ class TableComponent extends React.Component {
                                                         className="form-control input-sm"
                                                     >
                                                         <option value="all">All</option>
-                                                        <option value="online">Online</option>
+                                                        <option value="online" checked="checked">Online</option>
                                                         <option value="offline">Offline</option>
                                                     </select>
                                                 </div>
