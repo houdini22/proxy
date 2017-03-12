@@ -110,7 +110,7 @@ class TableComponent extends React.Component {
 
         return (
             <tr key={obj.address_img_url}>
-                <td>
+                <td style={{textAlign: 'center'}}>
                     <img src={obj.address_img_url}/>
                 </td>
                 <td>{type}</td>
@@ -255,9 +255,10 @@ class TableComponent extends React.Component {
                                                         }}
                                                         onChange={this.handleOnChangeFiltersInput.bind(this)}
                                                         className="form-control input-sm"
+                                                        defaultValue="online"
                                                     >
                                                         <option value="all">All</option>
-                                                        <option value="online" selected={true}>Online</option>
+                                                        <option value="online">Online</option>
                                                         <option value="offline">Offline</option>
                                                     </select>
                                                 </div>
