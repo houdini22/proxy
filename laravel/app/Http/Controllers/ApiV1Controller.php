@@ -249,22 +249,22 @@ class ApiV1Controller extends Controller
                 $img = Image::canvas(160, 33, [0, 0, 0, 0]);
 
                 for ($i = 0; $i < 5; $i++) {
-                    $img->line(0, rand() % 23, 160, rand() % 23, function ($draw) {
+                    $img->line(0, rand() % 33, 160, rand() % 33, function ($draw) {
                         $draw->color([rand(100, 255), rand(100, 255), rand(100, 255), 25]);
                     });
                 }
 
                 for ($i = 0; $i < 700; $i++) {
-                    $img->pixel([rand(100, 255), rand(100, 255), rand(100, 255), 25], rand() % 160, rand() % 23);
+                    $img->pixel([rand(100, 255), rand(100, 255), rand(100, 255), 25], rand() % 160, rand() % 33);
                 }
 
-                $img->text($server->address, 80, 12, function ($font) {
+                $img->text($server->address, 80, 16, function ($font) {
                     $font->file(base_path('/resources/fonts/Consolas Bold.ttf'));
                     $font->size(13);
                     $font->color('#3e3f3a');
                     $font->align('center');
                     $font->valign('middle');
-                    $font->angle(rand(-7, 7));
+                    $font->angle(rand(-8, 8));
                 });
 
                 $img->save($pathDisk);
