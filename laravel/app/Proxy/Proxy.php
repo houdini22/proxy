@@ -151,6 +151,7 @@ class Proxy
             $request->getCurlOptions()->set(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
             $requests[] = $request;
 
+            $server->is_available = 0;
             $server->is_checked_socks = 1;
             $server->socks_checked_at = date('Y-m-d H:i:s');
             $server->ping_socks_error++;

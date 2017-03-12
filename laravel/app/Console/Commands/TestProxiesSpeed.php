@@ -40,16 +40,19 @@ class TestProxiesSpeed extends Command
         $startTime = microtime(true);
         $servers = \App\AvailableServer::where('is_available', 1)
             ->where('is_checked_speed', '=', 0)
+            ->where('is_available', '=', 1)
             ->take(5)
             ->orderBy(\DB::raw('RAND()'))
             ->get();
-        $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url_http'));
+
         $requests = array();
         $responses = array();
         $filesize = filesize(base_path() . '/../public/files/test_file');
+
         foreach ($servers as $server) {
+            $client = new \Guzzle\Http\Client($server->is_socks ? \Config::get('proxy.check_server_url_socks') : \Config::get('proxy.check_server_url_http'));
             $request = $client->get(\Config::get('proxy.test_server_speed_path'), array(), array(
-                'proxy' => "tcp://{$server->address}",
+                'proxy' => $server->is_socks ? $server->address : "tcp://{$server->address}",
                 'timeout' => 40,
                 'connect_timeout' => 20
             ));
@@ -57,6 +60,7 @@ class TestProxiesSpeed extends Command
 
             $server->is_checked_speed = 1;
             $server->speed_checked_at = date('Y-m-d H:i:s');
+            $server->speed_error += 1;
 
             try {
                 $response = $client->send($request);
@@ -68,7 +72,7 @@ class TestProxiesSpeed extends Command
                 $server->speed_success++;
                 $server->last_speed_error_status_code = $server->last_speed_error_message = NULL;
 
-                \App\Proxy\Proxy::log("Speed: {$server->address}: {$server->speed}");
+                \App\Proxy\Proxy::log("SPEED: {$server->address}: {$server->speed} {$server->is_socks}");
             } catch (\Exception $e) {
                 \App\Proxy\Proxy::log($e->getMessage());
 
@@ -82,12 +86,12 @@ class TestProxiesSpeed extends Command
 
                     $server->last_speed_error_status_code = $server->last_speed_error_message = NULL;
 
-                    \App\Proxy\Proxy::log("Speed {$server->address}: {$server->speed}");
+                    \App\Proxy\Proxy::log("SPEED: {$server->address}: {$server->speed} {$server->is_socks}");
                 } else {
                     $server->speed = NULL;
                     $server->speed_error++;
 
-                    \App\Proxy\Proxy::log("ERROR: {$server->address}");
+                    \App\Proxy\Proxy::log("ERROR: {$server->address} NULL {$server->is_socks}");
                 }
 
                 preg_match('#\[status code\]\s(\d+)#', $e->getMessage(), $matches);
