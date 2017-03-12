@@ -6,6 +6,7 @@ use App\Console\Commands\DevCommand;
 use App\Console\Commands\FetchProxies;
 use App\Console\Commands\MigrateAvailableServers;
 use App\Console\Commands\TestOldAvailableServers;
+use App\Console\Commands\TestOnlineHttp;
 use App\Console\Commands\TestProxiesHttpOld;
 use App\Console\Commands\TestProxiesSocks;
 use App\Console\Commands\TestProxiesSpeed;
@@ -25,7 +26,8 @@ class Kernel extends ConsoleKernel
         TestProxiesHttpOld::class,
         TestProxiesSpeed::class,
         TestProxiesSocks::class,
-        DevCommand::class
+        DevCommand::class,
+        TestOnlineHttp::class
     ];
 
     /**

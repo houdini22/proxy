@@ -240,7 +240,7 @@ class Proxy
         self::log('Successed count: ' . count($successfullIds));
     }
 
-    public function testOldAvailableHttp($servers)
+    public function testOnlineHttp($servers)
     {
         $client = new \Guzzle\Http\Client(\Config::get('proxy.check_server_url_http'));
         $requests = array();
@@ -248,7 +248,7 @@ class Proxy
         foreach ($servers as $server)
         {
             $requests[] = $client->get(
-                \Config::get('/proxy/proxy_test_old_available'),
+                \Config::get('proxy.test_server_old_http_path'),
                 array(),
                 array(
                     'proxy'           => "tcp://{$server->address}",
@@ -321,7 +321,7 @@ class Proxy
                 $exception = $e->getExceptionForFailedRequest($request);
                 $query = $request->getQuery();
                 $ids[] = $failedIds[] = $query['id'];
-                $server = \App\Server::find($query['id']);
+                $server = \App\AvailableServer::find($query['id']);
                 if ($server)
                 {
                     preg_match('#\[status code\]\s(\d+)#', $exception->getMessage(), $matches);
@@ -333,10 +333,6 @@ class Proxy
                     if (!empty($matches[1]))
                     {
                         $server->last_error_message = $matches[1];
-                    }
-                    if ($server->first_ping === '0000-00-00 00:00:00')
-                    {
-                        $server->first_ping = date('Y-m-d H:i:s');
                     }
                     $server->save();
                 }

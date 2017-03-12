@@ -107,6 +107,68 @@ Route::get('/proxy_test_old', function (Request $request) {
     echo '::proxy_test';
 });
 
+Route::get('/proxy_test_http_online', function (Request $request) {
+    $oldServer = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
+    $oldServer->is_available = $oldServer->was_available = 1;
+    $oldServer->last_availability = date('Y-m-d H:i:s');
+    $oldServer->ping_error -= 1;
+    $oldServer->ping_success += 1;
+    $oldServer->save();
+
+    $json = array('id' => NULL);
+    if ($oldServer) {
+        $oldServer = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
+
+
+        if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
+            $oldServer->type = 'elite';
+        } elseif (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $oldServer->type = 'anonymous';
+        } else {
+            $oldServer->type = 'transparent';
+        }
+
+        $oldServer->ping = microtime(true) - (float)$request->query('start');
+        $oldServer->last_availability = date('Y-m-d H:i:s');
+        $oldServer->save();
+
+        $json['id'] = $oldServer->id;
+        $json['address'] = $oldServer->address;
+
+        $client = new \Guzzle\Http\Client('http://ip-api.com/');
+        $request = $client->get("/php/" . $request->query('ip'), array(), array(
+            'timeout' => 10,
+            'connect_timeout' => 2
+        ));
+        if (empty($oldServer->country)) {
+            try {
+                $response = $request->send();
+                $body = (string)$response->getBody();
+                $result = unserialize($body);
+            } catch (\Exception $e) {
+                $result = array();
+            }
+            if (!empty($result['status']) AND $result['status'] === 'success') {
+                $oldServer->country = !empty($result['country']) ? $result['country'] : NULL;
+                $oldServer->country_code = !empty($result['countryCode']) ? $result['countryCode'] : NULL;
+                $oldServer->region_code = !empty($result['region']) ? $result['region'] : NULL;
+                $oldServer->region_name = !empty($result['regionName']) ? $result['regionName'] : NULL;
+                $oldServer->city = !empty($result['city']) ? $result['city'] : NULL;
+                $oldServer->zip = !empty($result['zip']) ? $result['zip'] : NULL;
+                $oldServer->lat = !empty($result['lat']) ? $result['lat'] : NULL;
+                $oldServer->lon = !empty($result['lon']) ? $result['lon'] : NULL;
+                $oldServer->timezone = !empty($result['timezone']) ? $result['timezone'] : NULL;
+                $oldServer->isp = !empty($result['isp']) ? $result['isp'] : NULL;
+                $oldServer->organization = !empty($result['org']) ? $result['org'] : NULL;
+                $oldServer->save();
+            }
+        }
+    }
+    echo 'proxy_test::';
+    echo json_encode($json);
+    echo '::proxy_test';
+});
+
 Route::get('/proxy_test_socks', function (Request $request) {
 
     $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
