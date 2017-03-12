@@ -352,7 +352,9 @@ class ApiV1Controller extends Controller
 
         if ($user) {
             if ($user = Sentinel::login($user)) {
-                return JsonResponse::create($user);
+                $ar = $user->toArray();
+                $ar['created_at'] = date('F Y', strtotime($ar['created_at']));
+                return JsonResponse::create($ar);
             }
         }
         return JsonResponse::create([
