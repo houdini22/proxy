@@ -166,6 +166,6 @@ Route::get('/proxy_test_socks', function (Request $request) {
     return view('welcome');
 });
 
-Route::get('*', function () {
+Route::get('{any}', function () {
     return view('welcome');
-})->name('index');
+})->where('any', '(.*)')->name('index');

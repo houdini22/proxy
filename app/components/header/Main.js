@@ -71,13 +71,13 @@ class MainHeaderComponent extends React.Component {
                     <Nav pullRight>
                         <li className="dropdown user user-menu open">
                             <a id="account-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true"
-                               onClick={(e) => {
-                                   e.preventDefault();
-                                   this.setState({
-                                       displayUserMenu: !this.state.displayUserMenu
-                                   });
-                               }}
-                               aria-expanded="true" href="#">
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.setState({
+                                        displayUserMenu: !this.state.displayUserMenu
+                                    });
+                                }}
+                                aria-expanded="true" href="#">
                                 <span className="has-icon">
                                     <i className="fa fa-user-o"/>
                                 </span>
