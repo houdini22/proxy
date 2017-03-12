@@ -41,9 +41,9 @@ class TestProxiesSocks extends Command
         ini_set('mysql.connect_timeout', 300);
         ini_set('default_socket_timeout', 300);
 
-        $servers = \App\AvailableServer::take(50)
+        $servers = \App\AvailableServer::take(5)
             ->orderBy('checked_at', 'ASC')
-            ->where('is_checked_socks', '=', 0)
+            ->where('is_socks', '=', 1)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));

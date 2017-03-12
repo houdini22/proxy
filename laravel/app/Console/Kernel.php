@@ -26,7 +26,6 @@ class Kernel extends ConsoleKernel
         TestProxiesSpeed::class,
         TestProxiesSocks::class,
         TestOldAvailableServers::class,
-        CopyOldSocks::class
     ];
 
     /**
