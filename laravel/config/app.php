@@ -181,7 +181,6 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
