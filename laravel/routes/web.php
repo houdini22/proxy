@@ -12,9 +12,14 @@
 */
 
 use Illuminate\Http\Request;
+use Mews\Captcha\Facades\Captcha;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/captcha', function() {
+    return Captcha::img('flat');
 });
 
 Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
@@ -22,6 +27,7 @@ Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
         Route::get('/statistics', 'ApiV1Controller@getStatistics');
         Route::get('/servers', 'ApiV1Controller@getServers');
         Route::get('/address/{token}', 'ApiV1Controller@getAddress');
+        Route::post('/register', 'ApiV1Controller@postRegister');
     });
     Route::get('/', function () {
         return "API";
