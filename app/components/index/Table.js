@@ -126,7 +126,7 @@ class TableComponent extends React.Component {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label>Availability</label>
+                                                    <label>Status</label>
                                                     <select
                                                         ref={(input) => {
                                                             this.filterAvailability = input;
@@ -135,9 +135,9 @@ class TableComponent extends React.Component {
                                                         className="form-control input-sm"
                                                         defaultValue="online"
                                                     >
-                                                        <option value="all">All</option>
                                                         <option value="online">Online</option>
                                                         <option value="offline">Offline</option>
+                                                        <option value="all">All</option>
                                                     </select>
                                                 </div>
                                             </div>
