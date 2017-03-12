@@ -324,12 +324,17 @@ body {
       text-align: center;
     }
     .filters {
-      padding: 0 15px;
+      padding: 0 7px;
       background: #f8f5f0;
-      margin-bottom: 15px;
+      margin-bottom: 7px;
       .filters-buttons {
-        padding: 15px 0;
+        padding: 7px 0;
         float: right;
+      }
+      form {
+        .form-group {
+          margin: 7px 0;
+        }
       }
     }
   }
