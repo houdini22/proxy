@@ -155,7 +155,6 @@ class Proxy
             $server->socks_checked_at = date('Y-m-d H:i:s');
             $server->ping_socks_error++;
             $server->is_checked_speed = 0;
-            $server->speed = NULL;
             $server->save();
         }
         $ids = array();
