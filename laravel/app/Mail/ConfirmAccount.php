@@ -21,8 +21,10 @@ class ConfirmAccount extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($code, $token)
     {
+        $this->_code = $code;
+        $this->_token = $token;
     }
 
     /**
