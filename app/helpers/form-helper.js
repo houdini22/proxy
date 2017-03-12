@@ -19,3 +19,15 @@ export function getFormData(event) {
             }
         }, {});
 }
+
+export function clearFormData(event) {
+    return Array.from(event.target.elements)
+        .filter(el => el.name)
+        .map((a) => {
+            if (a.getAttribute('type') === 'checkbox') {
+                e.checked = false;
+            } else {
+                e.value = '';
+            }
+        }, {});
+}

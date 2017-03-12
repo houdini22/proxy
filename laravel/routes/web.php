@@ -14,14 +14,6 @@
 use Illuminate\Http\Request;
 use Mews\Captcha\Facades\Captcha;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/captcha', function() {
-    return Captcha::img('flat');
-});
-
 Route::group(['prefix' => 'api', 'middleware' => 'web'], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/statistics', 'ApiV1Controller@getStatistics');
@@ -34,6 +26,10 @@ Route::group(['prefix' => 'api', 'middleware' => 'web'], function () {
     Route::get('/', function () {
         return "API";
     });
+});
+
+Route::get('/captcha', function () {
+    return Captcha::img('flat');
 });
 
 Route::get('/proxy_test_old', function (Request $request) {
@@ -166,6 +162,10 @@ Route::get('/proxy_test_socks', function (Request $request) {
     echo '::proxy_test';
 });
 
-\Illuminate\Support\Facades\Event::listen('404', function() {
+\Illuminate\Support\Facades\Event::listen('404', function () {
     return view('welcome');
 });
+
+Route::get('*', function () {
+    return view('welcome');
+})->name('index');

@@ -31,7 +31,6 @@ class RegisterComponent extends React.Component {
                 this.setState({
                     alertSuccess: true
                 });
-                this.form.reset();
             })
             .catch((error) => {
                 this.setState({
