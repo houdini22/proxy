@@ -65,7 +65,6 @@ class TestProxiesSpeed extends Command
 
             $server->is_checked_speed = 1;
             $server->speed_checked_at = date('Y-m-d H:i:s');
-            $server->speed_error += 1;
 
             try {
                 $response = $client->send($request);
