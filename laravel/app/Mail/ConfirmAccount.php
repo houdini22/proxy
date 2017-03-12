@@ -34,6 +34,6 @@ class ConfirmAccount extends Mailable
         return $this
             ->from('no-reply@proxydatabase.net')
             ->view('emails.confirm_account')
-            ->with('url', '/confirm_account/' . $this->_code);
+            ->with('url', url('/confirm_account/' . $this->_code));
     }
 }
