@@ -44,6 +44,7 @@ class TestProxiesSocks extends Command
         $servers = \App\AvailableServer::take(5)
             ->orderBy('checked_at', 'ASC')
             ->where('is_socks', '=', 1)
+            ->where('is_checked_socks', '=', 0)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));
