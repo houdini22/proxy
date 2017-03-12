@@ -103,6 +103,11 @@ class TableComponent extends React.Component {
             uptimeRatioText = `${obj.ping_socks_success + obj.speed_success} / ${obj.ping_socks_error + obj.speed_error}`;
         }
 
+        let checked_at = obj.checked_at;
+        if(obj.is_socks) {
+            checked_at = obj.socks_checked_at;
+        }
+
         return (
             <tr key={obj.address_img_url}>
                 <td>
@@ -125,7 +130,7 @@ class TableComponent extends React.Component {
                     {obj.country}
                 </td>
                 <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{obj.city}</td>
-                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{obj.checked_at}</td>
+                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{checked_at}</td>
             </tr>
         );
     }

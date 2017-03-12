@@ -79,7 +79,7 @@ class ApiV1Controller extends Controller
         $servers = AvailableServer::orderBy(\DB::raw('IF(is_socks=0, checked_at, socks_checked_at)'), 'DESC')
             ->select([
                 'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
-                'checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
+                'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
                 'ping_socks_error', 'ping_socks_success',
                 'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
             ]);
@@ -188,6 +188,7 @@ class ApiV1Controller extends Controller
         foreach ($response['data'] as & $server) {
             $server['address_img_url'] = url('/api/v1/address/' . md5($server['address'] . $this->_token));
             $server['checked_at'] = \App\Date::fuzzy_span(strtotime($server['checked_at']));
+            $server['socks_checked_at'] = \App\Date::fuzzy_span(strtotime($server['socks_checked_at']));
             $server['speed_checked_at'] = $server['speed_checked_at'] !== NULL ? \App\Date::fuzzy_span(strtotime($server['speed_checked_at'])) : NULL;
             unset($server['address']);
         }
