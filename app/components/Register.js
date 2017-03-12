@@ -3,7 +3,7 @@ import MainHeaderComponent from './header/Main';
 import TableComponent from './index/Table';
 import StatisticsComponent from './index/Statistics';
 import PromoBoxComponent from './index/PromoBox';
-import {Form, FormGroup, Col, Button, ControlLabel, Checkbox, FormControl} from 'react-bootstrap';
+import {Form, FormGroup, Col, Button, ControlLabel, Checkbox, FormControl, HelpBlock} from 'react-bootstrap';
 import {getFormData} from '../helpers/form-helper';
 
 class IndexComponent extends React.Component {
@@ -24,7 +24,6 @@ class IndexComponent extends React.Component {
 
             })
             .catch((error) => {
-                this.getNewCaptcha();
                 this.setState({
                     errors: error.response.data
                 });
@@ -41,6 +40,13 @@ class IndexComponent extends React.Component {
             return null;
         }
         return 'error';
+    }
+
+    getValidationError(field) {
+        if (!this.state.errors[field]) {
+            return null;
+        }
+        return <HelpBlock>{this.state.errors[field].join(' ')}</HelpBlock>
     }
 
     render() {
@@ -63,6 +69,7 @@ class IndexComponent extends React.Component {
                                             placeholder="Email"
                                             name="email"
                                         />
+                                        {this.getValidationError('email')}
                                     </Col>
                                 </FormGroup>
 
@@ -77,6 +84,7 @@ class IndexComponent extends React.Component {
                                             placeholder="Repeat email"
                                             name="email_repeat"
                                         />
+                                        {this.getValidationError('email_repeat')}
                                     </Col>
                                 </FormGroup>
 
@@ -91,6 +99,7 @@ class IndexComponent extends React.Component {
                                             placeholder="Password"
                                             name="password"
                                         />
+                                        {this.getValidationError('password')}
                                     </Col>
                                 </FormGroup>
 
@@ -105,6 +114,7 @@ class IndexComponent extends React.Component {
                                             placeholder="Repeat password"
                                             name="password_repeat"
                                         />
+                                        {this.getValidationError('password_repeat')}
                                     </Col>
                                 </FormGroup>
 
@@ -143,6 +153,7 @@ class IndexComponent extends React.Component {
                                             placeholder="Enter code from image"
                                             name="captcha"
                                         />
+                                        {this.getValidationError('captcha')}
                                     </Col>
                                 </FormGroup>
 
