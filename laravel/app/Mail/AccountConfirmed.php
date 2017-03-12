@@ -2,19 +2,14 @@
 
 namespace App\Mail;
 
-use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ConfirmAccount extends Mailable
+class AccountConfirmed extends Mailable
 {
     use Queueable, SerializesModels;
-
-    protected $_code = NULL;
-
-    protected $_token = NULL;
 
     /**
      * Create a new message instance.
@@ -23,6 +18,7 @@ class ConfirmAccount extends Mailable
      */
     public function __construct()
     {
+        //
     }
 
     /**
@@ -32,8 +28,6 @@ class ConfirmAccount extends Mailable
      */
     public function build()
     {
-        return $this
-            ->from('no-reply@proxydatabase.net')
-            ->view('emails.account_confirmed');
+        return $this->view('view.name');
     }
 }
