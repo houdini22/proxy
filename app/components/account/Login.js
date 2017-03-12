@@ -59,7 +59,7 @@ class LoginComponent extends React.Component {
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="panel panel-primary panel-register">
                     <div className="panel-heading">
-                        <h3 className="panel-title"><i className="fa fa-user-plus"/>Log in</h3>
+                        <h3 className="panel-title"><i className="fa fa-sign-in"/>Log in</h3>
                     </div>
                     <div className="panel-body">
                         <Form horizontal onSubmit={this.onSubmit.bind(this)}>
