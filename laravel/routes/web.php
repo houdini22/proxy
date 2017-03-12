@@ -28,10 +28,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'web'], function () {
     });
 });
 
-Route::get('/captcha', function () {
-    return Captcha::img('flat');
-});
-
 Route::get('/proxy_test_old', function (Request $request) {
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
@@ -166,6 +162,6 @@ Route::get('/proxy_test_socks', function (Request $request) {
     return view('welcome');
 });
 
-Route::get('{any}', function () {
+Route::any('{path}', function () {
     return view('welcome');
-})->where('any', '(.*)')->name('index');
+})->where('path', '[a-z]+')->name('any');

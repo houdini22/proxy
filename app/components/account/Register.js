@@ -41,7 +41,7 @@ class RegisterComponent extends React.Component {
 
     getNewCaptcha() {
         this.captchaImage.setAttribute("src", "");
-        this.captchaImage.setAttribute("src", this.props.router.createHref('/captcha/' + (new Date()).getTime()));
+        this.captchaImage.setAttribute("src", this.props.router.createHref('/captcha/flat'));
         this.inputCaptcha.value = "";
     }
 

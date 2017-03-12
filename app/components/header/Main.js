@@ -18,6 +18,17 @@ class MainHeaderComponent extends React.Component {
         return "";
     }
 
+    handleClickSignOut(e) {
+        this.props.ajax.post('/logout')
+            .then(() => {
+                this.props.actions.sessionChanged(false, {});
+                this.props.router.push('/account');
+            })
+            .catch((error) => {
+
+            });
+    }
+
     render() {
         let {session: {user, isLoggedIn}} = this.props.state;
 
@@ -31,7 +42,8 @@ class MainHeaderComponent extends React.Component {
                     <Link to="/profile" className="btn btn-xs btn-primary">Profile</Link>
                 </div>
                 <div className="pull-right">
-                    <Link to="/logout" className="btn btn-xs btn-primary">Sign out</Link>
+                    <Link to="/logout" className="btn btn-xs btn-primary" onClick={this.handleClickSignOut.bind(this)}>Sign
+                        out</Link>
                 </div>
             </li>
         );
@@ -71,13 +83,13 @@ class MainHeaderComponent extends React.Component {
                     <Nav pullRight>
                         <li className="dropdown user user-menu open">
                             <a id="account-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    this.setState({
-                                        displayUserMenu: !this.state.displayUserMenu
-                                    });
-                                }}
-                                aria-expanded="true" href="#">
+                               onClick={(e) => {
+                                   e.preventDefault();
+                                   this.setState({
+                                       displayUserMenu: !this.state.displayUserMenu
+                                   });
+                               }}
+                               aria-expanded="true" href="#">
                                 <span className="has-icon">
                                     <i className="fa fa-user-o"/>
                                 </span>
