@@ -56,6 +56,11 @@ class TestProxiesSpeed extends Command
                 'timeout' => 40,
                 'connect_timeout' => 20
             ));
+
+            if ($server->is_socks) {
+                $request->getCurlOptions()->set(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            }
+
             $start = microtime(true);
 
             $server->is_checked_speed = 1;
