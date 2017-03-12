@@ -291,6 +291,7 @@ class ApiV1Controller extends Controller
 
         $user = Sentinel::register($credentials);
         $user->newsletter = (bool)$request->get('newsletter', false);
+        $user->token = str_random(32);
         $user->save();
 
         $activation = Activation::create($user);
