@@ -74,7 +74,12 @@ class CopyOldSocks extends Command
             $new->ping_success = 0;
             $new->ping_error = 0;
             $new->is_hacked = $s->is_hacked;
-            $new->save();
+
+            try {
+                $new->save();
+            } catch(\Exception $e) {
+
+            }
         }
     }
 }
