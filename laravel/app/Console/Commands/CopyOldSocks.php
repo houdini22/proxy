@@ -71,6 +71,7 @@ class CopyOldSocks extends Command
             $new->speed_success = 0;
             $new->speed_error = 0;
             $new->speed_checked_at = $s->speed_checked_at;
+            $new->checked_at = $s->first_ping;
             $new->ping_success = 0;
             $new->ping_error = 0;
             $new->is_hacked = $s->is_hacked;
