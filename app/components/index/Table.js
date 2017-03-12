@@ -53,6 +53,9 @@ class TableComponent extends React.Component {
         }
 
         let pingRatio = (obj.ping_success + obj.speed_success) / (obj.speed_error + obj.ping_error);
+        if (obj.is_socks) {
+            pingRatio = (obj.ping_socks_success + obj.speed_success) / (obj.ping_socks_error + obj.speed_error);
+        }
         let uploadRatioClassName;
         if (pingRatio > 0.75) {
             uploadRatioClassName = 'label label-success';
@@ -86,7 +89,7 @@ class TableComponent extends React.Component {
             if (obj.last_speed_error_message !== null) {
                 text += `Message: ${obj.last_speed_error_message}`;
             }
-            if(text.length === 0) {
+            if (text.length === 0) {
                 text = 'No error message specified.';
             }
             tooltip = <Tooltip id="speed-tooltip">{text}</Tooltip>;
