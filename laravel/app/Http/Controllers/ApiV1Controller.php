@@ -84,7 +84,7 @@ class ApiV1Controller extends Controller
                 'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
             ]);
 
-        switch ($request->query('availability', 'online')) {
+        switch ($request->query('availability', 'all')) {
             case 'online':
                 $servers->where('is_available', '=', 1);
                 break;
@@ -115,7 +115,7 @@ class ApiV1Controller extends Controller
                 break;
         }
 
-        switch ($request->query('ping')) {
+        switch ($request->query('ping', 'all')) {
             case 'fastest':
                 $servers->where('ping', '<', 3);
                 break;
@@ -135,7 +135,7 @@ class ApiV1Controller extends Controller
                 break;
         }
 
-        switch ($request->query('speed')) {
+        switch ($request->query('speed', 'all')) {
             case 'slow':
                 $servers->where(function ($query) {
                     $query->where('speed', '<', 2048)
@@ -158,7 +158,7 @@ class ApiV1Controller extends Controller
                 break;
         }
 
-        switch ($request->query('uptime_ratio')) {
+        switch ($request->query('uptime_ratio', 'all')) {
             case 'greatest':
                 $servers->where(\DB::raw('((ping_success + speed_success) / (ping_error + speed_error))'), '>', 0.75);
                 break;
