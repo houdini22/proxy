@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\AvailableServer;
 use App\Date;
+use App\Mail\AccountConfirmed;
 use App\Mail\ConfirmAccount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
@@ -307,6 +309,20 @@ class ApiV1Controller extends Controller
 
     public function getConfirmAccount(Request $request)
     {
-
+        $user = \App\User::where('token', '=', $request->route('token', 'a'))->first();
+        if($user) {
+            $user = Sentinel::findById($user->id);
+            if($user) {
+                if (Activation::complete($user, $request->route('code', 'b')))
+                {
+                    Mail::to($user->email)->send(new AccountConfirmed());
+                }
+                else
+                {
+                    // Activation not found or not completed.
+                }
+            }
+        }
     }
+
 }
