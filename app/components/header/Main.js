@@ -12,6 +12,25 @@ class MainHeaderComponent extends React.Component {
     }
 
     render() {
+        let {session: {user, isLoggedIn}} = this.props.state;
+
+        if (!user.email) {
+            user.email = 'Guest';
+        }
+
+        let accountLink = (
+            <LinkContainer to="/profile">
+                <MenuItem eventKey="1.1">Profile</MenuItem>
+            </LinkContainer>
+        );
+        if (!isLoggedIn) {
+            accountLink = (
+                <LinkContainer to="/account">
+                    <MenuItem eventKey="1.1">Account</MenuItem>
+                </LinkContainer>
+            );
+        }
+
         return (
             <Navbar fixedTop>
                 <Navbar.Header>
@@ -30,11 +49,12 @@ class MainHeaderComponent extends React.Component {
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavDropdown eventKey="1" title="Guest" id="account-dropdown">
-                            <MenuItem header>Logged as: Guest</MenuItem>
-                            <LinkContainer to="/account">
-                                <MenuItem eventKey="1.1">Account</MenuItem>
-                            </LinkContainer>
+                        <NavDropdown eventKey="1"
+                                     title={<span className="has-icon"><i
+                                         className="fa fa-user-o"/> {user.email}</span>}
+                                     id="account-dropdown">
+                            <MenuItem header> Logged as: {user.email}</MenuItem>
+                            {accountLink}
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

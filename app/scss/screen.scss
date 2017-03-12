@@ -40,6 +40,19 @@ body {
   }
 }
 
+.navbar-nav {
+  & > li {
+    a {
+      .has-icon {
+        .fa {
+          font-size: 20px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
 .btn {
   .glyphicon {
     margin-right: 5px;
