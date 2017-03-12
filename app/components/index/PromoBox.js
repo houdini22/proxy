@@ -23,9 +23,10 @@ class PromoBoxComponent extends React.Component {
                                     <li>Export any table to *.txt or CSV format!</li>
                                 </ul>
                                 <div className="alert alert-success"><i className="glyphicon-info-sign glyphicon"/>
-                                    Register right now to get 50% off for first 1 month.</div>
+                                    Register right now to get 50% off for first 1 month.
+                                </div>
                                 <p className="btn-container">
-                                    <Link to="/register" className="btn btn-xs btn-primary">Register now</Link>
+                                    <Link to="/account" className="btn btn-xs btn-primary">Register now</Link>
                                 </p>
                             </div>
                         </div>

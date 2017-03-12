@@ -32,10 +32,10 @@ class MainHeaderComponent extends React.Component {
                     <Nav pullRight>
                         <NavDropdown eventKey="1" title="Guest" id="account-dropdown">
                             <MenuItem header>Logged as: Guest</MenuItem>
-                            <LinkContainer to="/register">
+                            <LinkContainer to="/account">
                                 <MenuItem eventKey="1.1">Register</MenuItem>
                             </LinkContainer>
-                            <LinkContainer to="/login">
+                            <LinkContainer to="/account">
                                 <MenuItem eventKey="1.2">Log in</MenuItem>
                             </LinkContainer>
                         </NavDropdown>
