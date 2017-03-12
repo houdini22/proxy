@@ -181,21 +181,52 @@ Route::get('/proxy_test_old_available', function (Request $request) {
 });
 
 Route::get('/proxy_test_socks', function (Request $request) {
-    echo 'proxy_test::';
 
     $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $json = array('id' => NULL);
 
     if ($server) {
-        $server->is_socks = 1;
         $server->ping_socks_error -= 1;
         $server->ping_socks_success += 1;
-        $server->save();
+        $server->is_checked_socks = $server->is_available = $server->was_available = 1;
+        $server->ping = microtime(true) - (float)$request->query('start');
+        $server->last_availability = date('Y-m-d H:i:s');
+        $server->is_checked_speed = 0;
+        $server->speed = NULL;
+
+        $client = new \Guzzle\Http\Client('http://ip-api.com/');
+        $request = $client->get("/php/" . $request->query('ip'), array(), array(
+            'timeout' => 10,
+            'connect_timeout' => 2
+        ));
+
+        try {
+            $response = $request->send();
+            $body = (string)$response->getBody();
+            $result = unserialize($body);
+        } catch (\Exception $e) {
+            $result = array();
+        }
+        if (!empty($result['status']) AND $result['status'] === 'success') {
+            $server->country = !empty($result['country']) ? $result['country'] : NULL;
+            $server->country_code = !empty($result['countryCode']) ? $result['countryCode'] : NULL;
+            $server->region_code = !empty($result['region']) ? $result['region'] : NULL;
+            $server->region_name = !empty($result['regionName']) ? $result['regionName'] : NULL;
+            $server->city = !empty($result['city']) ? $result['city'] : NULL;
+            $server->zip = !empty($result['zip']) ? $result['zip'] : NULL;
+            $server->lat = !empty($result['lat']) ? $result['lat'] : NULL;
+            $server->lon = !empty($result['lon']) ? $result['lon'] : NULL;
+            $server->timezone = !empty($result['timezone']) ? $result['timezone'] : NULL;
+            $server->isp = !empty($result['isp']) ? $result['isp'] : NULL;
+            $server->organization = !empty($result['org']) ? $result['org'] : NULL;
+            $server->save();
+        }
 
         $json['id'] = $server->id;
         $json['address'] = $server->address;
     }
 
+    echo 'proxy_test::';
     echo json_encode($json);
     echo '::proxy_test';
 });

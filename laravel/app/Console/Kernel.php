@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CopyOldSocks;
 use App\Console\Commands\FetchProxies;
 use App\Console\Commands\MigrateAvailableServers;
 use App\Console\Commands\TestOldAvailableServers;
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
         TestProxiesHttpOld::class,
         TestProxiesSpeed::class,
         TestProxiesSocks::class,
-        TestOldAvailableServers::class
+        TestOldAvailableServers::class,
+        CopyOldSocks::class
     ];
 
     /**

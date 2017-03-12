@@ -45,6 +45,7 @@ class TestProxiesHttpOld extends Command
             ->orderBy(\DB::raw('RAND()'))
             ->where('test_disabled', '=', 0)
             ->where('is_checked', '=', 0)
+            ->where('is_socks', '=', 0)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));

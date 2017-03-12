@@ -42,11 +42,8 @@ class TestProxiesSocks extends Command
         ini_set('default_socket_timeout', 300);
 
         $servers = \App\AvailableServer::take(50)
-            ->orderBy(\DB::raw('RAND()'))
-            ->where('type', 'LIKE', 'elite')
-            ->where('is_available', '=', 1)
+            ->orderBy('checked_at', 'ASC')
             ->where('is_checked_socks', '=', 0)
-            ->where('is_socks', '=', 0)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));
