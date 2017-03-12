@@ -40,13 +40,27 @@ body {
   }
 }
 
-.navbar-nav {
-  & > li {
-    a {
-      .has-icon {
-        .fa {
-          font-size: 20px;
-          margin-right: 8px;
+.navbar {
+  .navbar-header {
+    .navbar-brand {
+      border-right: 1px solid #4c4840;
+    }
+  }
+  .navbar-nav {
+    &.pull-right {
+      & > li:last-child {
+        border-right: 1px solid #4c4840;
+      }
+    }
+    & > li:last-child {
+      border-left: 1px solid #4c4840;
+      border-right: 1px solid #4c4840;
+      a {
+        .has-icon {
+          .fa {
+            font-size: 20px;
+            margin-right: 8px;
+          }
         }
       }
     }
