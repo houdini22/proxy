@@ -315,9 +315,9 @@ class ApiV1Controller extends Controller
             if ($user) {
                 if (Activation::complete($user, $request->route('code', 'b'))) {
                     Mail::to($user->email)->send(new AccountConfirmed());
-                    return redirect('/account?confirm=1');
+                    return redirect('/account?confirmed=1');
                 } else {
-                    return redirect('/account?confirm=0');
+                    return redirect('/account?confirmed=0');
                 }
             }
         }
@@ -326,6 +326,32 @@ class ApiV1Controller extends Controller
 
     public function postLogin(Request $request)
     {
+        $credentials = [
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+        ];
 
+        $user = NULL;
+
+        try {
+            $user = Sentinel::authenticate($credentials);
+        } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $ex) {
+            return JsonResponse::create([
+                '_message' => 'Too many attempts.'
+            ], 403);
+        } catch (\Cartalyst\Sentinel\Checkpoints\NotActivatedException $ex) {
+            return JsonResponse::create([
+                '_message' => 'Please activate your account before trying to log in.'
+            ], 403);
+        }
+
+        if ($user) {
+            if ($user = Sentinel::login($user)) {
+                return JsonResponse::create($user);
+            }
+        }
+        return JsonResponse::create([
+            '_message' => 'Wrong credentials.'
+        ], 403);
     }
 }

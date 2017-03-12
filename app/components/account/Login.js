@@ -16,7 +16,8 @@ class LoginComponent extends React.Component {
         super();
         this.getValidationState = this.getValidationState.bind(this);
         this.state = {
-            errors: {}
+            errors: {},
+            user: {}
         };
     }
 
@@ -26,7 +27,9 @@ class LoginComponent extends React.Component {
         const data = getFormData(e);
         this.props.ajax.post('/login', data)
             .then((response) => {
-
+                this.setState({
+                    user: response.data
+                });
             })
             .catch((error) => {
                 this.setState({
@@ -55,6 +58,26 @@ class LoginComponent extends React.Component {
     }
 
     render() {
+        let errors = this.state.errors || {};
+
+        let alertError = '';
+        if (errors._message) {
+            alertError = (
+                <div className="alert alert-danger">
+                    <p>{errors._message}</p>
+                </div>
+            );
+        }
+
+        let alertConfirmed = '';
+        let query = this.props.router.location.query || {};
+        if(query.confirmed === "1") {
+            alertConfirmed = (
+                <div className="alert alert-success">
+                    <p>Your account is confirmed now.</p>
+                </div>
+            );
+        }
         return (
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="panel panel-primary panel-register">
@@ -62,6 +85,8 @@ class LoginComponent extends React.Component {
                         <h3 className="panel-title"><i className="fa fa-sign-in"/>Log in</h3>
                     </div>
                     <div className="panel-body">
+                        {alertError}
+                        {alertConfirmed}
                         <Form horizontal onSubmit={this.onSubmit.bind(this)}>
                             <FormGroup controlId="formHorizontalEmail" className="form-group-sm"
                                        validationState={this.getValidationState('email')}>
