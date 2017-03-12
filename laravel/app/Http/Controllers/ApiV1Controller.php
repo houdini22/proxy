@@ -239,7 +239,7 @@ class ApiV1Controller extends Controller
         if ($server) {
             $pathDisk = base_path() . '/../public/files/addresses/' . $token . '.png';
             if (!file_exists($pathDisk)) {
-                $img = Image::canvas(160, 23, [0, 0, 0, 0]);
+                $img = Image::canvas(160, 33, [0, 0, 0, 0]);
 
                 for ($i = 0; $i < 5; $i++) {
                     $img->line(0, rand() % 23, 160, rand() % 23, function ($draw) {
@@ -257,6 +257,7 @@ class ApiV1Controller extends Controller
                     $font->color('#3e3f3a');
                     $font->align('center');
                     $font->valign('middle');
+                    $font->angle(rand(-7, 7));
                 });
 
                 $img->save($pathDisk);
