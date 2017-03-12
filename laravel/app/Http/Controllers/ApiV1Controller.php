@@ -361,4 +361,11 @@ class ApiV1Controller extends Controller
             '_message' => 'Wrong credentials.'
         ], 403);
     }
+
+    public function getLogout(Request $request) {
+        Sentinel::logout();
+        return JsonResponse::create([
+            '_message' => 'ok'
+        ]);
+    }
 }

@@ -19,7 +19,7 @@ class MainHeaderComponent extends React.Component {
     }
 
     handleClickSignOut(e) {
-        this.props.ajax.post('/logout')
+        this.props.ajax.get('/logout')
             .then(() => {
                 this.props.actions.sessionChanged(false, {});
                 this.props.router.push('/account');
@@ -42,8 +42,8 @@ class MainHeaderComponent extends React.Component {
                     <Link to="/profile" className="btn btn-xs btn-primary">Profile</Link>
                 </div>
                 <div className="pull-right">
-                    <Link to="/logout" className="btn btn-xs btn-primary" onClick={this.handleClickSignOut.bind(this)}>Sign
-                        out</Link>
+                    <a href="#" className="btn btn-xs btn-primary" onClick={this.handleClickSignOut.bind(this)}>Sign
+                        out</a>
                 </div>
             </li>
         );
