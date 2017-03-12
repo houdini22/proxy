@@ -50,6 +50,6 @@ class TestOnlineHttp extends Command
         \App\Proxy\Proxy::log('Count: ' . count($servers));
 
         $proxy = new \App\Proxy\Proxy;
-        $proxy->testSocks($servers);
+        $proxy->testOnlineHttp($servers);
     }
 }
