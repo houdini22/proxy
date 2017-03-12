@@ -50,9 +50,13 @@ class StatisticsComponent extends React.Component {
                             </tr>
                             </tbody>
                         </table>
-                        <p className="btn-container">
-                            <Link to="/statistics" className="btn btn-xs btn-primary">More statistics</Link>
-                        </p>
+                        {
+                            /**
+                             <p className="btn-container">
+                             <a className="btn btn-xs btn-primary disabled">More statistics</a>
+                             </p>
+                             */
+                        }
                     </div>
                 </div>
             </div>
