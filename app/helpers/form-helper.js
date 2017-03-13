@@ -1,5 +1,5 @@
-export function getFormData(event) {
-    return Array.from(event.target.elements)
+export function getFormData(form) {
+    return Array.from(form.elements)
         .filter(el => el.name)
         .reduce((a, b) => {
             if (b.getAttribute("type") === 'checkbox') {

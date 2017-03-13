@@ -24,7 +24,7 @@ class LoginComponent extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         this.setState({errors: {}});
-        const data = getFormData(e);
+        const data = getFormData(e.target);
         this.props.ajax.post('/login', data)
             .then((response) => {
                 // action here

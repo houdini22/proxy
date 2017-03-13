@@ -18,6 +18,7 @@ import NotFoundComponent from './components/NotFound';
 import AppComponent from './components/__App';
 import AccountComponent from './components/Account';
 import ProfileComponent from './components/Profile';
+import ServersComponent from './components/Servers';
 
 const router = (
     <Provider store={store}>
@@ -27,6 +28,7 @@ const router = (
                 <Route path="/about" component={AboutComponent}/>
                 <Route path="/account" component={AccountComponent}/>
                 <Route path="/profile" component={ProfileComponent}/>
+                <Route path="/servers" component={ServersComponent}/>
                 <Route path="*" component={NotFoundComponent}/>
             </Route>
         </Router>

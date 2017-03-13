@@ -9,7 +9,7 @@ class StatisticsComponent extends React.Component {
             <div className="flex-child">
                 <div className="panel panel-primary panel-statistics">
                     <div className="panel-heading">
-                        <h3 className="panel-title"><i className="fa fa-globe" /> Statistics</h3>
+                        <h3 className="panel-title"><i className="fa fa-globe"/> Statistics</h3>
                     </div>
                     <div className="panel-body">
                         <table className="table table-condensed table-striped">
