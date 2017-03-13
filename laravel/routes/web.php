@@ -127,6 +127,7 @@ Route::get('/proxy_test_http_online', function (Request $request) {
         }
 
         $oldServer->ping = microtime(true) - (float)$request->query('start');
+        $oldServer->ping_sum += $oldServer->ping;
         $oldServer->save();
 
         $json['id'] = $oldServer->id;
@@ -178,6 +179,7 @@ Route::get('/proxy_test_socks', function (Request $request) {
         $server->ping = microtime(true) - (float)$request->query('start');
         $server->last_availability = date('Y-m-d H:i:s');
         $server->is_checked_speed = 0;
+        $server->ping_sum += $server->ping;
         $server->speed = NULL;
         $server->save();
 
