@@ -25,7 +25,7 @@ class RegisterComponent extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         this.setState({errors: {}});
-        const data = getFormData(e);
+        const data = getFormData(e.target);
         this.props.ajax.post('/register', data)
             .then((response) => {
                 this.setState({
@@ -61,7 +61,7 @@ class RegisterComponent extends React.Component {
 
     render() {
         let alertSuccess = '';
-        if(this.state.alertSuccess) {
+        if (this.state.alertSuccess) {
             alertSuccess = (
                 <div className="alert alert-success">
                     <p>You are registered now. Check your email for confirmation link.</p>
@@ -70,7 +70,7 @@ class RegisterComponent extends React.Component {
         }
 
         let alertInfo = '';
-        if(!this.state.alertSuccess) {
+        if (!this.state.alertSuccess) {
             alertInfo = (
                 <div className="alert alert-info">
                     <p><i className="fa fa-info-circle"/>Email is required for account confirmation.</p>

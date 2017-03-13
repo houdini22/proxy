@@ -90,7 +90,7 @@ class ApiV1Controller extends Controller
             'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
         ]);
 
-        switch ($request->query('availability', 'online')) {
+        switch ($request->query('status', 'online')) {
             case 'online':
                 $servers->where('is_available', '=', 1);
                 break;

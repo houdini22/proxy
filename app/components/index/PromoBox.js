@@ -7,12 +7,13 @@ class PromoBoxComponent extends React.Component {
             <div className="flex-child">
                 <div className="panel panel-warning panel-promo">
                     <div className="panel-heading">
-                        <h3 className="panel-title"><i className="fa fa-percent" /> Get <strong>50% off</strong> price!</h3>
+                        <h3 className="panel-title"><i className="fa fa-percent"/> Get <strong>50% off</strong> price!
+                        </h3>
                     </div>
                     <div className="panel-body">
                         <div>
                             <div className="row text-center percent-row">
-                                <span className="text-success">-50%</span>
+                                <span className="text-success"><strong>-50%</strong></span>
                             </div>
                             <div className="row text-row">
                                 <h4>Soon we will provide a <strong>premium</strong> features such as:</h4>
@@ -23,10 +24,11 @@ class PromoBoxComponent extends React.Component {
                                     <li>Export any table to *.txt or CSV format!</li>
                                 </ul>
                                 <div className="alert alert-success"><i className="glyphicon-info-sign glyphicon"/>
-                                    Register right now to get 50% off for first 1 month.
+                                    Register right now to get 50% off for first 3 months.
                                 </div>
                                 <p className="btn-container">
-                                    <Link to="/account" className="btn btn-xs btn-default"><i className="fa fa-sign-in"/> Register now</Link>
+                                    <Link to="/account" className="btn btn-xs btn-default"><i
+                                        className="fa fa-sign-in"/> Register now</Link>
                                 </p>
                             </div>
                         </div>

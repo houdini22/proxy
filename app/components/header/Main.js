@@ -55,7 +55,8 @@ class MainHeaderComponent extends React.Component {
             userFooter = (
                 <li className="user-footer">
                     <div className="pull-right">
-                        <Link to="/account" className="btn btn-xs btn-default"><i className="fa fa-sign-in"/> Login or Register</Link>
+                        <Link to="/account" className="btn btn-xs btn-default"><i className="fa fa-sign-in"/> Login or
+                            Register</Link>
                     </div>
                 </li>
             );
@@ -79,11 +80,14 @@ class MainHeaderComponent extends React.Component {
                         <IndexLinkContainer to="/">
                             <NavItem>Home</NavItem>
                         </IndexLinkContainer>
-                        <LinkContainer to="/about">
-                            <NavItem>About</NavItem>
+                        <LinkContainer to="/servers">
+                            <NavItem><strong>Servers</strong></NavItem>
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
+                        <LinkContainer to="/about">
+                            <NavItem>About</NavItem>
+                        </LinkContainer>
                         <li className="dropdown user user-menu open">
                             <a id="account-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true"
                                onClick={(e) => {

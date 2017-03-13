@@ -11,7 +11,7 @@ class BlackHatSEO extends \App\Proxy\Service\AbstractService implements \App\Pro
         $pageUrls = [];
         $pageUrls[] = $this->config['url'];
         for ($i = 2; $i < 3; $i++) {
-            $pageUrls[] = $this->config['url'] . 'page-' . $i;
+            $pageUrls[] = $this->config['url'] . 'currentPage-' . $i;
         }
         $postUrls = [];
         foreach ($pageUrls as $url) {
