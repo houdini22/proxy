@@ -74,6 +74,7 @@ class TestProxiesSpeed extends Command
 
                 $server->speed = round($filesize / $time);
                 $server->speed_success++;
+                $server->speed_sum += $server->speed;
                 $server->last_speed_error_status_code = $server->last_speed_error_message = NULL;
 
                 \App\Proxy\Proxy::log("SPEED: {$server->address}: {$server->speed} {$server->is_socks}");
@@ -87,6 +88,7 @@ class TestProxiesSpeed extends Command
 
                     $server->speed = round($matches[1] / $time);
                     $server->speed_success++;
+                    $server->speed_sum += $server->speed;
 
                     $server->last_speed_error_status_code = $server->last_speed_error_message = NULL;
 
