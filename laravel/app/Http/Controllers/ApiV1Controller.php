@@ -170,13 +170,17 @@ class ApiV1Controller extends Controller
                 break;
 
             case 'great':
-                $servers->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.75)
-                    ->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.5);
+                $servers->where(function ($q) {
+                    $q->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.75)
+                        ->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.5);
+                });
                 break;
 
             case 'medium':
-                $servers->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.5)
-                    ->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.25);
+                $servers->where(functioN ($q) {
+                    $q->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.5)
+                        ->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.25);
+                });
                 break;
 
             case 'low':
@@ -316,13 +320,13 @@ class ApiV1Controller extends Controller
                 if (Activation::complete($user, $request->route('code', 'b'))) {
                     Mail::to($user->email)->send(new AccountConfirmed());
                     return redirect()->to('/account?' . \http_build_query([
-                        'confirmed' => 1,
-                        'email' => $user->email
-                    ]));
+                            'confirmed' => 1,
+                            'email' => $user->email
+                        ]));
                 } else {
                     return redirect()->to('/account?' . \http_build_query([
-                        'confirmed' => 0
-                    ]));
+                            'confirmed' => 0
+                        ]));
                 }
             }
         }
@@ -362,7 +366,8 @@ class ApiV1Controller extends Controller
         ], 403);
     }
 
-    public function getLogout(Request $request) {
+    public function getLogout(Request $request)
+    {
         Sentinel::logout();
         return JsonResponse::create([
             '_message' => 'ok'
