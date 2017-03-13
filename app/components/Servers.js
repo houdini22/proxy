@@ -23,10 +23,10 @@ class ServersComponent extends React.Component {
         });
     }
 
-    fetchServers(currentPage = 1, filters = {}) {
+    fetchServers(page = 1, filters = {}) {
         this.props.ajax.get('/servers', {
             params: {
-                currentPage,
+                page,
                 ...filters
             }
         }).then((response) => {
