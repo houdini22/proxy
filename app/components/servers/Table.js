@@ -23,15 +23,11 @@ class TableComponent extends React.Component {
 
     handleButtonAutoRefreshClick(e) {
         e.preventDefault();
-        let run = () => {
-            this.props.fetchServers(this.currentPage, this.filters);
-            this.props.fetchStatistics();
-        };
-        run();
+        this.props.refresh();
         this.autoRefresh = !this.autoRefresh;
         if (this.autoRefresh) {
             this.autoRefreshInterval = setInterval(() => {
-                run();
+                this.props.refresh();
             }, 30 * 1000);
         } else {
             clearInterval(this.autoRefreshInterval);

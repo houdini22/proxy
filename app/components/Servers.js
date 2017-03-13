@@ -12,9 +12,13 @@ class ServersComponent extends React.Component {
         this.currentPage = 1;
     }
 
-    componentDidMount() {
+    refresh() {
         this.fetchStatistics();
-        this.fetchServers();
+        this.fetchServers(this.currentPage, this.filters);
+    }
+
+    componentDidMount() {
+        this.refresh();
     }
 
     fetchStatistics() {
@@ -70,6 +74,7 @@ class ServersComponent extends React.Component {
                         {...this.props}
                         goToPrevPage={this.goToPrevPage.bind(this)}
                         goToNextPage={this.goToNextPage.bind(this)}
+                        refresh={this.refresh.bind(this)}
                     />
                 </div>
             </div>
