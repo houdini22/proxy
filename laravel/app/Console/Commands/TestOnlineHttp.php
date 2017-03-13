@@ -44,7 +44,6 @@ class TestOnlineHttp extends Command
         $servers = \App\AvailableServer::take(5)
             ->orderBy('checked_at', 'ASC')
             ->where('is_socks', '=', 0)
-            ->where('is_checked', '=', 0)
             ->get();
 
         \App\Proxy\Proxy::log('Count: ' . count($servers));
