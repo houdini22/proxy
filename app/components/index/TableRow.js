@@ -9,27 +9,27 @@ class TableRowComponent extends React.Component {
         let speed;
         let speedClassName;
 
-        if (rowData.is_checked_speed && rowData.speed !== null) {
-            speed = rowData.speed;
-            if (speed < 2048) {
+        if (rowData.last_speed_error_status_code === null && rowData.last_speed_error_message === null) {
+            if (rowData.speed == null || !rowData.speed) {
+                speed = "not checked";
                 speedClassName = 'label label-danger';
-            } else if (speed >= 2048 && speed < 10240) {
-                speedClassName = 'label label-warning';
-            } else if (speed >= 10240 && speed <= 25600) {
-                speedClassName = 'label label-info';
             } else {
-                speedClassName = 'label label-success';
+                speed = rowData.speed;
+                if (speed < 2048) {
+                    speedClassName = 'label label-danger';
+                } else if (speed >= 2048 && speed < 10240) {
+                    speedClassName = 'label label-warning';
+                } else if (speed >= 10240 && speed <= 25600) {
+                    speedClassName = 'label label-info';
+                } else {
+                    speedClassName = 'label label-success';
+                }
+                speed = `${formatBytes(speed, true)}/s`;
             }
-            speed = `${formatBytes(speed, true)}/s`;
         } else {
-            if (rowData.speed_checked_at === null) {
-                speed = "not checked"
-            } else {
-                speed = 'error';
-            }
+            speed = 'error';
             speedClassName = 'label label-danger';
         }
-
 
         let pingClassName;
         if (rowData.ping < 3) {
@@ -68,10 +68,10 @@ class TableRowComponent extends React.Component {
 
         let tooltip;
         if (rowData.last_speed_error_status_code === null && rowData.last_speed_error_message === null) {
-            if (!rowData.speed) {
-                tooltip = <Tooltip id="speed-tooltip">not checked yet</Tooltip>;
+            if (rowData.speed == null || !rowData.speed) {
+                tooltip = <Tooltip id="speed-tooltip-not-checked">not checked yet</Tooltip>;
             } else {
-                tooltip = <Tooltip id="speed-tooltip">checked {rowData.speed_checked_at}</Tooltip>;
+                tooltip = <Tooltip id="speed-tooltip-checked-at">checked {rowData.speed_checked_at}</Tooltip>;
             }
         } else {
             let tooltipText = '';
@@ -84,7 +84,7 @@ class TableRowComponent extends React.Component {
             if (tooltipText.length === 0) {
                 tooltipText = 'No error message specified.';
             }
-            tooltip = <Tooltip id="speed-tooltip">{tooltipText}</Tooltip>;
+            tooltip = <Tooltip id="speed-tooltip-checked-message">{tooltipText}</Tooltip>;
         }
 
         let uptimeRatioText = `${rowData.ping_success + rowData.speed_success} / ${rowData.ping_error + rowData.speed_error}`;
