@@ -1,5 +1,5 @@
 var config = {
-    baseUrl: '/api/v1/'
+    baseUrl: '/proxy/api/v1/'
 };
 
 module.exports = config;
