@@ -133,7 +133,7 @@ class Proxy
 
     public function testSocks($servers)
     {
-        $client = new \Guzzle\Http\Client('http://195.154.179.219:8080');
+        $client = new \Guzzle\Http\Client('http://proxydatabase.online:8080');
         $requests = array();
         $responses = array();
         foreach ($servers as $server)
