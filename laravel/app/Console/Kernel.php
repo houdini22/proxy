@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
         TestProxiesSpeed::class,
         TestProxiesSocks::class,
         DevCommand::class,
-        TestOnlineHttp::class
+        TestOnlineHttp::class,
+        DevCommand::class
     ];
 
     /**

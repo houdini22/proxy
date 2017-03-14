@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\AvailableServer;
 use Illuminate\Console\Command;
 
 class DevCommand extends Command
@@ -37,6 +38,11 @@ class DevCommand extends Command
      */
     public function handle()
     {
-
+        $servers = AvailableServer::where('ping_sum', '=', 0)->get();
+        foreach ($servers as $s) {
+            $s->ping_sum = $s->ping * $s->ping_success;
+            $s->save();
+        }
+        echo PHP_EOL . count($servers) . PHP_EOL;
     }
 }
