@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ProxyDatabase.net</title>
+    <title>proxydatabase.online</title>
 </head>
 <body>
 <div id="main"></div>
