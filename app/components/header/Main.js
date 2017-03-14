@@ -71,7 +71,7 @@ class MainHeaderComponent extends React.Component {
             <Navbar fixedTop>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to="/">ProxyDatabase.net</Link>
+                        <Link to="/">proxydatabase.online</Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
