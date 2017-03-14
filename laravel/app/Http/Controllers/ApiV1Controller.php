@@ -86,7 +86,7 @@ class ApiV1Controller extends Controller
         $servers = AvailableServer::select([
             'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
             'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
-            'ping_socks_error', 'ping_socks_success', 'is_available',
+            'ping_socks_error', 'ping_socks_success', 'is_available', 'ping_sum', 'speed_sum',
             'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
         ]);
 
@@ -164,27 +164,32 @@ class ApiV1Controller extends Controller
                 break;
         }
 
+        $uptimeRatioQuery = \DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))');
+
         switch ($request->query('uptime_ratio', 'all')) {
             case 'greatest':
-                $servers->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.75);
+                $servers->where(function ($q) use ($uptimeRatioQuery) {
+                    $q->where($uptimeRatioQuery, '>', 0.75)
+                        ->orWhere($uptimeRatioQuery, '=', NULL);
+                });
                 break;
 
             case 'great':
-                $servers->where(function ($q) {
-                    $q->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.75)
-                        ->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.5);
+                $servers->where(function ($q) use ($uptimeRatioQuery) {
+                    $q->where($uptimeRatioQuery, '<=', 0.75)
+                        ->where($uptimeRatioQuery, '>', 0.5);
                 });
                 break;
 
             case 'medium':
-                $servers->where(functioN ($q) {
-                    $q->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.5)
-                        ->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '>', 0.25);
+                $servers->where(functioN ($q) use ($uptimeRatioQuery) {
+                    $q->where($uptimeRatioQuery, '<=', 0.5)
+                        ->where($uptimeRatioQuery, '>', 0.25);
                 });
                 break;
 
             case 'low':
-                $servers->where(\DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))'), '<=', 0.25);
+                $servers->where($uptimeRatioQuery, '<=', 0.25);
                 break;
         }
 
