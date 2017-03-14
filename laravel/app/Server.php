@@ -8,6 +8,10 @@ class Server extends Model
 {
     protected $table = 'servers';
 
+    protected $casts = [
+        'ping' => 'float'
+    ];
+
     public function getIp()
     {
         list($ip,) = explode(':', $this->address);
