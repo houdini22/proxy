@@ -58,7 +58,7 @@ Route::get('/proxy_test_old', function (Request $request) {
             }
 
             $server->is_checked = $server->is_available = $server->was_available = 1;
-            $server->ping = microtime(true) - (float)$request->query('start');
+            $server->ping = $server->ping_sum = microtime(true) - (float)$request->query('start');
             $server->first_ping = $oldServer->first_ping;
             if ($server->first_ping === '0000-00-00 00:00:00') {
                 $server->first_ping = date('Y-m-d H:i:s');
