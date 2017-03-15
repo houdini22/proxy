@@ -87,7 +87,7 @@ class ApiV1Controller extends Controller
             'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
             'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
             'ping_socks_error', 'ping_socks_success', 'is_available', 'ping_sum', 'speed_sum',
-            'country', 'country_code', 'region_code', 'region_name', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'organization'
+            'country'
         ]);
 
         switch ($request->query('status', 'online')) {
@@ -200,7 +200,22 @@ class ApiV1Controller extends Controller
 
         $servers->orderBy(\DB::raw('IF(is_socks = 0, checked_at, socks_checked_at)'), 'DESC');
 
-        $response = $servers->limit(30)->paginate()->toArray();
+        $limit = 15;
+        $per_page = 15;
+        $current_page = (int)$request->get('page', 1);
+        $last_page = 2;
+        if ($current_page > $last_page) {
+            $current_page = $last_page;
+        }
+
+        $result = $servers->limit($limit)->offset(($current_page * $limit) - $per_page)->get();
+
+        $response = [
+            'current_page' => $current_page,
+            'last_page' => $last_page,
+            'total' => $limit * $last_page,
+            'data' => $result->toArray()
+        ];
 
         foreach ($response['data'] as & $server) {
             $server['address_img_url'] = url('/api/v1/address/' . md5($server['address'] . $this->_token));

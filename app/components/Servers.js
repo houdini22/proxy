@@ -46,7 +46,8 @@ class ServersComponent extends React.Component {
     }
 
     goToNextPage() {
-        this.currentPage += 1;
+        let lastPage = this.props.state.servers.last_page || 0;
+        this.currentPage = Math.min(this.currentPage + 1, lastPage);
         this.fetchServers(this.currentPage, this.filters);
     }
 

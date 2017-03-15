@@ -91,6 +91,13 @@ form {
       margin-bottom: 7px;
       font-size: 13px;
       font-weight: bold;
+      .fa, .glyphicon {
+        margin-left: 5px;
+        font-size: 16px;
+        top: 2px;
+        position: relative;
+        cursor: help;
+      }
     }
     select.input-sm {
       height: 30px;

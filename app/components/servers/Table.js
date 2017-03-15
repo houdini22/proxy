@@ -75,7 +75,6 @@ class TableComponent extends React.Component {
                                     <th style={{width: "65px"}}>Uptime Ratio</th>
                                     <th style={{width: "100px"}}>Speed</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
-                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">City</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Checked at</th>
                                 </tr>
                                 </thead>
