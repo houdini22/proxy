@@ -9,8 +9,10 @@ class ProxyDB extends \App\Proxy\Service\AbstractService implements \App\Proxy\S
     public function process()
     {
         $url = $this->config['url'];
+        $start = 0;
+        $end = 10000 / 50;
 
-        do {
+        for($i = 0; $i <= $end; $i += 50) {
             $page = $this->downloadPage($url);
             $phpquery = $this->createPhpQuery($page);
             $addresses = $this->fetchAddresses($page);
@@ -18,7 +20,7 @@ class ProxyDB extends \App\Proxy\Service\AbstractService implements \App\Proxy\S
             $btn = $phpquery->find('form.mb-3 a.btn:last');
             $btn = pq($btn);
 
-            $url = 'https://proxydb.net' . $btn->attr('href');
-        } while ($btn->size());
+            $url = 'https://proxydb.net/?offset=' . $i;
+        }
     }
 }
