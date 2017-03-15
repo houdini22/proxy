@@ -10,7 +10,7 @@ class ProxyDB extends \App\Proxy\Service\AbstractService implements \App\Proxy\S
     {
         $url = $this->config['url'];
 
-        for($i = 0; $i <= 10000; $i += 50) {
+        for($i = 0; $i <= 400000; $i += 50) {
             $page = $this->downloadPage($url);
             $addresses = $this->fetchAddresses($page);
             $this->addServers($addresses);
