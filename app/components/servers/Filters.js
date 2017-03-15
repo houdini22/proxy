@@ -178,8 +178,7 @@ class FiltersComponent extends React.Component {
                                             <option value="all">All</option>
                                             {
                                                 countries.map((obj, i) => {
-                                                    return <option key={i} value={obj.country}>{obj.country}
-                                                        disabled={!premiumEnabled}
+                                                    return <option key={i} value={obj.country} disabled={!premiumEnabled}>{obj.country}
                                                         &nbsp;({obj.count})</option>;
                                                 })
                                             }
