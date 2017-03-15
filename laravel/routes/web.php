@@ -14,7 +14,7 @@
 use Illuminate\Http\Request;
 use Mews\Captcha\Facades\Captcha;
 
-Route::group(['prefix' => 'api', 'middleware' => 'web'], function () {
+Route::group(['prefix' => 'api', 'middleware' => ['web', 'secure']], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/statistics', 'ApiV1Controller@getStatistics');
         Route::get('/servers', 'ApiV1Controller@getServers');
