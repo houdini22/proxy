@@ -161,7 +161,9 @@ class TableRowComponent extends React.Component {
                             className="glyphicon-info-sign glyphicon"/></span>
                     </OverlayTrigger>
                 </td>
-                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{rowData.city}</td>
+                <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">
+                    {rowData.country}
+                </td>
                 <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{checked_at}</td>
             </tr>
         );
