@@ -6,6 +6,8 @@ import {
     Button,
     ControlLabel,
     FormControl,
+    Tooltip,
+    OverlayTrigger
 } from 'react-bootstrap';
 import {getFormData} from '../../helpers/form-helper';
 import ReactDOM from 'react-dom';
@@ -24,6 +26,7 @@ class FiltersComponent extends React.Component {
 
     render() {
         let countries = this.props.state.statistics.server_countries || [];
+        let premiumEnabled = false;
 
         return (
             <div className="flex-child">
@@ -78,6 +81,10 @@ class FiltersComponent extends React.Component {
                                 <FormGroup controlId="formHorizontalEmail" className="form-group-sm">
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Ping
+                                        <OverlayTrigger placement="top"
+                                                        overlay={<Tooltip id="premium-enable">Option available only for premium users.</Tooltip>}>
+                                            <i className="fa fa-question-circle text-info" />
+                                        </OverlayTrigger>
                                     </Col>
                                     <Col sm={9}>
                                         <FormControl
@@ -88,10 +95,10 @@ class FiltersComponent extends React.Component {
                                             defaultValue="all"
                                         >
                                             <option value="all">All</option>
-                                            <option value="fastest">Fastest (0 - 3 seconds)</option>
-                                            <option value="fast">Fast (3 - 10 seconds)</option>
-                                            <option value="medium">Medium (10 - 25 seconds)</option>
-                                            <option value="slow">Slow (25+ seconds)</option>
+                                            <option value="fastest" disabled={!premiumEnabled}>Fastest (0 - 3 seconds)</option>
+                                            <option value="fast" disabled={!premiumEnabled}>Fast (3 - 10 seconds)</option>
+                                            <option value="medium" disabled={!premiumEnabled}>Medium (10 - 25 seconds)</option>
+                                            <option value="slow" disabled={!premiumEnabled}>Slow (25+ seconds)</option>
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
@@ -99,6 +106,10 @@ class FiltersComponent extends React.Component {
                                 <FormGroup controlId="formHorizontalEmail" className="form-group-sm">
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Speed
+                                        <OverlayTrigger placement="top"
+                                                        overlay={<Tooltip id="premium-enable">Option available only for premium users.</Tooltip>}>
+                                            <i className="fa fa-question-circle text-info" />
+                                        </OverlayTrigger>
                                     </Col>
                                     <Col sm={9}>
                                         <FormControl
@@ -109,10 +120,16 @@ class FiltersComponent extends React.Component {
                                             defaultValue="all"
                                         >
                                             <option value="all">All</option>
-                                            <option value="fastest">Fastest (25+ kB/seconds)</option>
-                                            <option value="fast">Fast (10 - 25 kB/seconds)</option>
-                                            <option value="medium">Medium (2 - 10 kB/seconds)</option>
-                                            <option value="slow">Slow ( > 2 kB/seconds)</option>
+                                            <option value="fastest" disabled={!premiumEnabled}>Fastest (25+
+                                                kB/seconds)
+                                            </option>
+                                            <option value="fast" disabled={!premiumEnabled}>Fast (10 - 25 kB/seconds)
+                                            </option>
+                                            <option value="medium" disabled={!premiumEnabled}>Medium (2 - 10
+                                                kB/seconds)
+                                            </option>
+                                            <option value="slow" disabled={!premiumEnabled}>Slow ( > 2 kB/seconds)
+                                            </option>
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
@@ -120,6 +137,10 @@ class FiltersComponent extends React.Component {
                                 <FormGroup controlId="formHorizontalEmail" className="form-group-sm">
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Uptime ratio
+                                        <OverlayTrigger placement="top"
+                                                        overlay={<Tooltip id="premium-enable">Option available only for premium users.</Tooltip>}>
+                                            <i className="fa fa-question-circle text-info" />
+                                        </OverlayTrigger>
                                     </Col>
                                     <Col sm={9}>
                                         <FormControl
@@ -130,10 +151,10 @@ class FiltersComponent extends React.Component {
                                             defaultValue="all"
                                         >
                                             <option value="all">All</option>
-                                            <option value="greatest"> >75%</option>
-                                            <option value="great"> 50 - 75%</option>
-                                            <option value="medium"> 25 - 50%</option>
-                                            <option value="low"> 0 - 25%</option>
+                                            <option value="greatest" disabled={!premiumEnabled}> >75%</option>
+                                            <option value="great" disabled={!premiumEnabled}> 50 - 75%</option>
+                                            <option value="medium" disabled={!premiumEnabled}> 25 - 50%</option>
+                                            <option value="low" disabled={!premiumEnabled}> 0 - 25%</option>
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
@@ -141,6 +162,10 @@ class FiltersComponent extends React.Component {
                                 <FormGroup controlId="formHorizontalEmail" className="form-group-sm">
                                     <Col componentClass={ControlLabel} sm={3}>
                                         Country
+                                        <OverlayTrigger placement="top"
+                                                        overlay={<Tooltip id="premium-enable">Option available only for premium users.</Tooltip>}>
+                                            <i className="fa fa-question-circle text-info" />
+                                        </OverlayTrigger>
                                     </Col>
                                     <Col sm={9}>
                                         <FormControl
@@ -154,7 +179,8 @@ class FiltersComponent extends React.Component {
                                             {
                                                 countries.map((obj, i) => {
                                                     return <option key={i} value={obj.country}>{obj.country}
-                                                        ({obj.count})</option>;
+                                                        disabled={!premiumEnabled}
+                                                        &nbsp;({obj.count})</option>;
                                                 })
                                             }
                                         </FormControl>
