@@ -220,14 +220,12 @@ Route::get('/proxy_test_socks', function (Request $request) {
     echo '::proxy_test';
 });
 
-\Illuminate\Support\Facades\Event::listen('404', function () {
-    return view('welcome');
-});
+Route::group(['middleware' => 'secure'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::any('{path}', function () {
+        return view('welcome');
+    })->where('path', '[a-z\_\/]+')->name('any');
 });
-
-Route::any('{path}', function () {
-    return view('welcome');
-})->where('path', '[a-z\_\/]+')->name('any');
