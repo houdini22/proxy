@@ -63,9 +63,9 @@ class ServersComponent extends React.Component {
         return (
             <div className="page page-servers">
                 <MainHeaderComponent {...this.props} />
+                <StatisticsComponent {...this.props}/>
                 <div className="container" role="main">
-                    <div className="row flex-parent">
-                        <StatisticsComponent {...this.props}/>
+                    <div className="row">
                         <FiltersComponent
                             {...this.props}
                             setFilters={this.setFilters.bind(this)}
