@@ -41,7 +41,7 @@ class RegisterComponent extends React.Component {
 
     getNewCaptcha() {
         this.captchaImage.setAttribute("src", "");
-        this.captchaImage.setAttribute("src", this.props.router.createHref('/captcha/flat'));
+        this.captchaImage.setAttribute("src", this.props.router.createHref('/captcha/' + (new Date()).getTime()));
         this.inputCaptcha.value = "";
     }
 
@@ -80,7 +80,7 @@ class RegisterComponent extends React.Component {
 
         return (
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div className="panel panel-primary panel-register">
+                <div className="panel panel-default panel-register">
                     <div className="panel-heading">
                         <h3 className="panel-title"><i className="fa fa-user-plus"/>Create account for free!</h3>
                     </div>

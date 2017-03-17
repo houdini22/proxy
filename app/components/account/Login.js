@@ -87,7 +87,7 @@ class LoginComponent extends React.Component {
 
         return (
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div className="panel panel-primary panel-register">
+                <div className="panel panel-default panel-register">
                     <div className="panel-heading">
                         <h3 className="panel-title"><i className="fa fa-sign-in"/> Log in</h3>
                     </div>
