@@ -5,7 +5,7 @@ class MainFooterComponent extends React.Component {
         return (
             <footer className="footer">
                 <div className="container">
-                    <p className="text-muted">Copyright © 2013 proxydatabase.online</p>
+                    <p className="text-muted">Copyright © 2017 proxydatabase.online</p>
                 </div>
             </footer>
         );

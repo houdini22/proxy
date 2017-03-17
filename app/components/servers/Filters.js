@@ -97,7 +97,7 @@ class FiltersComponent extends React.Component {
                                         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <FormGroup controlId="formHorizontalEmail" className="form-group-sm">
                                                 <Col componentClass={ControlLabel} sm={3} md={4}>
-                                                    Ping
+                                                    Latency
                                                     <Permission {...this.props} permission="server.filter_all"
                                                                 value={false}>
                                                         <OverlayTrigger placement="top"

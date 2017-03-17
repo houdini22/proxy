@@ -9,7 +9,7 @@ class IndexComponent extends React.Component {
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
                     <div className="well">
-                        Copyright by proxydatabase.online
+                        Copyright © 2017 proxydatabase.online
                     </div>
                 </div>
                 <FooterComponent {...this.props}/>
