@@ -373,10 +373,12 @@ class ApiV1Controller extends Controller
             'password' => $request->get('password'),
         ];
 
+        $remember = $request->get('remember') === "1";
+
         $user = NULL;
 
         try {
-            $user = Sentinel::authenticate($credentials);
+            $user = Sentinel::authenticate($credentials, $remember);
         } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $ex) {
             return JsonResponse::create([
                 '_message' => 'Too many attempts.'

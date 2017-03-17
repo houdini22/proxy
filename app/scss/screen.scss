@@ -468,6 +468,25 @@ body {
 
 .page.page-index {
   .container {
+    .jumbotron {
+      h1 {
+        font-size: 36px;
+        margin: 0;
+      }
+      h2 {
+        font-size: 25px;
+        margin-top: 0;
+      }
+      p {
+        font-size: 15px;
+        .btn {
+          .fa {
+            font-size: 20px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
     .panel-promo {
       position: relative;
       .panel-body {
