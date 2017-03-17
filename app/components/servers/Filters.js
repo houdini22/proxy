@@ -31,10 +31,11 @@ class FiltersComponent extends React.Component {
 
         return (
             <div className="col-md-12">
-                <div className="panel panel-default panel-statistics">
-                    <Form horizontal ref={(form) => {
-                        this.form = form;
-                    }}>
+                <Form horizontal ref={(form) => {
+                    this.form = form;
+                }}>
+                    <div className="panel panel-default panel-statistics">
+
                         <div className="panel-heading">
                             <h3 className="panel-title"><i className="fa fa-filter"/> Filters</h3>
                             <div className="panel-tools">
@@ -255,8 +256,8 @@ class FiltersComponent extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </Form>
-                </div>
+                    </div>
+                </Form>
             </div>
         );
     }
