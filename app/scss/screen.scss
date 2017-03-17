@@ -150,6 +150,9 @@ body {
     &.btn-xs {
       font-size: 11px;
     }
+    &.btn-lg {
+      padding: 12px 16px;
+    }
     &.disabled {
       pointer-events: all;
     }
