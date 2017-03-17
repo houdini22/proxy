@@ -35,7 +35,6 @@ class FiltersComponent extends React.Component {
                     this.form = form;
                 }}>
                     <div className="panel panel-default panel-statistics">
-
                         <div className="panel-heading">
                             <h3 className="panel-title"><i className="fa fa-filter"/> Filters</h3>
                             <div className="panel-tools">
