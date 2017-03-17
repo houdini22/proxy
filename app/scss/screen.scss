@@ -265,11 +265,19 @@ body {
 }
 
 @media (max-width: 767px) {
-  .navbar-nav > .user-menu .user-image {
-    float: none;
-    margin-right: 0;
-    margin-top: -8px;
-    line-height: 10px;
+  .navbar-nav {
+    margin: 0 -15px;
+    & > .user-menu {
+      .dropdown-menu {
+        width: 100%;
+      }
+      .user-image {
+        float: none;
+        margin-right: 0;
+        margin-top: -8px;
+        line-height: 10px;
+      }
+    }
   }
 }
 
