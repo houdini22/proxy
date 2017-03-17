@@ -32,19 +32,20 @@ class FiltersComponent extends React.Component {
         return (
             <div className="col-md-12">
                 <div className="panel panel-default panel-statistics">
-                    <div className="panel-heading">
-                        <h3 className="panel-title"><i className="fa fa-filter"/> Filters</h3>
-                        <div className="panel-tools">
-                            <Button type="reset" className="btn-xs btn" onClick={(e) => {
-                                this.props.setFilters({});
-                            }}>
-                                Reset
-                            </Button>
-                        </div>
-                    </div>
                     <Form horizontal ref={(form) => {
                         this.form = form;
                     }}>
+                        <div className="panel-heading">
+                            <h3 className="panel-title"><i className="fa fa-filter"/> Filters</h3>
+                            <div className="panel-tools">
+                                <Button type="reset" className="btn-xs btn" onClick={(e) => {
+                                    this.props.setFilters({});
+                                }}>
+                                    Reset
+                                </Button>
+                            </div>
+                        </div>
+
                         <div>
                             <div className="panel-body">
                                 <div className="filters">
