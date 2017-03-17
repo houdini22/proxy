@@ -7,7 +7,8 @@ import {
     ControlLabel,
     FormControl,
     HelpBlock,
-    InputGroup
+    InputGroup,
+    Checkbox
 } from 'react-bootstrap';
 import {getFormData} from '../../helpers/form-helper';
 
@@ -128,6 +129,18 @@ class LoginComponent extends React.Component {
                                         />
                                     </InputGroup>
                                     {this.getValidationError('password')}
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup className="form-group-sm">
+                                <Col smOffset={2} sm={10}>
+                                    <Checkbox
+                                        defaultChecked={true}
+                                        name="remember"
+                                        value="1"
+                                    >
+                                        Remember me
+                                    </Checkbox>
                                 </Col>
                             </FormGroup>
 
