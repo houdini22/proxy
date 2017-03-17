@@ -328,7 +328,7 @@ body {
   top: -10px;
   right: 10px;
   z-index: 0;
-  font-size: 90px;
+  font-size: 75px;
   color: rgba(0, 0, 0, 0.15);
 }
 .small-box:hover {
@@ -336,7 +336,7 @@ body {
   color: #f8f5f0;
 }
 .small-box:hover .icon {
-  font-size: 95px;
+  font-size: 80px;
 }
 @media (max-width: 767px) {
   .small-box {
@@ -469,25 +469,38 @@ body {
 }
 
 .page.page-index {
-  .container .panel-promo {
-    position: relative;
-    .panel-body {
-      .row {
-        padding: 0 15px;
-        &.percent-row {
-          font-size: 72px;
+  .container {
+    .panel-promo {
+      position: relative;
+      .panel-body {
+        .row {
+          padding: 0 15px;
+          &.percent-row {
+            font-size: 72px;
+          }
+          &.text-row {
+            margin-bottom: 25px;
+            .btn-container {
+              position: absolute;
+              bottom: 15px;
+              right: 15px;
+              margin: 0;
+            }
+            p:not(.btn-container) {
+              margin-bottom: 7px;
+            }
+          }
         }
-        &.text-row {
-          margin-bottom: 25px;
-          .btn-container {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            margin: 0;
-          }
-          p:not(.btn-container) {
-            margin-bottom: 7px;
-          }
+      }
+    }
+    .panel-news {
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        li {
+          padding: 5px;
+          border-bottom: 1px solid #dfd7ca;
         }
       }
     }

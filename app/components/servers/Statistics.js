@@ -27,7 +27,7 @@ class StatisticsComponent extends React.Component {
                                     <p>servers online in the last 24h</p>
                                 </div>
                                 <div className="icon">
-                                    <i className=""></i>
+                                    <i className="fa fa-clock-o"></i>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@ class StatisticsComponent extends React.Component {
                                     <p>servers online past 15 minutes</p>
                                 </div>
                                 <div className="icon">
-                                    <i className=""></i>
+                                    <i className="fa fa-clock-o"></i>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@ class StatisticsComponent extends React.Component {
                                     <p>server countries</p>
                                 </div>
                                 <div className="icon">
-                                    <i className=""></i>
+                                    <i className="fa fa-globe"></i>
                                 </div>
                             </div>
                         </div>
