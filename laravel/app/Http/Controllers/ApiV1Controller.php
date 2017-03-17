@@ -406,4 +406,37 @@ class ApiV1Controller extends Controller
             '_message' => 'ok'
         ]);
     }
+
+    public function postImport(Request $request)
+    {
+        $user = Sentinel::getUser();
+        $hasPermission = FALSE;
+        if (!!$user AND $user->hasAccess('server.import')) {
+            $hasPermission = TRUE;
+        }
+        if (!$hasPermission) {
+            return abort(403);
+        }
+
+        $html = $request->get('import_text', '');
+        $count = 0;
+        preg_match_all('/(\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b):(\d+)/', $html, $matches, PREG_SET_ORDER);
+        foreach ($matches as $match) {
+            $server = new \App\Server;
+            $server->address = $match[0];
+            $server->ip = $match[1];
+            $server->port = $match[2];
+            $server->source = 'import';
+            try {
+                $server->save();
+                $count++;
+            } catch (\Exception $ex) {
+
+            }
+        }
+
+        return JsonResponse::create([
+            'count' => $count
+        ]);
+    }
 }
