@@ -30,7 +30,42 @@ Route::group(['prefix' => 'api', 'middleware' => ['web', 'secure']], function ()
     });
 });
 
-Route::get('/proxy_test_old', function (Request $request) {
+$checkAnonymity = function () {
+    $headers = array(
+        'HTTP_X_REAL_IP',
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_PROXY_ID',
+        'HTTP_VIA',
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_FORWARDED_FOR',
+        'HTTP_X_FORWARDED',
+        'HTTP_FORWARDED',
+        'HTTP_CLIENT_IP',
+        'HTTP_FORWARDED_FOR_IP',
+        'VIA',
+        'X_FORWARDED_FOR',
+        'FORWARDED_FOR',
+        'X_FORWARDED FORWARDED',
+        'CLIENT_IP',
+        'FORWARDED_FOR_IP',
+        'HTTP_PROXY_CONNECTION',
+        'HTTP_XROXY_CONNECTION'
+    );
+
+    $level = FALSE;
+    foreach ($headers as $headerName) {
+        if (isset($_SERVER[$headerName])) {
+            $level = 'transparent';
+            break;
+        }
+    }
+    if($level === FALSE) {
+        $level = 'elite';
+    }
+    return $level;
+};
+
+Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) {
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
     if ($oldServer->first_ping === '0000-00-00 00:00:00') {
@@ -49,15 +84,7 @@ Route::get('/proxy_test_old', function (Request $request) {
             $server->address = $oldServer->address;
             $server->port = $oldServer->getPort();
             $server->ip = $oldServer->getIp();
-
-            if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
-                $server->type = 'elite';
-            } elseif (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $server->type = 'anonymous';
-            } else {
-                $server->type = 'transparent';
-            }
-
+            $server->type = $checkAnonymity();
             $server->is_checked = $server->is_available = $server->was_available = 1;
             $server->ping = $server->ping_sum = microtime(true) - (float)$request->query('start');
             $server->first_ping = $oldServer->first_ping;
@@ -108,7 +135,7 @@ Route::get('/proxy_test_old', function (Request $request) {
     echo '::proxy_test';
 });
 
-Route::get('/proxy_test_http_online', function (Request $request) {
+Route::get('/proxy_test_http_online', function (Request $request) use($checkAnonymity) {
     $oldServer = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $json = [];
 
@@ -118,15 +145,7 @@ Route::get('/proxy_test_http_online', function (Request $request) {
         $oldServer->ping_error -= 1;
         $oldServer->ping_success += 1;
         $oldServer->is_checked_speed = 0;
-
-        if (empty($_SERVER['HTTP_X_FORWARDED_FOR']) AND empty($_SERVER['HTTP_VIA']) AND empty($_SERVER['HTTP_PROXY_CONNECTION'])) {
-            $oldServer->type = 'elite';
-        } elseif (empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $oldServer->type = 'anonymous';
-        } else {
-            $oldServer->type = 'transparent';
-        }
-
+        $oldServer->type = $checkAnonymity();
         $oldServer->ping = microtime(true) - (float)$request->query('start');
         $oldServer->ping_sum += $oldServer->ping;
         $oldServer->save();

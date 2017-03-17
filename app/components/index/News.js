@@ -10,9 +10,12 @@ class NewsComponent extends React.Component {
                         <h3 className="panel-title"><i className="fa fa-newspaper-o"/> News</h3>
                     </div>
                     <div className="panel-body">
-                        <div>
-                            I'm news
-                        </div>
+                        <ul>
+                            <li>
+                                <Link to="/news/1">First production database testing started.</Link>
+                                <span className="pull-right date">2016.01.01</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
