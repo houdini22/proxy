@@ -208,12 +208,17 @@ class ApiV1Controller extends Controller
         $limit = 15;
         $per_page = 15;
         $current_page = (int)$request->get('page', 1);
-        $last_page = 2;
-        if ($current_page > $last_page) {
-            $current_page = $last_page;
-        }
 
-        $result = $servers->limit($limit)->offset(($current_page * $limit) - $per_page)->get();
+        if (!!$user AND $user->hasAccess('server.no_pages_limit')) {
+            $last_page = ceil($servers->get()->count() / $per_page);
+            $result = $servers->limit($limit)->offset(($current_page * $limit) - $per_page)->get();
+        } else {
+            $last_page = 2;
+            if ($current_page > $last_page) {
+                $current_page = $last_page;
+            }
+            $result = $servers->limit($limit)->offset(($current_page * $limit) - $per_page)->get();
+        }
 
         $response = [
             'current_page' => $current_page,
