@@ -2,6 +2,7 @@ import React from 'react';
 import MainHeaderComponent from './header/Main';
 import LoginComponent from './account/Login';
 import RegisterComponent from './account/Register';
+import FooterComponent from './footer/Main';
 
 class AccountComponent extends React.Component {
     getNewCaptcha() {
@@ -19,6 +20,7 @@ class AccountComponent extends React.Component {
                         <RegisterComponent {...this.props} />
                     </div>
                 </div>
+                <FooterComponent {...this.props}/>
             </div>
         );
     }

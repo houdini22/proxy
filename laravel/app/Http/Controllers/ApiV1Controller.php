@@ -85,7 +85,7 @@ class ApiV1Controller extends Controller
         $servers = AvailableServer::select([
             'address', 'type', 'ping', 'speed', 'no_redirect', 'ping_success', 'ping_error', 'speed_success', 'speed_error',
             'checked_at', 'socks_checked_at', 'speed_checked_at', 'is_socks', 'is_checked_speed', 'last_speed_error_status_code', 'last_speed_error_message',
-            'ping_socks_error', 'ping_socks_success', 'is_available', 'ping_sum', 'speed_sum',
+            'ping_socks_error', 'ping_socks_success', 'is_available', 'ping_sum', 'speed_sum', 'last_availability',
             'country'
         ]);
 
@@ -232,6 +232,7 @@ class ApiV1Controller extends Controller
             $server['checked_at'] = \App\Date::fuzzy_span(strtotime($server['checked_at']));
             $server['socks_checked_at'] = \App\Date::fuzzy_span(strtotime($server['socks_checked_at']));
             $server['speed_checked_at'] = $server['speed_checked_at'] !== NULL ? \App\Date::fuzzy_span(strtotime($server['speed_checked_at'])) : NULL;
+            $server['last_availability'] = date('Y-m-d', strtotime($server['last_availability']));
             unset($server['address']);
         }
 
