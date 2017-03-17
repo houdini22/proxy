@@ -203,7 +203,7 @@ class ApiV1Controller extends Controller
             }
         }
 
-        $servers->orderBy(\DB::raw('IF(is_socks = 0, checked_at, socks_checked_at)'), 'DESC');
+        $servers->orderBy('last_availability', 'DESC');
 
         $limit = 15;
         $per_page = 15;
