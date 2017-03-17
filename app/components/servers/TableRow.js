@@ -119,6 +119,11 @@ class TableRowComponent extends React.Component {
         let onlineText = rowData.is_available ? 'online' : 'offline';
         let onlineTextClassName = rowData.is_available ? 'label label-success' : 'label label-danger';
 
+        let lastAvailabilityCaption = `${rowData.last_availability} days ago`;
+        if(rowData.last_availability === 0) {
+            lastAvailabilityCaption = 'today';
+        }
+
         return (
             <tr>
                 <td style={{textAlign: 'center'}}>
@@ -165,7 +170,7 @@ class TableRowComponent extends React.Component {
                     {rowData.country}
                 </td>
                 <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{checked_at}</td>
-                <td>{rowData.last_availability} days ago</td>
+                <td>{lastAvailabilityCaption}</td>
             </tr>
         );
     }
