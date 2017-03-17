@@ -107,7 +107,7 @@ class Proxy
                 $exception = $e->getExceptionForFailedRequest($request);
                 $query = $request->getQuery();
                 $ids[] = $failedIds[] = $query['id'];
-                $server = \App\Server::find($query['id']);
+                /*$server = \App\Server::find($query['id']);
                 if ($server)
                 {
                     preg_match('#\[status code\]\s(\d+)#', $exception->getMessage(), $matches);
@@ -125,7 +125,7 @@ class Proxy
                         $server->first_ping = date('Y-m-d H:i:s');
                     }
                     $server->save();
-                }
+                }*/
             }
         }
         self::log('Successed count: ' . count($successfullIds));
