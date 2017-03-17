@@ -117,6 +117,9 @@ form {
         width: 100%;
       }
     }
+    &.form-group-sm {
+      margin: 5px 0;
+    }
   }
 }
 
@@ -478,6 +481,9 @@ body {
     }
     nav {
       text-align: center;
+      .pagination {
+        margin-bottom: 0;
+      }
     }
     .filters {
       padding: 0 7px;

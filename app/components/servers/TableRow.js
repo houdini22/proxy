@@ -101,8 +101,8 @@ class TableRowComponent extends React.Component {
             speedSumCaption = `${formatBytes(rowData.speed_sum / rowData.speed_success, true)}/s`;
             speedSumClassName = getSpeedClassName(rowData.speed_sum / rowData.speed_success);
         } else {
-            speedSumTooltip = <Tooltip id="speed-tooltip-average-speed">no measurements</Tooltip>;
-            speedSumCaption = 'N/A';
+            speedSumTooltip = <Tooltip id="speed-tooltip-average-speed">no success measurements ({rowData.speed_error} attempts)</Tooltip>;
+            speedSumCaption = `N/A`;
             speedSumClassName = 'label label-danger';
         }
 
@@ -133,16 +133,16 @@ class TableRowComponent extends React.Component {
                 <td><span className={onlineTextClassName}>{onlineText}</span></td>
                 <td className="text-center">
                     <OverlayTrigger placement="top"
-                                    overlay={<Tooltip id="speed-tooltip-last-ping">last ping
+                                    overlay={<Tooltip id="speed-tooltip-last-ping">last measurement
                                         (checked {rowData.checked_at})</Tooltip>}>
                         <span className={getPingClassName(rowData.ping)}>{rowData.ping}s <i
                             className="glyphicon-info-sign glyphicon"/></span>
                     </OverlayTrigger>
                     <br/>
                     <OverlayTrigger placement="top"
-                                    overlay={<Tooltip id="speed-tooltip-average-ping">average ping
+                                    overlay={<Tooltip id="speed-tooltip-average-ping">average latency
                                         ({(rowData.is_socks ? rowData.ping_socks_success : rowData.ping_success)}
-                                        &nbsp;pings)</Tooltip>}>
+                                        &nbsp;success attempts)</Tooltip>}>
                         <span
                             className={getPingClassName(rowData.ping_sum / (rowData.is_socks ? rowData.ping_socks_success : rowData.ping_success))}>
                             {(rowData.ping_sum / (rowData.is_socks ? rowData.ping_socks_success : rowData.ping_success)).toFixed(3)}s
