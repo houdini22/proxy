@@ -1,5 +1,5 @@
 import React from 'react';
-
+import FooterComponent from './footer/Main';
 import MainHeaderComponent from './header/Main';
 
 class IndexComponent extends React.Component {
@@ -9,9 +9,10 @@ class IndexComponent extends React.Component {
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
                     <div className="well">
-                        Copyright by @hud
+                        Copyright by proxydatabase.online
                     </div>
                 </div>
+                <FooterComponent {...this.props}/>
             </div>
         );
     }

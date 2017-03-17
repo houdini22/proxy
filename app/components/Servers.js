@@ -1,5 +1,5 @@
 import React from 'react';
-
+import FooterComponent from './footer/Main';
 import MainHeaderComponent from './header/Main';
 import TableComponent from './servers/Table';
 import StatisticsComponent from './servers/Statistics';
@@ -78,6 +78,7 @@ class ServersComponent extends React.Component {
                         refresh={this.refresh.bind(this)}
                     />
                 </div>
+                <FooterComponent {...this.props}/>
             </div>
         );
     }

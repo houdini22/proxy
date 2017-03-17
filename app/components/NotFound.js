@@ -1,4 +1,5 @@
 import React from 'react';
+import FooterComponent from './footer/Main';
 
 class NotFoundComponent extends React.Component {
     render() {

@@ -10,6 +10,7 @@ import {
 import MainHeaderComponent from './header/Main';
 import Permission from './Permission';
 import {getFormData} from '../helpers/form-helper';
+import FooterComponent from './footer/Main';
 
 class ProfileComponent extends React.Component {
 
@@ -95,6 +96,7 @@ class ProfileComponent extends React.Component {
                         </div>
                     </div>
                 </Permission>
+                <FooterComponent {...this.props}/>
             </div>
         );
     }

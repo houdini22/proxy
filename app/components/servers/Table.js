@@ -90,11 +90,12 @@ class TableComponent extends React.Component {
                                     <th style={{width: "160px"}}>Address</th>
                                     <th style={{width: "120px"}}>Type</th>
                                     <th style={{width: "60px"}}>Status</th>
-                                    <th style={{width: "65px"}}>Ping</th>
+                                    <th style={{width: "65px"}}>Latency</th>
                                     <th style={{width: "65px"}}>Uptime Ratio</th>
                                     <th style={{width: "100px"}}>Speed</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
                                     <th style={{width: "100px"}} className="hidden-sm hidden-xs">Checked at</th>
+                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">Last availability</th>
                                 </tr>
                                 </thead>
                                 <tbody>

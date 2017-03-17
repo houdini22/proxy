@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import MainHeaderComponent from './header/Main';
 import NewsComponent from './index/News';
 import PromoBoxComponent from './index/PromoBox';
+import FooterComponent from './footer/Main';
 
 class IndexComponent extends React.Component {
     render() {
@@ -31,6 +32,7 @@ class IndexComponent extends React.Component {
                         <PromoBoxComponent {...this.props}/>
                     </div>
                 </div>
+                <FooterComponent {...this.props}/>
             </div>
         );
     }
