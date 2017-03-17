@@ -5,7 +5,7 @@ class Main extends React.Component {
         this.props.ajax.get('/session')
             .then((response) => {
                 // action here
-                this.props.actions.sessionChanged(response.data.isLogged, response.data.user);
+                this.props.actions.sessionChanged(response.data.isLoggedIn, response.data.user);
             })
             .catch((error) => {
 

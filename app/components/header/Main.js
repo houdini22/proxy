@@ -30,7 +30,7 @@ class MainHeaderComponent extends React.Component {
     }
 
     render() {
-        let {session: {user, isLoggedIn}} = this.props.state;
+        let {user, isLoggedIn} = this.props.state.session;
 
         if (!user.email) {
             user.email = 'Guest';
