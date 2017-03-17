@@ -66,8 +66,8 @@ return array(
             'disable_empty_limit' => TRUE
         ),*/
         array(
-            'url' => 'http://xzzy.info/ca/da/list.txt',
-            'service_name' => 'XZZY',
+            'url' => 'http://www.proxy4ever.com',
+            'service_name' => 'ProxyForEver',
             'disable_empty_limit' => TRUE
         )
 	)
