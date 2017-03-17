@@ -89,7 +89,7 @@ class Proxy
                         preg_match('/<\s*script[^>]*>[\s\S]*?(<\s*\/script[^>]*>|$)/i', $response, $script_matches);
                         if (isset($script_matches[0]))
                         {
-                            file_put_contents(app_path() . '/storage/proxiee/hacked/' . $server->address . '.txt', $script_matches[0]);
+                            file_put_contents(base_path('/storage/proxiee/hacked/') . $server->address . '.txt', $script_matches[0]);
                         }
                     }
                     else
@@ -198,7 +198,7 @@ class Proxy
                         preg_match('/<\s*script[^>]*>[\s\S]*?(<\s*\/script[^>]*>|$)/i', $response, $script_matches);
                         if (isset($script_matches[0]))
                         {
-                            file_put_contents(app_path() . '/storage/proxiee/hacked/' . $server->address . '.txt', $script_matches[0]);
+                            file_put_contents(base_path('/storage/proxiee/hacked/') . $server->address . '.txt', $script_matches[0]);
                         }
                     }
                     else
@@ -304,7 +304,7 @@ class Proxy
                         preg_match('/<\s*script[^>]*>[\s\S]*?(<\s*\/script[^>]*>|$)/i', $response, $script_matches);
                         if (isset($script_matches[0]))
                         {
-                            file_put_contents(app_path() . '/storage/proxiee/hacked/' . $server->address . '.txt', $script_matches[0]);
+                            file_put_contents(base_path('/storage/proxiee/hacked/') . $server->address . '.txt', $script_matches[0]);
                         }
                     }
                     else

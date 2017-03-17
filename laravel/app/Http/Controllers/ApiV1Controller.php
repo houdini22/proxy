@@ -232,7 +232,7 @@ class ApiV1Controller extends Controller
             $server['checked_at'] = \App\Date::fuzzy_span(strtotime($server['checked_at']));
             $server['socks_checked_at'] = \App\Date::fuzzy_span(strtotime($server['socks_checked_at']));
             $server['speed_checked_at'] = $server['speed_checked_at'] !== NULL ? \App\Date::fuzzy_span(strtotime($server['speed_checked_at'])) : NULL;
-            $server['last_availability'] = date('Y-m-d', strtotime($server['last_availability']));
+            $server['last_availability'] = floor((time() - strtotime($server['last_availability'])) / Date::DAY);
             unset($server['address']);
         }
 

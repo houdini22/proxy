@@ -165,7 +165,7 @@ class TableRowComponent extends React.Component {
                     {rowData.country}
                 </td>
                 <td style={{maxWidth: '110px'}} className="hidden-sm hidden-xs">{checked_at}</td>
-                <td>{rowData.last_availability}</td>
+                <td>{rowData.last_availability} days ago</td>
             </tr>
         );
     }
