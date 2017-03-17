@@ -12,8 +12,10 @@ class NewsComponent extends React.Component {
                     <div className="panel-body">
                         <ul>
                             <li>
-                                <Link to="/news/1">First production database testing started.</Link>
-                                <span className="pull-right date">2016.01.01</span>
+                                <div className="clearfix">
+                                    <Link to="/news/1">First production database testing started.</Link>
+                                    <span className="pull-right date">2016.01.01</span>
+                                </div>
                             </li>
                         </ul>
                     </div>
