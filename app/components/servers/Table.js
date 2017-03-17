@@ -73,15 +73,14 @@ class TableComponent extends React.Component {
                                 >
                                     <span className="glyphicon glyphicon-refresh"/>
                                     Auto Refresh
-                                </a>
-                                <Permission {...this.props} permission="table.auto_refresh" value={false}>
-                                    <OverlayTrigger placement="top"
-                                                    overlay={<Tooltip id="premium-enable">Sign in to enable option.</Tooltip>}>
-                                        <a className="btn btn-xs">
+                                    <Permission {...this.props} permission="table.auto_refresh" value={false}>
+                                        <OverlayTrigger placement="top"
+                                                        overlay={<Tooltip id="premium-enable">Sign in to enable
+                                                            option.</Tooltip>}>
                                             <i className="fa fa-question-circle text-info"/>
-                                        </a>
-                                    </OverlayTrigger>
-                                </Permission>
+                                        </OverlayTrigger>
+                                    </Permission>
+                                </a>
                             </div>
                         </div>
                         <div className="panel-body">
