@@ -453,6 +453,7 @@ class ApiV1Controller extends Controller
         if(!!$user) {
             $response['isLoggedIn'] = TRUE;
             $response['user'] = $user->toArray();
+            $response['user']['created_at'] = date('F Y', strtotime($user->created_at));
         }
 
         return JsonResponse::create($response);
