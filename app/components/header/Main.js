@@ -21,7 +21,7 @@ class MainHeaderComponent extends React.Component {
     handleClickSignOut(e) {
         this.props.ajax.get('/logout')
             .then(() => {
-                this.props.actions.sessionChanged(false, {});
+                this.props.actions.sessionChanged(false, {permissions: {}});
                 this.props.router.push('/account');
             })
             .catch((error) => {

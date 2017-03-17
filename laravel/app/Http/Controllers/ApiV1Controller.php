@@ -8,7 +8,6 @@ use App\Mail\AccountConfirmed;
 use App\Mail\ConfirmAccount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
@@ -90,6 +89,8 @@ class ApiV1Controller extends Controller
             'country'
         ]);
 
+        $user = Sentinel::getUser();
+
         switch ($request->query('status', 'online')) {
             case 'online':
                 $servers->where('is_available', '=', 1);
@@ -117,85 +118,89 @@ class ApiV1Controller extends Controller
                 break;
 
             case 'socks5_elite':
-                $servers->where('is_socks', '=', 1);
+                if (!!$user AND $user->hasAccess('server.filter_all')) {
+                    $servers->where('is_socks', '=', 1);
+                }
                 break;
         }
 
-        switch ($request->query('ping', 'all')) {
-            case 'fastest':
-                $servers->where('ping', '<', 3);
-                break;
+        if (!!$user AND $user->hasAccess('server.filter_all')) {
+            switch ($request->query('ping', 'all')) {
+                case 'fastest':
+                    $servers->where('ping', '<', 3);
+                    break;
 
-            case 'fast':
-                $servers->where('ping', '>=', 3)
-                    ->where('ping', '<', 10);
-                break;
+                case 'fast':
+                    $servers->where('ping', '>=', 3)
+                        ->where('ping', '<', 10);
+                    break;
 
-            case 'medium':
-                $servers->where('ping', '>=', 10)
-                    ->where('ping', '<', 25);
-                break;
+                case 'medium':
+                    $servers->where('ping', '>=', 10)
+                        ->where('ping', '<', 25);
+                    break;
 
-            case 'slow':
-                $servers->where('ping', '>=', 25);
-                break;
-        }
+                case 'slow':
+                    $servers->where('ping', '>=', 25);
+                    break;
+            }
 
-        switch ($request->query('speed', 'all')) {
-            case 'slow':
-                $servers->where(function ($query) {
-                    $query->where('speed', '<', 2048)
-                        ->orWhereNull('speed');
-                });
-                break;
+            switch ($request->query('speed', 'all')) {
+                case 'slow':
+                    $servers->where(function ($query) {
+                        $query->where('speed', '<', 2048)
+                            ->orWhereNull('speed');
+                    });
+                    break;
 
-            case 'medium':
-                $servers->where('speed', '>=', 2048)
-                    ->where('speed', '<', 10240);
-                break;
+                case 'medium':
+                    $servers->where('speed', '>=', 2048)
+                        ->where('speed', '<', 10240);
+                    break;
 
-            case 'fast':
-                $servers->where('speed', '>=', 10240)
-                    ->where('speed', '<', 25600);
-                break;
+                case 'fast':
+                    $servers->where('speed', '>=', 10240)
+                        ->where('speed', '<', 25600);
+                    break;
 
-            case 'fastest':
-                $servers->where('speed', '>=', 25600);
-                break;
-        }
+                case 'fastest':
+                    $servers->where('speed', '>=', 25600);
+                    break;
+            }
 
-        $uptimeRatioQuery = \DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))');
+            $uptimeRatioQuery = \DB::raw('(IF(is_socks=0, ping_success + speed_success, ping_socks_success + speed_success) / IF(is_socks = 0, ping_error + speed_error, ping_socks_error + speed_error))');
 
-        switch ($request->query('uptime_ratio', 'all')) {
-            case 'greatest':
-                $servers->where(function ($q) use ($uptimeRatioQuery) {
-                    $q->where($uptimeRatioQuery, '>', 0.75)
-                        ->orWhere($uptimeRatioQuery, '=', NULL);
-                });
-                break;
+            switch ($request->query('uptime_ratio', 'all')) {
+                case 'greatest':
+                    $servers->where(function ($q) use ($uptimeRatioQuery) {
+                        $q->where($uptimeRatioQuery, '>', 0.75)
+                            ->orWhere($uptimeRatioQuery, '=', NULL);
+                    });
+                    break;
 
-            case 'great':
-                $servers->where(function ($q) use ($uptimeRatioQuery) {
-                    $q->where($uptimeRatioQuery, '<=', 0.75)
-                        ->where($uptimeRatioQuery, '>', 0.5);
-                });
-                break;
+                case 'great':
+                    $servers->where(function ($q) use ($uptimeRatioQuery) {
+                        $q->where($uptimeRatioQuery, '<=', 0.75)
+                            ->where($uptimeRatioQuery, '>', 0.5);
+                    });
+                    break;
 
-            case 'medium':
-                $servers->where(functioN ($q) use ($uptimeRatioQuery) {
-                    $q->where($uptimeRatioQuery, '<=', 0.5)
-                        ->where($uptimeRatioQuery, '>', 0.25);
-                });
-                break;
+                case 'medium':
+                    $servers->where(functioN ($q) use ($uptimeRatioQuery) {
+                        $q->where($uptimeRatioQuery, '<=', 0.5)
+                            ->where($uptimeRatioQuery, '>', 0.25);
+                    });
+                    break;
 
-            case 'low':
-                $servers->where($uptimeRatioQuery, '<=', 0.25);
-                break;
-        }
+                case 'low':
+                    $servers->where($uptimeRatioQuery, '<=', 0.25);
+                    break;
+            }
 
-        $country = $request->query('country', 'all');
-        if ($country !== 'all') {
-            $servers->where('country', '=', $country);
+            $country = $request->query('country', 'all');
+            if ($country !== 'all') {
+                $servers->where('country', '=', $country);
+            }
         }
 
         $servers->orderBy(\DB::raw('IF(is_socks = 0, checked_at, socks_checked_at)'), 'DESC');
@@ -318,6 +323,9 @@ class ApiV1Controller extends Controller
         $user = Sentinel::register($credentials);
         $user->newsletter = (bool)$request->get('newsletter', false);
         $user->token = str_random(32);
+        $user->permissions = [
+            'table.auto_refresh' => TRUE
+        ];
         $user->save();
 
         $activation = Activation::create($user);
@@ -375,7 +383,7 @@ class ApiV1Controller extends Controller
         }
 
         if ($user) {
-            if ($user = Sentinel::login($user)) {
+            if (Sentinel::login($user)) {
                 $ar = $user->toArray();
                 $ar['created_at'] = date('F Y', strtotime($ar['created_at']));
                 return JsonResponse::create($ar);

@@ -1,6 +1,11 @@
 import React from 'react';
 import TableRowComponent from './TableRow';
 import TablePaginationComponent from './TablePagination';
+import Permission from '../Permission';
+import {
+    Tooltip,
+    OverlayTrigger
+} from 'react-bootstrap';
 
 class TableComponent extends React.Component {
     componentDidMount() {
@@ -23,6 +28,12 @@ class TableComponent extends React.Component {
 
     handleButtonAutoRefreshClick(e) {
         e.preventDefault();
+
+        let hasPermission = this.props.state.session.isLoggedIn;
+        if (!hasPermission) {
+            return false;
+        }
+
         this.props.refresh();
         this.autoRefresh = !this.autoRefresh;
         if (this.autoRefresh) {
@@ -37,12 +48,13 @@ class TableComponent extends React.Component {
 
     render() {
         let servers = this.props.state.servers.data || [];
+        let hasPermission = this.props.state.session.isLoggedIn;
 
-        let playButtonClassNames;
+        let playButtonClassNames = hasPermission ? '' : 'disabled';
         if (this.autoRefresh) {
-            playButtonClassNames = "btn btn-danger btn-xs";
+            playButtonClassNames += " btn btn-danger btn-xs";
         } else {
-            playButtonClassNames = "btn btn-success btn-xs";
+            playButtonClassNames += " btn btn-success btn-xs";
         }
 
         return (
@@ -62,6 +74,14 @@ class TableComponent extends React.Component {
                                     <span className="glyphicon glyphicon-refresh"/>
                                     Auto Refresh
                                 </a>
+                                <Permission {...this.props} permission="table.auto_refresh" value={false}>
+                                    <OverlayTrigger placement="top"
+                                                    overlay={<Tooltip id="premium-enable">Sign in to enable option.</Tooltip>}>
+                                        <a className="btn btn-xs">
+                                            <i className="fa fa-question-circle text-info"/>
+                                        </a>
+                                    </OverlayTrigger>
+                                </Permission>
                             </div>
                         </div>
                         <div className="panel-body">

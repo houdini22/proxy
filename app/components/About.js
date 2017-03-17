@@ -5,7 +5,7 @@ import MainHeaderComponent from './header/Main';
 class IndexComponent extends React.Component {
     render() {
         return (
-            <div>
+            <div className="page page-about">
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
                     <div className="well">

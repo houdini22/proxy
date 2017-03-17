@@ -14,7 +14,9 @@ const defaultState = {
     servers: {},
     session: {
         isLoggedIn: false,
-        user: {}
+        user: {
+            permissions: {}
+        }
     }
 };
 
