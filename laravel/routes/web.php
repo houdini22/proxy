@@ -24,6 +24,7 @@ Route::group(['prefix' => 'api', 'middleware' => ['web', 'secure']], function ()
         Route::post('/login', 'ApiV1Controller@postLogin');
         Route::get('/logout', 'ApiV1Controller@getLogout');
         Route::post('/import', 'ApiV1Controller@postImport');
+        Route::get('/session', 'ApiV1Controller@getSession');
     });
     Route::get('/', function () {
         return "API";

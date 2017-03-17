@@ -439,4 +439,22 @@ class ApiV1Controller extends Controller
             'count' => $count
         ]);
     }
+
+    public function getSession(Request $request)
+    {
+        $response = [
+            'isLogged' => FALSE,
+            'user' => [
+                'permissions' => new \stdClass()
+            ]
+        ];
+
+        $user = Sentinel::getUser();
+        if(!!$user) {
+            $response['isLoggedIn'] = TRUE;
+            $response['user'] = $user->toArray();
+        }
+
+        return JsonResponse::create($response);
+    }
 }

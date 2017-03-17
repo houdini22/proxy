@@ -81,7 +81,7 @@ class MainHeaderComponent extends React.Component {
                             <NavItem>Home</NavItem>
                         </IndexLinkContainer>
                         <LinkContainer to="/servers">
-                            <NavItem><strong>Servers</strong></NavItem>
+                            <NavItem><strong>Proxy List</strong></NavItem>
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
