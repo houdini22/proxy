@@ -443,7 +443,7 @@ class ApiV1Controller extends Controller
     public function getSession(Request $request)
     {
         $response = [
-            'isLogged' => FALSE,
+            'isLoggedIn' => FALSE,
             'user' => [
                 'permissions' => new \stdClass()
             ]
