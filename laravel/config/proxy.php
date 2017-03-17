@@ -8,7 +8,7 @@ return array(
     'test_server_socks_http_path' => '/proxy_test_socks',
     'test_server_speed_path' => '/files/test_file',
 	'services' => array(
-        /*array(
+        array(
             'url' => 'http://best-proxy-list-ips.blogspot.com/',
             'disabled' => FALSE,
             'service_name' => 'BestProxyList'
@@ -54,15 +54,16 @@ return array(
             'service_name' => 'BestProxyList',
         ),
         array(
+            'url' => 'https://proxydb.net/',
+            'disabled' => FALSE,
+            'service_name' => 'ProxyDB',
+            'disable_empty_limit' => TRUE
+        ),
+        array(
             'url' => 'http://www.blackhatworld.com/forums/proxy-lists.103/',
             'disabled' => FALSE,
             'service_name' => 'BlackHatSEO',
             'disable_empty_limit' => TRUE
-        ),*/
-        array(
-            'url' => 'https://proxydb.net/',
-            'disabled' => FALSE,
-            'service_name' => 'ProxyDB',
         ),
 	)
 );
