@@ -63,8 +63,9 @@ class ServersComponent extends React.Component {
         return (
             <div className="page page-servers">
                 <MainHeaderComponent {...this.props} />
-                <StatisticsComponent {...this.props}/>
                 <div className="container" role="main">
+                    <h3 className="page-header">Proxy List</h3>
+                    <StatisticsComponent {...this.props}/>
                     <div className="row">
                         <FiltersComponent
                             {...this.props}

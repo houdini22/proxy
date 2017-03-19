@@ -8,6 +8,7 @@ class IndexComponent extends React.Component {
             <div className="page page-about">
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
+                    <h3 className="page-header">About</h3>
                     <div className="well">
                         Copyright © 2017 proxydatabase.online
                     </div>
