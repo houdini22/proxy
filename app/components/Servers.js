@@ -3,7 +3,6 @@ import FooterComponent from './footer/Main';
 import MainHeaderComponent from './header/Main';
 import TableComponent from './servers/Table';
 import StatisticsComponent from './servers/Statistics';
-import FiltersComponent from './servers/Filters';
 
 class ServersComponent extends React.Component {
     constructor() {

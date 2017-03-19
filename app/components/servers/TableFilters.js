@@ -4,9 +4,8 @@ import {
     Radio,
     Checkbox
 } from 'react-bootstrap';
-import {getFormData} from '../../helpers/form-helper';
 
-class FiltersComponent extends React.Component {
+class TableFiltersComponent extends React.Component {
     constructor() {
         super();
         this.filters = {};
@@ -47,7 +46,7 @@ class FiltersComponent extends React.Component {
     }
 
     handleFilterChange(e, groupName) {
-        let el = e.target;
+        let el = e.currentTarget;
         let realName = el.name;
         let isArray = realName.slice(-2) === '[]';
         let name = isArray ? realName.substr(0, realName.length - 2) : realName;
@@ -76,6 +75,7 @@ class FiltersComponent extends React.Component {
 
 
         let label = this.refs[`filter.btn.label.${name}`];
+        let reset = this.refs[`filter.btn.reset.${name}`];
         let text = 0;
         if (this.filters[name]) {
             text = 1;
@@ -86,8 +86,14 @@ class FiltersComponent extends React.Component {
         label.textContent = text;
         if (text) {
             label.style.display = 'inline';
+            if (reset) {
+                reset.style.display = 'inline';
+            }
         } else {
             label.style.display = 'none';
+            if (reset) {
+                reset.style.display = 'none';
+            }
         }
 
         let btn = this.refs[`filter.btn.${name}`];
@@ -102,8 +108,44 @@ class FiltersComponent extends React.Component {
         this.props.setFilters(this.filters);
     }
 
+    handleOnClickReset(e, name) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let label = this.refs[`filter.btn.label.${name}`];
+        let reset = this.refs[`filter.btn.reset.${name}`];
+        let btn = this.refs[`filter.btn.${name}`];
+        let detail = this.refs['filter.detail.' + name];
+
+        label.style.display = 'none';
+        reset.style.display = 'none';
+        btn.classList.remove('is-active');
+        detail.removeAttribute('data-is-active', 'false');
+        detail.style.display = 'none';
+        btn.classList.remove('active');
+        this.refs.filters_overlay.style.display = 'none';
+
+        delete this.filters[name];
+
+        Object.keys(this.refs).filter((key) => {
+            return key.indexOf(`filter.filter.${name}`) === 0;
+        }).forEach((key => {
+            let filter = this.refs[key];
+            if (filter.type === 'radio' || filter.type === 'checkbox') {
+                if (filter.checked) {
+                    filter.checked = false;
+                }
+            } else {
+                filter.value = '';
+            }
+        }));
+
+        this.props.setFilters(this.filters);
+    }
+
     render() {
         let countries = this.props.state.statistics.server_countries || [];
+        let filtersEnabled = this.props.state.session.user.permissions['server.filter_all'];
 
         return (
             <div>
@@ -115,6 +157,10 @@ class FiltersComponent extends React.Component {
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.type"
                                   style={{display: 'none'}}>0</span>
+                            <span className="reset" ref="filter.btn.reset.type"
+                                  onClick={(e) => {
+                                      this.handleOnClickReset(e, 'type')
+                                  }}>reset</span>
                         </span>
                     </a>
                     <a className="btn btn-app btn-xs is-active" data-name="status" ref="filter.btn.status"
@@ -132,6 +178,9 @@ class FiltersComponent extends React.Component {
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.latency"
                                   style={{display: 'none'}}>0</span>
+                            <span className="reset" ref="filter.btn.reset.latency" onClick={(e) => {
+                                this.handleOnClickReset(e, 'latency')
+                            }}>reset</span>
                         </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="uptime" ref="filter.btn.uptime"
@@ -141,6 +190,9 @@ class FiltersComponent extends React.Component {
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.uptime"
                                   style={{display: 'none'}}>0</span>
+                            <span className="reset" ref="filter.btn.reset.uptime" onClick={(e) => {
+                                this.handleOnClickReset(e, 'uptime')
+                            }}>reset</span>
                         </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="speed" ref="filter.btn.speed"
@@ -150,6 +202,9 @@ class FiltersComponent extends React.Component {
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.speed"
                                   style={{display: 'none'}}>0</span>
+                            <span className="reset" ref="filter.btn.reset.speed" onClick={(e) => {
+                                this.handleOnClickReset(e, 'speed')
+                            }}>reset</span>
                         </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="country" ref="filter.btn.country"
@@ -159,6 +214,9 @@ class FiltersComponent extends React.Component {
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.country"
                                   style={{display: 'none'}}>0</span>
+                            <span className="reset" ref="filter.btn.reset.country" onClick={(e) => {
+                                this.handleOnClickReset(e, 'country')
+                            }}>reset</span>
                         </span>
                     </a>
                 </div>
@@ -166,7 +224,9 @@ class FiltersComponent extends React.Component {
                     <div data-name="type" ref="filter.detail.type">
                         <ul className="list-group">
                             <li className="list-group-item">
-                                <Checkbox name="type[]" value="http_elite" ref="filter.filter.type.http_elite"
+                                <Checkbox name="type[]" value="http_elite" inputRef={(input) => {
+                                    this.refs['filter.filter.type.http_elite'] = input;
+                                }}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'type');
                                           }}>
@@ -178,7 +238,9 @@ class FiltersComponent extends React.Component {
                             </li>
                             <li className="list-group-item">
                                 <Checkbox name="type[]" value="http_transparent"
-                                          ref="filter.filter.type.http_transparent"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.type.http_transparent'] = input;
+                                          }}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'type');
                                           }}>
@@ -189,7 +251,10 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item">
-                                <Checkbox name="type[]" value="socks5_elite" ref="filter.filter.type.socks5_elite"
+                                <Checkbox name="type[]" value="socks5_elite"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.type.socks5_elite'] = input;
+                                          }}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'type');
                                           }}>
@@ -205,7 +270,9 @@ class FiltersComponent extends React.Component {
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
                                 <Radio name="status" value="online" defaultChecked="checked"
-                                       ref="filter.filter.status.online"
+                                       inputRef={(input) => {
+                                           this.refs['filter.filter.status.online'] = input;
+                                       }}
                                        onChange={(e) => {
                                            this.handleFilterChange(e, 'status');
                                        }}>
@@ -215,7 +282,10 @@ class FiltersComponent extends React.Component {
                                 </Radio>
                             </li>
                             <li className="list-group-item bg-danger-light">
-                                <Radio name="status" value="offline" ref="filter.filter.status.offline"
+                                <Radio name="status" value="offline"
+                                       inputRef={(input) => {
+                                           this.refs['filter.filter.status.offline'] = input;
+                                       }}
                                        onChange={(e) => {
                                            this.handleFilterChange(e, 'status');
                                        }}>
@@ -227,7 +297,11 @@ class FiltersComponent extends React.Component {
                     <div data-name="latency" ref="filter.detail.latency">
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
-                                <Checkbox name="latency[]" value="fastest" ref="filter.filter.latency.fastest"
+                                <Checkbox name="latency[]" value="fastest"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.latency.fastest'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'latency');
                                           }}>
@@ -238,7 +312,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-info-light">
-                                <Checkbox name="latency[]" value="fast" ref="filter.filter.latency.fast"
+                                <Checkbox name="latency[]" value="fast"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.latency.fast'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'latency');
                                           }}>
@@ -249,7 +327,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-warning-light">
-                                <Checkbox name="latency[]" value="medium" ref="filter.filter.latency.medium"
+                                <Checkbox name="latency[]" value="medium"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.latency.medium'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'latency');
                                           }}>
@@ -260,7 +342,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-danger-light">
-                                <Checkbox name="latency[]" value="slow" ref="filter.filter.latency.slow"
+                                <Checkbox name="latency[]" value="slow"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.latency.slow'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'latency');
                                           }}>
@@ -275,7 +361,11 @@ class FiltersComponent extends React.Component {
                     <div data-name="speed" ref="filter.detail.speed">
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
-                                <Checkbox name="speed[]" value="fastest" ref="filter.filter.speed.fastest"
+                                <Checkbox name="speed[]" value="fastest"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.speed.fastest'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'speed');
                                           }}>
@@ -286,7 +376,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-info-light">
-                                <Checkbox name="speed[]" value="fast" ref="filter.filter.speed.fast"
+                                <Checkbox name="speed[]" value="fast"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.speed.fast'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'speed');
                                           }}>
@@ -297,7 +391,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-warning-light">
-                                <Checkbox name="speed[]" value="medium" ref="filter.filter.speed.medium"
+                                <Checkbox name="speed[]" value="medium"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.speed.medium'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'speed');
                                           }}>
@@ -308,7 +406,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-danger-light">
-                                <Checkbox name="speed[]" value="slow" ref="filter.filter.speed.slow"
+                                <Checkbox name="speed[]" value="slow"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.speed.slow'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'speed');
                                           }}>
@@ -323,7 +425,11 @@ class FiltersComponent extends React.Component {
                     <div data-name="uptime" ref="filter.detail.uptime">
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
-                                <Checkbox name="uptime[]" value="greatest" ref="filter.filter.uptime.greatest"
+                                <Checkbox name="uptime[]" value="greatest"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.uptime.greatest'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
@@ -333,7 +439,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-info-light">
-                                <Checkbox name="uptime[]" value="great" ref="filter.filter.uptime.great"
+                                <Checkbox name="uptime[]" value="great"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.uptime.great'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
@@ -343,7 +453,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-warning-light">
-                                <Checkbox name="uptime[]" value="medium" ref="filter.filter.uptime.medium"
+                                <Checkbox name="uptime[]" value="medium"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.uptime.medium'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
@@ -353,7 +467,11 @@ class FiltersComponent extends React.Component {
                                 </Checkbox>
                             </li>
                             <li className="list-group-item bg-danger-light">
-                                <Checkbox name="uptime[]" value="low" ref="filter.filter.uptime.low"
+                                <Checkbox name="uptime[]" value="low"
+                                          inputRef={(input) => {
+                                              this.refs['filter.filter.uptime.low'] = input;
+                                          }}
+                                          disabled={!filtersEnabled}
                                           onChange={(e) => {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
@@ -371,7 +489,10 @@ class FiltersComponent extends React.Component {
                                 componentClass="select"
                                 className="input-sm"
                                 defaultValue="all"
-                                ref="filter.filter.country"
+                                disabled={!filtersEnabled}
+                                inputRef={(input) => {
+                                    this.refs['filter.filter.country'] = input;
+                                }}
                                 onChange={(e) => {
                                     this.handleFilterChange(e, 'country');
                                 }}
@@ -379,11 +500,12 @@ class FiltersComponent extends React.Component {
                                 <option value="">all countries</option>
                                 {
                                     countries.map((obj, i) => {
-                                        return <option key={i} value={obj.country}>{obj.country}
-                                            &nbsp;({obj.count})</option>;
+                                        return (<option key={i} value={obj.country}>{obj.country}
+                                            &nbsp;({obj.count})</option>);
                                     })
                                 }
                             </FormControl>
+
                         </div>
                     </div>
                     <div className="panel-filters-details-overlay" ref="filters_overlay"></div>
@@ -393,4 +515,4 @@ class FiltersComponent extends React.Component {
     }
 }
 
-export default FiltersComponent;
+export default TableFiltersComponent;
