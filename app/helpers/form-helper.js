@@ -2,7 +2,7 @@ export function getFormData(form) {
     return Array.from(form.elements)
         .filter(el => el.name)
         .reduce((a, b) => {
-            if (b.getAttribute("type") === 'checkbox') {
+            if (b.getAttribute("type") === 'checkbox' || b.getAttribute("type") === 'radio') {
                 if (b.checked) {
                     return {
                         ...a,

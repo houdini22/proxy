@@ -45,6 +45,122 @@ body {
       }
     }
   }
+  .panel-content {
+    position: relative;
+    .panel-filters {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 81px;
+      background: #f8f5f0;
+      border-right: 1px solid #dfd7ca;
+      border-bottom-left-radius: 4px;
+      .btn.btn-app {
+        margin: 0;
+        border-radius: 0;
+        border: 0 none;
+        padding: 0;
+        padding-right: 20px;
+        padding-left: 7px;
+        line-height: 80px;
+        height: 80px;
+        border-bottom: 1px solid #dfd7ca;
+        background: #f8f5f0;
+        position: relative;
+        text-align: left;
+        .fa {
+          font-size: 11px;
+          margin: 0;
+          right: 7px;
+          position: absolute;
+          top: calc(50% - 5px);
+        }
+        span {
+          color: #98978b;
+          line-height: 15px;
+        }
+        &:hover, &.active {
+          background: #e2dfda;
+        }
+        &.is-active {
+          span {
+            color: #494843;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .panel-filters-details {
+      & > * {
+        display: none;
+        position: absolute;
+        left: 81px;
+        top: 0;
+        bottom: 0;
+        background: #fff;
+        width: 250px;
+        //background: #f8f5f0;
+        border-right: 1px solid #dfd7ca;
+        .list-group {
+          border: 0 none;
+          margin: 0;
+          .list-group-item {
+            //background: #f8f5f0;
+            background: #fff;
+            border: 0 none;
+            border-bottom: 1px solid #ddd;
+            border-radius: 0;
+            margin: 0;
+            cursor: pointer;
+            height: 40px;
+            padding: 0;
+            line-height: 40px;
+            padding-left: 15px;
+            &:hover {
+              background: #f4f4f4;
+            }
+            .checkbox, .radio {
+              margin: 0;
+              line-height: 40px;
+              text-align: center;
+              label {
+                text-align: left;
+                vertical-align: middle;
+                display: block;
+                line-height: 40px;
+                padding: 0;
+                margin: 0;
+                span {
+
+                }
+                input {
+                  position: absolute;
+                  right: 10px;
+                  top: calc(50% - 6px);
+                  margin: 0;
+                  vertical-align: middle;
+                  display: inline;
+                }
+              }
+            }
+          }
+        }
+        select.form-control {
+          border-top: 0 none;
+          border-left: 0 none;
+          border-right: 0 none;
+          -webkit-border-radius: 0;
+          -moz-border-radius: 0;
+          border-radius: 0;
+          height: 50px;
+        }
+      }
+    }
+    .panel-body {
+      margin-left: 95px;
+    }
+  }
   .panel-footer {
     .form-group {
       margin: 0;
@@ -384,6 +500,22 @@ body {
   background-color: #00c0ef !important;
 }
 
+.bg-success-light {
+  background-color: #dff0d8 !important;
+}
+
+.bg-danger-light {
+  background-color: #f2dede !important;
+}
+
+.bg-info-light {
+  background-color: #d9edf7 !important;
+}
+
+.bg-warning-light {
+  background-color: #fcf8e3 !important;
+}
+
 .page {
   width: 100%;
   background: #fff;
@@ -414,6 +546,45 @@ body {
       }
     }
   }
+}
+
+.btn-app {
+  border-radius: 3px;
+  position: relative;
+  padding: 15px 5px;
+  margin: 0 0 10px 10px;
+  min-width: 80px;
+  height: 50px;
+  text-align: center;
+  color: #666;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  font-size: 12px;
+}
+.btn-app > .fa,
+.btn-app > .glyphicon,
+.btn-app > .ion {
+  font-size: 20px;
+  display: block;
+}
+.btn-app:hover {
+  background: #f4f4f4;
+  color: #444;
+  border-color: #aaa;
+}
+.btn-app:active,
+.btn-app.active,
+.btn-app:focus {
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.btn-app > .badge {
+  position: absolute;
+  top: -3px;
+  right: -10px;
+  font-size: 10px;
+  font-weight: 400;
 }
 
 .page.page-servers {

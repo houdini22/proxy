@@ -65,11 +65,10 @@ class TableRowComponent extends React.Component {
 
         let type;
         if (rowData.is_socks) {
-            type = 'SOCKS5 ';
+            type = <span>SOCKS5<br/><small>{rowData.type}</small></span>;
         } else {
-            type = 'HTTP ';
+            type = <span>HTTP<br/><small>{rowData.type}</small></span>;
         }
-        type += rowData.type;
 
         let tooltip;
         if (rowData.last_speed_error_status_code === null && rowData.last_speed_error_message === null) {

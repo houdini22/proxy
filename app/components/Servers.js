@@ -66,17 +66,12 @@ class ServersComponent extends React.Component {
                 <div className="container" role="main">
                     <h3 className="page-header">Proxy List</h3>
                     <StatisticsComponent {...this.props}/>
-                    <div className="row">
-                        <FiltersComponent
-                            {...this.props}
-                            setFilters={this.setFilters.bind(this)}
-                        />
-                    </div>
                     <TableComponent
                         {...this.props}
                         goToPrevPage={this.goToPrevPage.bind(this)}
                         goToNextPage={this.goToNextPage.bind(this)}
                         refresh={this.refresh.bind(this)}
+                        setFilters={this.setFilters.bind(this)}
                     />
                 </div>
                 <FooterComponent {...this.props}/>
