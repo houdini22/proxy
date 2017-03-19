@@ -132,54 +132,54 @@ class ApiV1Controller extends Controller
 
         if (!!$user AND $user->hasAccess('server.filter_all')) {
 
-            $uptimeRatio = $request->get('latency', []);
+            $latency = $request->get('latency', []);
 
-            $servers->where(function ($q) use ($uptimeRatio, $user) {
-                if (in_array('fastest', $uptimeRatio)) {
+            $servers->where(function ($q) use ($latency, $user) {
+                if (in_array('fastest', $latency)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('ping', '<', 3);
                     });
                 }
-                if (in_array('fast', $uptimeRatio)) {
+                if (in_array('fast', $latency)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('ping', '>=', 3)
                             ->where('ping', '<', 10);
                     });
                 }
-                if (in_array('medium', $uptimeRatio)) {
+                if (in_array('medium', $latency)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('ping', '>=', 10)
                             ->where('ping', '<', 25);
                     });
                 }
-                if (in_array('slow', $uptimeRatio)) {
+                if (in_array('slow', $latency)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('ping', '>=', 25);
                     });
                 }
             });
 
-            $uptimeRatio = $request->get('speed', []);
+            $speed = $request->get('speed', []);
 
-            $servers->where(function ($q) use ($uptimeRatio) {
-                if (in_array('fastest', $uptimeRatio)) {
+            $servers->where(function ($q) use ($speed) {
+                if (in_array('fastest', $speed)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('speed', '>=', 25600);
                     });
                 }
-                if (in_array('fast', $uptimeRatio)) {
+                if (in_array('fast', $speed)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('speed', '>=', 10240)
                             ->where('speed', '<', 25600);
                     });
                 }
-                if (in_array('medium', $uptimeRatio)) {
+                if (in_array('medium', $speed)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('speed', '>=', 2048)
                             ->where('speed', '<', 10240);
                     });
                 }
-                if (in_array('slow', $uptimeRatio)) {
+                if (in_array('slow', $speed)) {
                     $q->orWhere(function ($q2) {
                         $q2->where('speed', '<', 2048)
                             ->orWhereNull('speed');
