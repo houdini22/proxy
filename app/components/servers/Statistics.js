@@ -9,9 +9,9 @@ class StatisticsComponent extends React.Component {
             <div className="row statistics-row">
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <div className="info-box">
-                        <span className="info-box-icon bg-aqua"><i className="fa fa-clock-o"></i></span>
+                        <span className="info-box-icon bg-aqua"><i className="fa fa-globe"></i></span>
                         <div className="info-box-content">
-                            <span className="info-box-text">All working servers</span>
+                            <span className="info-box-text">All servers which were online</span>
                             <span className="info-box-number">{statistics.nb_servers_available_in_past}</span>
                         </div>
                     </div>
@@ -36,7 +36,7 @@ class StatisticsComponent extends React.Component {
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <div className="info-box">
-                        <span className="info-box-icon bg-aqua"><i className="fa fa-clock-o"></i></span>
+                        <span className="info-box-icon bg-aqua"><i className="fa fa-info"></i></span>
                         <div className="info-box-content">
                             <span className="info-box-text">SOCKS5 servers online</span>
                             <span className="info-box-number">{statistics.nb_servers_socks5_online} / <small>{statistics.nb_servers_socks5_available}</small></span>
@@ -45,7 +45,7 @@ class StatisticsComponent extends React.Component {
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <div className="info-box">
-                        <span className="info-box-icon bg-aqua"><i className="fa fa-clock-o"></i></span>
+                        <span className="info-box-icon bg-aqua"><i className="fa fa-map-marker"></i></span>
                         <div className="info-box-content">
                             <span className="info-box-text">Servers countries</span>
                             <span className="info-box-number">{statistics.nb_server_countries}</span>
@@ -54,7 +54,7 @@ class StatisticsComponent extends React.Component {
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                     <div className="info-box">
-                        <span className="info-box-icon bg-aqua"><i className="fa fa-clock-o"></i></span>
+                        <span className="info-box-icon bg-aqua"><i className="fa fa-map-marker"></i></span>
                         <div className="info-box-content">
                             <span className="info-box-text">Servers cities</span>
                             <span className="info-box-number">{statistics.nb_server_cities}</span>
