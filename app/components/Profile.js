@@ -55,6 +55,7 @@ class ProfileComponent extends React.Component {
             <div className="page page-profile">
                 <MainHeaderComponent {...this.props} />
                 <div className="container" role="main">
+                    <h3 className="page-header">Profile</h3>
                     <div className="well">
                         Profile
                     </div>
