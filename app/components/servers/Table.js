@@ -6,6 +6,7 @@ import {
     Tooltip,
     OverlayTrigger
 } from 'react-bootstrap';
+import PanelFilterComponent from './TableFilters';
 
 class TableComponent extends React.Component {
     componentDidMount() {
@@ -83,33 +84,40 @@ class TableComponent extends React.Component {
                                 </a>
                             </div>
                         </div>
-                        <div className="panel-body">
-                            <table className="proxy-table table table-condensed table-striped">
-                                <thead>
-                                <tr>
-                                    <th style={{width: "160px"}}>Address</th>
-                                    <th style={{width: "120px"}}>Type</th>
-                                    <th style={{width: "60px"}}>Status</th>
-                                    <th style={{width: "65px"}}>Latency</th>
-                                    <th style={{width: "65px"}}>Uptime Ratio</th>
-                                    <th style={{width: "100px"}}>Speed</th>
-                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
-                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">Checked at</th>
-                                    <th style={{width: "100px"}} className="hidden-sm hidden-xs">Last availability</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    servers.map((obj) => {
-                                        return <TableRowComponent {...this.props} key={obj.address_img_url}
-                                                                  rowData={obj}/>
-                                    })
-                                }
-                                </tbody>
-                            </table>
-                            <TablePaginationComponent {...this.props}
-                                                      handlePrevPageClick={this.handlePrevPageClick.bind(this)}
-                                                      handleNextPageClick={this.handleNextPageClick.bind(this)}/>
+                        <div className="panel-content">
+                            <PanelFilterComponent
+                                {...this.props}
+                                setFilters={this.props.setFilters}
+                            />
+                            <div className="panel-body">
+                                <table className="proxy-table table table-condensed table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th style={{width: "160px"}}>Address</th>
+                                        <th style={{width: "80px"}}>Type</th>
+                                        <th style={{width: "60px"}}>Status</th>
+                                        <th style={{width: "65px"}}>Latency</th>
+                                        <th style={{width: "65px"}}>Uptime Ratio</th>
+                                        <th style={{width: "100px"}}>Speed</th>
+                                        <th style={{width: "100px"}} className="hidden-sm hidden-xs">Country</th>
+                                        <th style={{width: "100px"}} className="hidden-sm hidden-xs">Checked at</th>
+                                        <th style={{width: "100px"}} className="hidden-sm hidden-xs">Last availability
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        servers.map((obj) => {
+                                            return <TableRowComponent {...this.props} key={obj.address_img_url}
+                                                                      rowData={obj}/>
+                                        })
+                                    }
+                                    </tbody>
+                                </table>
+                                <TablePaginationComponent {...this.props}
+                                                          handlePrevPageClick={this.handlePrevPageClick.bind(this)}
+                                                          handleNextPageClick={this.handleNextPageClick.bind(this)}/>
+                            </div>
                         </div>
                     </div>
                 </div>
