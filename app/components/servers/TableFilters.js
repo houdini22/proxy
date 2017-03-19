@@ -37,10 +37,12 @@ class FiltersComponent extends React.Component {
             detail.style.display = 'block';
             detail.setAttribute('data-is-active', 'true');
             btn.classList.add('active');
+            this.refs.filters_overlay.style.display = 'block';
         } else {
             detail.style.display = 'none';
             detail.setAttribute('data-is-active', 'false');
             btn.classList.remove('active');
+            this.refs.filters_overlay.style.display = 'none';
         }
     }
 
@@ -72,10 +74,27 @@ class FiltersComponent extends React.Component {
             }
         }
 
+
+        let label = this.refs[`filter.btn.label.${name}`];
+        let text = 0;
+        if (this.filters[name]) {
+            text = 1;
+            if (Array.isArray(this.filters[name])) {
+                text = this.filters[name].length;
+            }
+        }
+        label.textContent = text;
+        if (text) {
+            label.style.display = 'inline';
+        } else {
+            label.style.display = 'none';
+        }
+
         let btn = this.refs[`filter.btn.${name}`];
         let marked = !!this.filters[name];
         if (marked) {
             btn.classList.add('is-active');
+
         } else {
             btn.classList.remove('is-active');
         }
@@ -91,33 +110,56 @@ class FiltersComponent extends React.Component {
                 <div className="panel-filters">
                     <a className="btn btn-app btn-xs" data-name="type" ref="filter.btn.type"
                        onClick={this.handleOnClickBtn.bind(this, 'type')}>
-                        <span>Type</span>
+                        <span className="caption">Type</span>
                         <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.type"
+                                  style={{display: 'none'}}>0</span>
+                        </span>
                     </a>
                     <a className="btn btn-app btn-xs is-active" data-name="status" ref="filter.btn.status"
                        onClick={this.handleOnClickBtn.bind(this, 'status')}>
-                        <span>Status</span>
+                        <span className="caption">Status</span>
                         <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.status">1</span>
+                        </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="latency" ref="filter.btn.latency"
                        onClick={this.handleOnClickBtn.bind(this, 'latency')}>
-                        <span>Latency</span>
+                        <span className="caption">Latency</span>
                         <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.latency"
+                                  style={{display: 'none'}}>0</span>
+                        </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="uptime" ref="filter.btn.uptime"
                        onClick={this.handleOnClickBtn.bind(this, 'uptime')}>
-                        <span>Uptime</span>
+                        <span className="caption">Uptime</span>
                         <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.uptime"
+                                  style={{display: 'none'}}>0</span>
+                        </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="speed" ref="filter.btn.speed"
                        onClick={this.handleOnClickBtn.bind(this, 'speed')}>
-                        <span>Speed</span>
+                        <span className="caption">Speed</span>
                         <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.speed"
+                                  style={{display: 'none'}}>0</span>
+                        </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="country" ref="filter.btn.country"
                        onClick={this.handleOnClickBtn.bind(this, 'country')}>
-                        <span>Country</span>
+                        <span className="caption">Country</span>
                         <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.country"
+                                  style={{display: 'none'}}>0</span>
+                        </span>
                     </a>
                 </div>
                 <div className="panel-filters-details" ref="filters_container">
@@ -344,6 +386,7 @@ class FiltersComponent extends React.Component {
                             </FormControl>
                         </div>
                     </div>
+                    <div className="panel-filters-details-overlay" ref="filters_overlay"></div>
                 </div>
             </div>
         );
