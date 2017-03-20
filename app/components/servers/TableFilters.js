@@ -447,7 +447,7 @@ class TableFiltersComponent extends React.Component {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
                                     <span>
-                                        >75%
+                                        >= 100%
                                     </span>
                                 </Checkbox>
                             </li>
@@ -461,7 +461,7 @@ class TableFiltersComponent extends React.Component {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
                                     <span>
-                                        50 - 75%
+                                        {'<= 66% < 100'}%
                                     </span>
                                 </Checkbox>
                             </li>
@@ -475,7 +475,7 @@ class TableFiltersComponent extends React.Component {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
                                     <span>
-                                        25 - 50%
+                                        {'<= 33% < 66'}%
                                     </span>
                                 </Checkbox>
                             </li>
@@ -489,7 +489,7 @@ class TableFiltersComponent extends React.Component {
                                               this.handleFilterChange(e, 'uptime');
                                           }}>
                                     <span>
-                                        0 - 25%
+                                        {'> 33'}%
                                     </span>
                                 </Checkbox>
                             </li>

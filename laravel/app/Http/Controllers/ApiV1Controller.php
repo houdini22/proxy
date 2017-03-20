@@ -195,25 +195,25 @@ class ApiV1Controller extends Controller
             $servers->where(function ($q) use ($uptimeRatio, $uptimeRatioQuery) {
                 if (in_array('greatest', $uptimeRatio)) {
                     $q->orWhere(function ($q2) use ($uptimeRatioQuery) {
-                        $q2->where($uptimeRatioQuery, '>', 0.75)
+                        $q2->where($uptimeRatioQuery, '>=', 1)
                             ->orWhere($uptimeRatioQuery, '=', NULL);
                     });
                 }
                 if (in_array('great', $uptimeRatio)) {
                     $q->orWhere(function ($q2) use ($uptimeRatioQuery) {
-                        $q2->where($uptimeRatioQuery, '<=', 0.75)
-                            ->where($uptimeRatioQuery, '>', 0.5);
+                        $q2->where($uptimeRatioQuery, '<', 1)
+                            ->where($uptimeRatioQuery, '>=', 0.66);
                     });
                 }
                 if (in_array('medium', $uptimeRatio)) {
                     $q->orWhere(function ($q2) use ($uptimeRatioQuery) {
-                        $q2->where($uptimeRatioQuery, '<=', 0.5)
-                            ->where($uptimeRatioQuery, '>', 0.25);
+                        $q2->where($uptimeRatioQuery, '<', 0.66)
+                            ->where($uptimeRatioQuery, '>=', 0.33);
                     });
                 }
                 if (in_array('low', $uptimeRatio)) {
                     $q->orWhere(function ($q2) use ($uptimeRatioQuery) {
-                        $q2->where($uptimeRatioQuery, '<=', 0.25);
+                        $q2->where($uptimeRatioQuery, '<', 0.33);
                     });
                 }
             });

@@ -53,11 +53,11 @@ class TableRowComponent extends React.Component {
         }
 
         let uploadRatioClassName;
-        if (pingRatio > 0.75) {
+        if (pingRatio >= 1) {
             uploadRatioClassName = 'label label-success';
-        } else if (pingRatio <= 0.75 && pingRatio > 0.50) {
+        } else if (pingRatio >= 0.66 && pingRatio < 1) {
             uploadRatioClassName = 'label label-info';
-        } else if (pingRatio <= 0.50 && pingRatio > 0.25) {
+        } else if (pingRatio >= 0.33 && pingRatio < 0.66) {
             uploadRatioClassName = 'label label-warning';
         } else {
             uploadRatioClassName = 'label label-danger';
