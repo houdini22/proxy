@@ -130,6 +130,34 @@ body {
         width: 250px;
         //background: #f8f5f0;
         border-right: 1px solid #dfd7ca;
+        .page-header {
+          margin: 0;
+          color: #494843;
+          font-size: 13px;
+          padding: 0;
+          height: 30px;
+          padding-left: 10px;
+          line-height: 30px;
+          background: #f8f5f0;
+          font-weight: bold;
+          position: relative;
+          .page-header-tools {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin-right: 3px;
+            .btn {
+              font-size: 0;
+              line-height: 13px;
+              .fa {
+                margin: 0;
+                color: #98978b;
+                font-size: 13px;
+              }
+            }
+          }
+        }
         .list-group {
           border: 0 none;
           margin: 0;

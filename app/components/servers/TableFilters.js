@@ -122,7 +122,7 @@ class TableFiltersComponent extends React.Component {
         label.style.display = 'none';
         reset.style.display = 'none';
         btn.classList.remove('is-active');
-        detail.removeAttribute('data-is-active', 'false');
+        detail.removeAttribute('data-is-active');
         detail.style.display = 'none';
         btn.classList.remove('active');
         this.refs.filters_overlay.style.display = 'none';
@@ -143,6 +143,18 @@ class TableFiltersComponent extends React.Component {
         }));
 
         this.props.setFilters(this.filters);
+    }
+
+    handleOnClickClose(e, name) {
+        e.preventDefault();
+        let btn = this.refs[`filter.btn.${name}`];
+        let detail = this.refs['filter.detail.' + name];
+
+        btn.classList.remove('is-active');
+        btn.classList.remove('active');
+        detail.removeAttribute('data-is-active');
+        detail.style.display = 'none';
+        this.refs.filters_overlay.style.display = 'none';
     }
 
     render() {
@@ -235,6 +247,16 @@ class TableFiltersComponent extends React.Component {
                 </div>
                 <div className="panel-filters-details" ref="filters_container">
                     <div data-name="type" ref="filter.detail.type">
+                        <h5 className="page-header">
+                            Type
+                            <div className="page-header-tools">
+                                <a className="btn btn-xs" onClick={(e) => {
+                                    this.handleOnClickClose(e, 'type');
+                                }}>
+                                    <i className="fa fa-times"/>
+                                </a>
+                            </div>
+                        </h5>
                         <ul className="list-group">
                             <li className="list-group-item">
                                 <Checkbox name="type[]" value="http_elite" inputRef={(input) => {
@@ -280,6 +302,16 @@ class TableFiltersComponent extends React.Component {
                         </ul>
                     </div>
                     <div data-name="status" ref="filter.detail.status">
+                        <h5 className="page-header">
+                            Status
+                            <div className="page-header-tools">
+                                <a className="btn btn-xs" onClick={(e) => {
+                                    this.handleOnClickClose(e, 'status');
+                                }}>
+                                    <i className="fa fa-times"/>
+                                </a>
+                            </div>
+                        </h5>
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
                                 <Radio name="status" value="online" defaultChecked="checked"
@@ -308,6 +340,16 @@ class TableFiltersComponent extends React.Component {
                         </ul>
                     </div>
                     <div data-name="latency" ref="filter.detail.latency">
+                        <h5 className="page-header">
+                            Latency
+                            <div className="page-header-tools">
+                                <a className="btn btn-xs" onClick={(e) => {
+                                    this.handleOnClickClose(e, 'latency');
+                                }}>
+                                    <i className="fa fa-times"/>
+                                </a>
+                            </div>
+                        </h5>
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
                                 <Checkbox name="latency[]" value="fastest"
@@ -372,6 +414,16 @@ class TableFiltersComponent extends React.Component {
                         </ul>
                     </div>
                     <div data-name="speed" ref="filter.detail.speed">
+                        <h5 className="page-header">
+                            Speed
+                            <div className="page-header-tools">
+                                <a className="btn btn-xs" onClick={(e) => {
+                                    this.handleOnClickClose(e, 'speed');
+                                }}>
+                                    <i className="fa fa-times"/>
+                                </a>
+                            </div>
+                        </h5>
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
                                 <Checkbox name="speed[]" value="fastest"
@@ -436,6 +488,16 @@ class TableFiltersComponent extends React.Component {
                         </ul>
                     </div>
                     <div data-name="uptime" ref="filter.detail.uptime">
+                        <h5 className="page-header">
+                            Uptime
+                            <div className="page-header-tools">
+                                <a className="btn btn-xs" onClick={(e) => {
+                                    this.handleOnClickClose(e, 'uptime');
+                                }}>
+                                    <i className="fa fa-times"/>
+                                </a>
+                            </div>
+                        </h5>
                         <ul className="list-group">
                             <li className="list-group-item bg-success-light">
                                 <Checkbox name="uptime[]" value="greatest"
@@ -496,6 +558,16 @@ class TableFiltersComponent extends React.Component {
                         </ul>
                     </div>
                     <div data-name="country" ref="filter.detail.country">
+                        <h5 className="page-header">
+                            Country
+                            <div className="page-header-tools">
+                                <a className="btn btn-xs" onClick={(e) => {
+                                    this.handleOnClickClose(e, 'country');
+                                }}>
+                                    <i className="fa fa-times"/>
+                                </a>
+                            </div>
+                        </h5>
                         <div>
                             <FormControl
                                 name="country"
