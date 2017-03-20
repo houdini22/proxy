@@ -128,8 +128,8 @@ class TableRowComponent extends React.Component {
                 <td style={{textAlign: 'center'}}>
                     <img src={rowData.address_img_url}/>
                 </td>
-                <td>{type}</td>
                 <td><span className={onlineTextClassName}>{onlineText}</span></td>
+                <td>{type}</td>
                 <td className="text-center">
                     <OverlayTrigger placement="top"
                                     overlay={<Tooltip id="speed-tooltip-last-ping">last measurement

@@ -150,6 +150,14 @@ class TableFiltersComponent extends React.Component {
         return (
             <div>
                 <div className="panel-filters">
+                    <a className="btn btn-app btn-xs is-active" data-name="status" ref="filter.btn.status"
+                       onClick={this.handleOnClickBtn.bind(this, 'status')}>
+                        <span className="caption">Status</span>
+                        <i className="fa fa-chevron-right"/>
+                        <span className="label-container">
+                            <span className="label bg-yellow" ref="filter.btn.label.status">1</span>
+                        </span>
+                    </a>
                     <a className="btn btn-app btn-xs" data-name="type" ref="filter.btn.type"
                        onClick={this.handleOnClickBtn.bind(this, 'type')}>
                         <span className="caption">Type</span>
@@ -161,14 +169,6 @@ class TableFiltersComponent extends React.Component {
                                   onClick={(e) => {
                                       this.handleOnClickReset(e, 'type')
                                   }}>reset</span>
-                        </span>
-                    </a>
-                    <a className="btn btn-app btn-xs is-active" data-name="status" ref="filter.btn.status"
-                       onClick={this.handleOnClickBtn.bind(this, 'status')}>
-                        <span className="caption">Status</span>
-                        <i className="fa fa-chevron-right"/>
-                        <span className="label-container">
-                            <span className="label bg-yellow" ref="filter.btn.label.status">1</span>
                         </span>
                     </a>
                     <a className="btn btn-app btn-xs" data-name="latency" ref="filter.btn.latency"
