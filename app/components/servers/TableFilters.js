@@ -150,7 +150,6 @@ class TableFiltersComponent extends React.Component {
         let btn = this.refs[`filter.btn.${name}`];
         let detail = this.refs['filter.detail.' + name];
 
-        btn.classList.remove('is-active');
         btn.classList.remove('active');
         detail.removeAttribute('data-is-active');
         detail.style.display = 'none';
