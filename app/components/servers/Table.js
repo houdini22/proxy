@@ -94,8 +94,8 @@ class TableComponent extends React.Component {
                                     <thead>
                                     <tr>
                                         <th style={{width: "160px"}}>Address</th>
-                                        <th style={{width: "80px"}}>Type</th>
                                         <th style={{width: "60px"}}>Status</th>
+                                        <th style={{width: "80px"}}>Type</th>
                                         <th style={{width: "65px"}}>Latency</th>
                                         <th style={{width: "65px"}}>Uptime Ratio</th>
                                         <th style={{width: "100px"}}>Speed</th>

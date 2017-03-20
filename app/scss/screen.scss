@@ -108,6 +108,9 @@ body {
             color: #222;
             cursor: pointer;
             display: none;
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
