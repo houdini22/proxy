@@ -2,7 +2,9 @@ import React from 'react';
 import {
     FormControl,
     Radio,
-    Checkbox
+    Checkbox,
+    OverlayTrigger,
+    Tooltip
 } from 'react-bootstrap';
 
 class TableFiltersComponent extends React.Component {
@@ -146,6 +148,17 @@ class TableFiltersComponent extends React.Component {
     render() {
         let countries = this.props.state.statistics.server_countries || [];
         let filtersEnabled = this.props.state.session.user.permissions['server.filter_all'];
+        let btnIcon = <i className="fa fa-chevron-right"/>;
+
+        if(!filtersEnabled) {
+            btnIcon = (
+                <OverlayTrigger placement="top"
+                                overlay={<Tooltip id="premium-enable">Option available only for premium
+                                    users.</Tooltip>}>
+                    <i className="fa fa-question-circle text-info"/>
+                </OverlayTrigger>
+            );
+        }
 
         return (
             <div>
@@ -174,7 +187,6 @@ class TableFiltersComponent extends React.Component {
                     <a className="btn btn-app btn-xs" data-name="latency" ref="filter.btn.latency"
                        onClick={this.handleOnClickBtn.bind(this, 'latency')}>
                         <span className="caption">Latency</span>
-                        <i className="fa fa-chevron-right"/>
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.latency"
                                   style={{display: 'none'}}>0</span>
@@ -182,11 +194,11 @@ class TableFiltersComponent extends React.Component {
                                 this.handleOnClickReset(e, 'latency')
                             }}>reset</span>
                         </span>
+                        {btnIcon}
                     </a>
                     <a className="btn btn-app btn-xs" data-name="uptime" ref="filter.btn.uptime"
                        onClick={this.handleOnClickBtn.bind(this, 'uptime')}>
                         <span className="caption">Uptime</span>
-                        <i className="fa fa-chevron-right"/>
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.uptime"
                                   style={{display: 'none'}}>0</span>
@@ -194,11 +206,11 @@ class TableFiltersComponent extends React.Component {
                                 this.handleOnClickReset(e, 'uptime')
                             }}>reset</span>
                         </span>
+                        {btnIcon}
                     </a>
                     <a className="btn btn-app btn-xs" data-name="speed" ref="filter.btn.speed"
                        onClick={this.handleOnClickBtn.bind(this, 'speed')}>
                         <span className="caption">Speed</span>
-                        <i className="fa fa-chevron-right"/>
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.speed"
                                   style={{display: 'none'}}>0</span>
@@ -206,11 +218,11 @@ class TableFiltersComponent extends React.Component {
                                 this.handleOnClickReset(e, 'speed')
                             }}>reset</span>
                         </span>
+                        {btnIcon}
                     </a>
                     <a className="btn btn-app btn-xs" data-name="country" ref="filter.btn.country"
                        onClick={this.handleOnClickBtn.bind(this, 'country')}>
                         <span className="caption">Country</span>
-                        <i className="fa fa-chevron-right"/>
                         <span className="label-container">
                             <span className="label bg-yellow" ref="filter.btn.label.country"
                                   style={{display: 'none'}}>0</span>
@@ -218,6 +230,7 @@ class TableFiltersComponent extends React.Component {
                                 this.handleOnClickReset(e, 'country')
                             }}>reset</span>
                         </span>
+                        {btnIcon}
                     </a>
                 </div>
                 <div className="panel-filters-details" ref="filters_container">

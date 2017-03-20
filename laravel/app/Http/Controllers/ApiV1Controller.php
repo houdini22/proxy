@@ -124,9 +124,7 @@ class ApiV1Controller extends Controller
                 });
             }
             if (in_array('socks5_elite', $type)) {
-                if (!!$user) {
-                    $q->orWhere('is_socks', '=', 1);
-                }
+                $q->orWhere('is_socks', '=', 1);
             }
         });
 
