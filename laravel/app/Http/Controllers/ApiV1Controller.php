@@ -133,26 +133,28 @@ class ApiV1Controller extends Controller
             $latency = $request->get('latency', []);
 
             $servers->where(function ($q) use ($latency, $user) {
+                $averageLatencyQuery = \DB::raw('ping_sum / IF(is_socks = 1, ping_socks_success, ping_success)');
+
                 if (in_array('fastest', $latency)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('ping', '<', 3);
+                    $q->orWhere(function ($q2) use ($averageLatencyQuery) {
+                        $q2->where($averageLatencyQuery, '<', 3);
                     });
                 }
                 if (in_array('fast', $latency)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('ping', '>=', 3)
-                            ->where('ping', '<', 10);
+                    $q->orWhere(function ($q2) use ($averageLatencyQuery) {
+                        $q2->where($averageLatencyQuery, '>=', 3)
+                            ->where($averageLatencyQuery, '<', 10);
                     });
                 }
                 if (in_array('medium', $latency)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('ping', '>=', 10)
-                            ->where('ping', '<', 25);
+                    $q->orWhere(function ($q2) use ($averageLatencyQuery) {
+                        $q2->where($averageLatencyQuery, '>=', 10)
+                            ->where($averageLatencyQuery, '<', 25);
                     });
                 }
                 if (in_array('slow', $latency)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('ping', '>=', 25);
+                    $q->orWhere(function ($q2) use ($averageLatencyQuery) {
+                        $q2->where($averageLatencyQuery, '>=', 25);
                     });
                 }
             });
@@ -160,27 +162,29 @@ class ApiV1Controller extends Controller
             $speed = $request->get('speed', []);
 
             $servers->where(function ($q) use ($speed) {
+                $averageSpeedQuery = \DB::raw('speed_sum / speed_success');
+
                 if (in_array('fastest', $speed)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('speed', '>=', 25600);
+                    $q->orWhere(function ($q2) use ($averageSpeedQuery) {
+                        $q2->where($averageSpeedQuery, '>=', 25600);
                     });
                 }
                 if (in_array('fast', $speed)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('speed', '>=', 10240)
-                            ->where('speed', '<', 25600);
+                    $q->orWhere(function ($q2) use ($averageSpeedQuery) {
+                        $q2->where($averageSpeedQuery, '>=', 10240)
+                            ->where($averageSpeedQuery, '<', 25600);
                     });
                 }
                 if (in_array('medium', $speed)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('speed', '>=', 2048)
-                            ->where('speed', '<', 10240);
+                    $q->orWhere(function ($q2) use ($averageSpeedQuery) {
+                        $q2->where($averageSpeedQuery, '>=', 2048)
+                            ->where($averageSpeedQuery, '<', 10240);
                     });
                 }
                 if (in_array('slow', $speed)) {
-                    $q->orWhere(function ($q2) {
-                        $q2->where('speed', '<', 2048)
-                            ->orWhereNull('speed');
+                    $q->orWhere(function ($q2) use ($averageSpeedQuery) {
+                        $q2->where($averageSpeedQuery, '<', 2048)
+                            ->orWhereNull($averageSpeedQuery);
                     });
                 }
             });
