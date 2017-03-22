@@ -174,74 +174,75 @@ Route::get('/proxy_test_http_online', function (Request $request) use ($checkAno
                 $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
                 $server->save();
             }
-
-            $json['id'] = $server->id;
-            $json['address'] = $server->address;
         }
 
-        echo 'proxy_test::';
-        echo json_encode($json);
-        echo '::proxy_test';
-    });
+        $json['id'] = $server->id;
+        $json['address'] = $server->address;
+    }
 
-    Route::get('/proxy_test_socks', function (Request $request) {
-        $ping = microtime(true) - (float)$request->query('start');
-        $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
-        $json = array('id' => NULL);
+    echo 'proxy_test::';
+    echo json_encode($json);
+    echo '::proxy_test';
+});
 
-        if ($server) {
-            $server->ping_socks_error -= 1;
-            $server->ping_socks_success += 1;
-            $server->is_available = $server->was_available = 1;
-            $server->ping = $ping;
-            $server->last_availability = date('Y-m-d H:i:s');
-            $server->is_checked_speed = 0;
-            $server->ping_sum += $server->ping;
-            $server->speed = NULL;
-            $server->save();
+Route::get('/proxy_test_socks', function (Request $request) {
+    $ping = microtime(true) - (float)$request->query('start');
+    $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
+    $json = array('id' => NULL);
 
-            if (!$server->country) {
-                $client = new \Guzzle\Http\Client('http://freegeoip.net/');
-                $request = $client->get("/json/" . $request->query('ip'), array(), array(
-                    'timeout' => 10,
-                    'connect_timeout' => 2
-                ));
+    if ($server) {
+        $server->ping_socks_error -= 1;
+        $server->ping_socks_success += 1;
+        $server->is_available = $server->was_available = 1;
+        $server->ping = $ping;
+        $server->last_availability = date('Y-m-d H:i:s');
+        $server->is_checked_speed = 0;
+        $server->ping_sum += $server->ping;
+        $server->speed = NULL;
+        $server->save();
 
-                try {
-                    $response = $request->send();
-                    $body = (string)$response->getBody();
-                    $result = json_decode($body, true);
-                } catch (\Exception $e) {
-                    $result = FALSE;
-                }
-                if ($result !== FALSE) {
-                    $server->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
-                    $server->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
-                    $server->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
-                    $server->city = !empty($result['city']) ? $result['city'] : NULL;
-                    $server->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
-                    $server->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
-                    $server->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
-                    $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
-                    $server->save();
-                }
+        if (!$server->country) {
+            $client = new \Guzzle\Http\Client('http://freegeoip.net/');
+            $request = $client->get("/json/" . $request->query('ip'), array(), array(
+                'timeout' => 10,
+                'connect_timeout' => 2
+            ));
+
+            try {
+                $response = $request->send();
+                $body = (string)$response->getBody();
+                $result = json_decode($body, true);
+            } catch (\Exception $e) {
+                $result = FALSE;
             }
-
-            $json['id'] = $server->id;
-            $json['address'] = $server->address;
+            if ($result !== FALSE) {
+                $server->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
+                $server->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
+                $server->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
+                $server->city = !empty($result['city']) ? $result['city'] : NULL;
+                $server->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
+                $server->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
+                $server->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
+                $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
+                $server->save();
+            }
         }
 
-        echo 'proxy_test::';
-        echo json_encode($json);
-        echo '::proxy_test';
+        $json['id'] = $server->id;
+        $json['address'] = $server->address;
+    }
+
+    echo 'proxy_test::';
+    echo json_encode($json);
+    echo '::proxy_test';
+});
+
+Route::group(['middleware' => 'secure'], function () {
+    Route::get('/', function () {
+        return view('welcome');
     });
 
-    Route::group(['middleware' => 'secure'], function () {
-        Route::get('/', function () {
-            return view('welcome');
-        });
-
-        Route::any('{path}', function () {
-            return view('welcome');
-        })->where('path', '[a-z\_\/]+')->name('any');
-    });
+    Route::any('{path}', function () {
+        return view('welcome');
+    })->where('path', '[a-z\_\/]+')->name('any');
+});
