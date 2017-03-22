@@ -94,20 +94,15 @@ class TableRowComponent extends React.Component {
         let speedSumTooltip;
         let speedSumClassName;
         let speedSumCaption;
-        if (rowData.speed_sum > 0) {
+        if (rowData.average_speed > 0) {
             speedSumTooltip = <Tooltip id="speed-tooltip-average-speed">average speed
                 ({rowData.speed_success} measurements)</Tooltip>;
-            speedSumCaption = `${formatBytes(rowData.speed_sum / rowData.speed_success, true)}/s`;
-            speedSumClassName = getSpeedClassName(rowData.speed_sum / rowData.speed_success);
+            speedSumCaption = `${formatBytes(rowData.average_speed, true)}/s`;
+            speedSumClassName = getSpeedClassName(rowData.average_speed);
         } else {
             speedSumTooltip = <Tooltip id="speed-tooltip-average-speed">no success measurements ({rowData.speed_error} attempts)</Tooltip>;
             speedSumCaption = `N/A`;
             speedSumClassName = 'label label-danger';
-        }
-
-        let uptimeRatioText = `${rowData.ping_success + rowData.speed_success} / ${rowData.ping_error + rowData.speed_error}`;
-        if (rowData.is_socks) {
-            uptimeRatioText = `${rowData.ping_socks_success + rowData.speed_success} / ${rowData.ping_socks_error + rowData.speed_error}`;
         }
 
         let checked_at = rowData.checked_at;
@@ -152,7 +147,7 @@ class TableRowComponent extends React.Component {
                 <td className="text-center">
                     <span
                         className={uploadRatioClassName}>
-                        {uptimeRatioText}
+                        {rowData.uptime_ratio}
                     </span>
                 </td>
                 <td className="text-center">
