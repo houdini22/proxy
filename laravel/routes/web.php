@@ -151,31 +151,6 @@ Route::get('/proxy_test_http_online', function (Request $request) use($checkAnon
 
         $json['id'] = $oldServer->id;
         $json['address'] = $oldServer->address;
-
-        $client = new \Guzzle\Http\Client('http://freegeoip.net/');
-        $request = $client->get("/json/" . $request->query('ip'), array(), array(
-            'timeout' => 10,
-            'connect_timeout' => 2
-        ));
-
-        try {
-            $response = $request->send();
-            $body = (string)$response->getBody();
-            $result = json_decode($body, true);
-        } catch (\Exception $e) {
-            $result = FALSE;
-        }
-        if ($result !== FALSE) {
-            $oldServer->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
-            $oldServer->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
-            $oldServer->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
-            $oldServer->city = !empty($result['city']) ? $result['city'] : NULL;
-            $oldServer->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
-            $oldServer->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
-            $oldServer->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
-            $oldServer->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
-            $oldServer->save();
-        }
     }
 
     echo 'proxy_test::';
@@ -199,29 +174,31 @@ Route::get('/proxy_test_socks', function (Request $request) {
         $server->speed = NULL;
         $server->save();
 
-        $client = new \Guzzle\Http\Client('http://freegeoip.net/');
-        $request = $client->get("/json/" . $request->query('ip'), array(), array(
-            'timeout' => 10,
-            'connect_timeout' => 2
-        ));
+        if(!$server->country) {
+            $client = new \Guzzle\Http\Client('http://freegeoip.net/');
+            $request = $client->get("/json/" . $request->query('ip'), array(), array(
+                'timeout' => 10,
+                'connect_timeout' => 2
+            ));
 
-        try {
-            $response = $request->send();
-            $body = (string)$response->getBody();
-            $result = json_decode($body, true);
-        } catch (\Exception $e) {
-            $result = FALSE;
-        }
-        if ($result !== FALSE) {
-            $server->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
-            $server->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
-            $server->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
-            $server->city = !empty($result['city']) ? $result['city'] : NULL;
-            $server->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
-            $server->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
-            $server->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
-            $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
-            $server->save();
+            try {
+                $response = $request->send();
+                $body = (string)$response->getBody();
+                $result = json_decode($body, true);
+            } catch (\Exception $e) {
+                $result = FALSE;
+            }
+            if ($result !== FALSE) {
+                $server->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
+                $server->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
+                $server->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
+                $server->city = !empty($result['city']) ? $result['city'] : NULL;
+                $server->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
+                $server->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
+                $server->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
+                $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
+                $server->save();
+            }
         }
 
         $json['id'] = $server->id;
