@@ -15,7 +15,7 @@ class SecureHttps
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->secure() && env('APP_ENV') === 'production') {
+        if (!$request->secure() && env('APP_ENV') === 'production' && $_SERVER['SERVER_PORT'] == 80) {
             return redirect()->secure($request->getRequestUri());
         }
 
