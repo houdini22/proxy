@@ -102,33 +102,29 @@ Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) 
             $json['id'] = $server->id;
             $json['address'] = $server->address;
 
-            $client = new \Guzzle\Http\Client('http://ip-api.com/');
-            $request = $client->get("/php/" . $request->query('ip'), array(), array(
+            $client = new \Guzzle\Http\Client('http://freegeoip.net/');
+            $request = $client->get("/json/" . $request->query('ip'), array(), array(
                 'timeout' => 10,
                 'connect_timeout' => 2
             ));
-            if (empty($server->country)) {
-                try {
-                    $response = $request->send();
-                    $body = (string)$response->getBody();
-                    $result = unserialize($body);
-                } catch (\Exception $e) {
-                    $result = array();
-                }
-                if (!empty($result['status']) AND $result['status'] === 'success') {
-                    $server->country = !empty($result['country']) ? $result['country'] : NULL;
-                    $server->country_code = !empty($result['countryCode']) ? $result['countryCode'] : NULL;
-                    $server->region_code = !empty($result['region']) ? $result['region'] : NULL;
-                    $server->region_name = !empty($result['regionName']) ? $result['regionName'] : NULL;
-                    $server->city = !empty($result['city']) ? $result['city'] : NULL;
-                    $server->zip = !empty($result['zip']) ? $result['zip'] : NULL;
-                    $server->lat = !empty($result['lat']) ? $result['lat'] : NULL;
-                    $server->lon = !empty($result['lon']) ? $result['lon'] : NULL;
-                    $server->timezone = !empty($result['timezone']) ? $result['timezone'] : NULL;
-                    $server->isp = !empty($result['isp']) ? $result['isp'] : NULL;
-                    $server->organization = !empty($result['org']) ? $result['org'] : NULL;
-                    $server->save();
-                }
+
+            try {
+                $response = $request->send();
+                $body = (string)$response->getBody();
+                $result = json_decode($body, true);
+            } catch (\Exception $e) {
+                $result = FALSE;
+            }
+            if ($result !== FALSE) {
+                $server->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
+                $server->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
+                $server->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
+                $server->city = !empty($result['city']) ? $result['city'] : NULL;
+                $server->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
+                $server->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
+                $server->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
+                $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
+                $server->save();
             }
         }
     }
@@ -156,8 +152,8 @@ Route::get('/proxy_test_http_online', function (Request $request) use($checkAnon
         $json['id'] = $oldServer->id;
         $json['address'] = $oldServer->address;
 
-        $client = new \Guzzle\Http\Client('http://ip-api.com/');
-        $request = $client->get("/php/" . $request->query('ip'), array(), array(
+        $client = new \Guzzle\Http\Client('http://freegeoip.net/');
+        $request = $client->get("/json/" . $request->query('ip'), array(), array(
             'timeout' => 10,
             'connect_timeout' => 2
         ));
@@ -165,22 +161,19 @@ Route::get('/proxy_test_http_online', function (Request $request) use($checkAnon
         try {
             $response = $request->send();
             $body = (string)$response->getBody();
-            $result = unserialize($body);
+            $result = json_decode($body, true);
         } catch (\Exception $e) {
-            $result = array();
+            $result = FALSE;
         }
-        if (!empty($result['status']) AND $result['status'] === 'success') {
-            $oldServer->country = !empty($result['country']) ? $result['country'] : NULL;
-            $oldServer->country_code = !empty($result['countryCode']) ? $result['countryCode'] : NULL;
-            $oldServer->region_code = !empty($result['region']) ? $result['region'] : NULL;
-            $oldServer->region_name = !empty($result['regionName']) ? $result['regionName'] : NULL;
+        if ($result !== FALSE) {
+            $oldServer->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
+            $oldServer->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
+            $oldServer->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
             $oldServer->city = !empty($result['city']) ? $result['city'] : NULL;
-            $oldServer->zip = !empty($result['zip']) ? $result['zip'] : NULL;
-            $oldServer->lat = !empty($result['lat']) ? $result['lat'] : NULL;
-            $oldServer->lon = !empty($result['lon']) ? $result['lon'] : NULL;
-            $oldServer->timezone = !empty($result['timezone']) ? $result['timezone'] : NULL;
-            $oldServer->isp = !empty($result['isp']) ? $result['isp'] : NULL;
-            $oldServer->organization = !empty($result['org']) ? $result['org'] : NULL;
+            $oldServer->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
+            $oldServer->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
+            $oldServer->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
+            $oldServer->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
             $oldServer->save();
         }
     }
@@ -206,8 +199,8 @@ Route::get('/proxy_test_socks', function (Request $request) {
         $server->speed = NULL;
         $server->save();
 
-        $client = new \Guzzle\Http\Client('http://ip-api.com/');
-        $request = $client->get("/php/" . $request->query('ip'), array(), array(
+        $client = new \Guzzle\Http\Client('http://freegeoip.net/');
+        $request = $client->get("/json/" . $request->query('ip'), array(), array(
             'timeout' => 10,
             'connect_timeout' => 2
         ));
@@ -215,22 +208,19 @@ Route::get('/proxy_test_socks', function (Request $request) {
         try {
             $response = $request->send();
             $body = (string)$response->getBody();
-            $result = unserialize($body);
+            $result = json_decode($body, true);
         } catch (\Exception $e) {
-            $result = array();
+            $result = FALSE;
         }
-        if (!empty($result['status']) AND $result['status'] === 'success') {
-            $server->country = !empty($result['country']) ? $result['country'] : NULL;
-            $server->country_code = !empty($result['countryCode']) ? $result['countryCode'] : NULL;
-            $server->region_code = !empty($result['region']) ? $result['region'] : NULL;
-            $server->region_name = !empty($result['regionName']) ? $result['regionName'] : NULL;
+        if ($result !== FALSE) {
+            $server->country = !empty($result['country_name']) ? $result['country_name'] : NULL;
+            $server->country_code = !empty($result['country_code']) ? $result['country_code'] : NULL;
+            $server->region_name = !empty($result['region_name']) ? $result['region_name'] : NULL;
             $server->city = !empty($result['city']) ? $result['city'] : NULL;
-            $server->zip = !empty($result['zip']) ? $result['zip'] : NULL;
-            $server->lat = !empty($result['lat']) ? $result['lat'] : NULL;
-            $server->lon = !empty($result['lon']) ? $result['lon'] : NULL;
-            $server->timezone = !empty($result['timezone']) ? $result['timezone'] : NULL;
-            $server->isp = !empty($result['isp']) ? $result['isp'] : NULL;
-            $server->organization = !empty($result['org']) ? $result['org'] : NULL;
+            $server->zip = !empty($result['zip_code']) ? $result['zip_code'] : NULL;
+            $server->lat = !empty($result['latitude']) ? $result['latitude'] : NULL;
+            $server->lon = !empty($result['longitude']) ? $result['longitude'] : NULL;
+            $server->timezone = !empty($result['time_zone']) ? $result['time_zone'] : NULL;
             $server->save();
         }
 
