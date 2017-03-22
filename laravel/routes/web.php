@@ -67,6 +67,7 @@ $checkAnonymity = function () {
 };
 
 Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) {
+    $ping = microtime(true) - (float)$request->query('start');
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
     if ($oldServer->first_ping === '0000-00-00 00:00:00') {
@@ -87,7 +88,7 @@ Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) 
             $server->ip = $oldServer->getIp();
             $server->type = $checkAnonymity();
             $server->is_checked = $server->is_available = $server->was_available = 1;
-            $server->ping = $server->ping_sum = microtime(true) - (float)$request->query('start');
+            $server->ping = $server->ping_sum = $ping;
             $server->first_ping = $oldServer->first_ping;
             if ($server->first_ping === '0000-00-00 00:00:00') {
                 $server->first_ping = date('Y-m-d H:i:s');
@@ -137,6 +138,7 @@ Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) 
 });
 
 Route::get('/proxy_test_http_online', function (Request $request) use($checkAnonymity) {
+    $ping = microtime(true) - (float)$request->query('start');
     $oldServer = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $json = [];
 
@@ -147,7 +149,7 @@ Route::get('/proxy_test_http_online', function (Request $request) use($checkAnon
         $oldServer->ping_success += 1;
         $oldServer->is_checked_speed = 0;
         $oldServer->type = $checkAnonymity();
-        $oldServer->ping = microtime(true) - (float)$request->query('start');
+        $oldServer->ping = $ping;
         $oldServer->ping_sum += $oldServer->ping;
         $oldServer->save();
 
@@ -189,7 +191,7 @@ Route::get('/proxy_test_http_online', function (Request $request) use($checkAnon
 });
 
 Route::get('/proxy_test_socks', function (Request $request) {
-
+    $ping = microtime(true) - (float)$request->query('start');
     $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $json = array('id' => NULL);
 
@@ -197,7 +199,7 @@ Route::get('/proxy_test_socks', function (Request $request) {
         $server->ping_socks_error -= 1;
         $server->ping_socks_success += 1;
         $server->is_available = $server->was_available = 1;
-        $server->ping = microtime(true) - (float)$request->query('start');
+        $server->ping = $ping;
         $server->last_availability = date('Y-m-d H:i:s');
         $server->is_checked_speed = 0;
         $server->ping_sum += $server->ping;
