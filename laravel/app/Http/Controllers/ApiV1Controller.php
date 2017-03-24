@@ -255,14 +255,14 @@ class ApiV1Controller extends Controller
             $server['speed_checked_at'] = $server['speed_checked_at'] !== NULL ? \App\Date::fuzzy_span(strtotime($server['speed_checked_at'])) : NULL;
             $server['last_availability'] = floor((time() - strtotime($server['last_availability'])) / Date::DAY);
             if ($server['is_socks'] === 1) {
-                $server['average_ping'] = ($server['ping_socks_success'] > 0) ? $server['ping_sum'] / $server['ping_socks_success'] : NULL;
+                $server['average_ping'] = ($server['ping_socks_success'] > 0) ? round($server['ping_sum'] / $server['ping_socks_success'], 2) : NULL;
                 $server['uptime_ratio'] = ($server['ping_socks_success'] + $server['speed_success']) . '/' . ($server['ping_socks_error'] + $server['speed_error']);
             } else {
-                $server['average_ping'] = ($server['ping_success'] > 0) ? $server['ping_sum'] / $server['ping_success'] : NULL;
+                $server['average_ping'] = ($server['ping_success'] > 0) ? round($server['ping_sum'] / $server['ping_success'], 2) : NULL;
                 $server['uptime_ratio'] = ($server['ping_success'] + $server['speed_success']) . '/' . ($server['ping_error'] + $server['speed_error']);
             }
             $server['average_speed'] = ($server['speed_success'] > 0) ? $server['speed_sum'] / $server['speed_success'] : NULL;
-
+            $server['ping_sum'] = (float)$server['ping_sum'];
             unset($server['address']);
         }
 
