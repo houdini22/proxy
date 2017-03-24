@@ -117,13 +117,10 @@ class TableFiltersComponent extends React.Component {
         let label = this.refs[`filter.btn.label.${name}`];
         let reset = this.refs[`filter.btn.reset.${name}`];
         let btn = this.refs[`filter.btn.${name}`];
-        let detail = this.refs['filter.detail.' + name];
 
         label.style.display = 'none';
         reset.style.display = 'none';
         btn.classList.remove('is-active');
-        detail.removeAttribute('data-is-active');
-        detail.style.display = 'none';
         btn.classList.remove('active');
 
         delete this.filters[name];
