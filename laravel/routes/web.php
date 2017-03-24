@@ -136,14 +136,14 @@ Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) 
 Route::get('/proxy_test_old_socks', function (Request $request) use ($checkAnonymity) {
     $ping = microtime(true) - (float)$request->query('start');
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
-    $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
-    $oldServer->last_availability = date('Y-m-d H:i:s');
-    $oldServer->ping_socks_error--;
-    $oldServer->ping_socks_success++;
-    $oldServer->save();
-
     $json = array('id' => NULL);
     if ($oldServer) {
+        $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
+        $oldServer->last_availability = date('Y-m-d H:i:s');
+        $oldServer->ping_socks_error--;
+        $oldServer->ping_socks_success++;
+        $oldServer->save();
+
         $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
         if (!$server) {
             $server = new \App\AvailableServer();

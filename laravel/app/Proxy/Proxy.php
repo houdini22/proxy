@@ -127,7 +127,7 @@ class Proxy
                             }
                         }*/
         }
-        self::log('HTTP SUCCESS' . count($successfullIds));
+        self::log('HTTP SUCCESS: ' . count($successfullIds));
     }
 
     public function testOldSocks($servers)
