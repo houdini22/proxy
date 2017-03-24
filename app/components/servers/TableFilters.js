@@ -125,7 +125,6 @@ class TableFiltersComponent extends React.Component {
         detail.removeAttribute('data-is-active');
         detail.style.display = 'none';
         btn.classList.remove('active');
-        this.refs.filters_overlay.style.display = 'none';
 
         delete this.filters[name];
 
