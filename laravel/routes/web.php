@@ -69,18 +69,19 @@ $checkAnonymity = function () {
 Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) {
     $ping = microtime(true) - (float)$request->query('start');
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
-    $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
-    if ($oldServer->first_ping === '0000-00-00 00:00:00') {
-        $oldServer->first_ping = date('Y-m-d H:i:s');
-    }
-    $oldServer->last_availability = date('Y-m-d H:i:s');
-    $oldServer->ping_error -= 1;
-    $oldServer->ping_success += 1;
-    $oldServer->save();
-
     $json = array('id' => NULL);
     if ($oldServer) {
+        $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
+        if ($oldServer->first_ping === '0000-00-00 00:00:00') {
+            $oldServer->first_ping = date('Y-m-d H:i:s');
+        }
+        $oldServer->last_availability = date('Y-m-d H:i:s');
+        $oldServer->ping_error -= 1;
+        $oldServer->ping_success += 1;
+        $oldServer->save();
+
         $server = \App\AvailableServer::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
+
         if (!$server) {
             $server = new \App\AvailableServer();
             $server->address = $oldServer->address;
