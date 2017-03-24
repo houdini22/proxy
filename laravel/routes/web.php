@@ -133,7 +133,7 @@ Route::get('/proxy_test_old', function (Request $request) use ($checkAnonymity) 
     echo '::proxy_test';
 });
 
-oute::get('/proxy_test_old_socks', function (Request $request) use ($checkAnonymity) {
+Route::get('/proxy_test_old_socks', function (Request $request) use ($checkAnonymity) {
     $ping = microtime(true) - (float)$request->query('start');
     $oldServer = \App\Server::where('address', '=', $request->query('ip') . ':' . $request->query('port'))->first();
     $oldServer->is_available = $oldServer->was_available = $oldServer->test_disabled = 1;
