@@ -51,5 +51,6 @@ class TestProxiesHttpOld extends Command
 
         $proxy = new \App\Proxy\Proxy;
         $proxy->testOldHttp($servers);
+        $proxy->testOldSocks($servers);
     }
 }

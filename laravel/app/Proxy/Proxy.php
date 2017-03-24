@@ -100,35 +100,114 @@ class Proxy
                     $ids[] = $successfullIds[] = $server->id;
                 }
             }
+            /*
+                        $failedRequests = $e->getFailedRequests();
+                        foreach ($failedRequests as $request)
+                        {
+                            $exception = $e->getExceptionForFailedRequest($request);
+                            $query = $request->getQuery();
+                            $ids[] = $failedIds[] = $query['id'];$server = \App\Server::find($query['id']);
+                            if ($server)
+                            {
+                                preg_match('#\[status code\]\s(\d+)#', $exception->getMessage(), $matches);
+                                if (!empty($matches[1]))
+                                {
+                                    $server->last_status_code = $matches[1];
+                                }
+                                preg_match('#\[curl\]\s([a-zA-Z0-9\s\:\.]+)#', $exception->getMessage(), $matches);
+                                if (!empty($matches[1]))
+                                {
+                                    $server->last_error_message = $matches[1];
+                                }
+                                if ($server->first_ping === '0000-00-00 00:00:00')
+                                {
+                                    $server->first_ping = date('Y-m-d H:i:s');
+                                }
+                                $server->save();
+                            }
+                        }*/
+        }
+        self::log('HTTP SUCCESS' . count($successfullIds));
+    }
 
-            $failedRequests = $e->getFailedRequests();
-            foreach ($failedRequests as $request)
+    public function testOldSocks($servers)
+    {
+        $client = new \Guzzle\Http\Client('http://proxydatabase.online:8080');
+        $requests = array();
+        $responses = array();
+        foreach ($servers as $server)
+        {
+            $request = $client->get(
+                '/proxy_test_old_socks',
+                array(),
+                array(
+                    'proxy'           => "{$server->address}",
+                    'query'           => array('start' => microtime(true), 'ip' => $server->getIp(), 'port' => $server->getPort(), 'id' => $server->id),
+                    'timeout'         => 40,
+                    'connect_timeout' => 20
+                )
+            );
+            $request->getCurlOptions()->set(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            $requests[] = $request;
+
+            $server->is_checked_socks = 1;
+            $server->socks_checked_at = date('Y-m-d H:i:s');
+            $server->ping_socks_error++;
+            $server->save();
+        }
+        $ids = array();
+        $successfullIds = array();
+        $failedIds = array();
+        try
+        {
+            $responses = $client->send($requests);
+            foreach ($responses as $response)
             {
-                $exception = $e->getExceptionForFailedRequest($request);
-                $query = $request->getQuery();
-                $ids[] = $failedIds[] = $query['id'];
-                /*$server = \App\Server::find($query['id']);
-                if ($server)
+                $body = (string)$response->getBody();
+                preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $body, $matches);
+                if (!empty($matches[1]))
                 {
-                    preg_match('#\[status code\]\s(\d+)#', $exception->getMessage(), $matches);
-                    if (!empty($matches[1]))
-                    {
-                        $server->last_status_code = $matches[1];
-                    }
-                    preg_match('#\[curl\]\s([a-zA-Z0-9\s\:\.]+)#', $exception->getMessage(), $matches);
-                    if (!empty($matches[1]))
-                    {
-                        $server->last_error_message = $matches[1];
-                    }
-                    if ($server->first_ping === '0000-00-00 00:00:00')
-                    {
-                        $server->first_ping = date('Y-m-d H:i:s');
-                    }
-                    $server->save();
-                }*/
+                    $data = json_decode($matches[1]);
+                    $successfullIds[] = $data->id;
+                }
             }
         }
-        self::log('Successed count: ' . count($successfullIds));
+        catch (\Guzzle\Http\Exception\MultiTransferException $e)
+        {
+            $successfulRequests = $e->getSuccessfulRequests();
+            foreach ($successfulRequests as $request)
+            {
+                $response = (string)$request->getResponse()->getBody();
+                $query = $request->getQuery();
+                if ($server = \App\AvailableServer::where('address', '=', $query['ip'] . ':' . $query['port'])->first())
+                {
+                    if (preg_match('#proxy_test\:\:(.*)\:\:proxy_test#', $response))
+                    {
+                        $server->no_redirect = 1;
+                    }
+                    else
+                    {
+                        $server->no_redirect = 0;
+                    }
+                    if (strpos($response, "script") !== false)
+                    {
+                        $server->is_hacked = 1;
+                        preg_match('/<\s*script[^>]*>[\s\S]*?(<\s*\/script[^>]*>|$)/i', $response, $script_matches);
+                        if (isset($script_matches[0]))
+                        {
+                            file_put_contents(base_path('/storage/proxiee/hacked/') . $server->address . '.txt', $script_matches[0]);
+                        }
+                    }
+                    else
+                    {
+                        $server->is_hacked = 0;
+                    }
+                    $server->save();
+                    $ids[] = $successfullIds[] = $server->id;
+                }
+            }
+        }
+        self::log('SOCKS SUCCESS: ' . count($successfullIds));
     }
 
     public function testSocks($servers)
