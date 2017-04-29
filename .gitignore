@@ -3,3 +3,11 @@ node_modules
 public/static/js/bundle.js
 public/static/js/bundle.js.map
 npm-debug.log
+.DS_Store
+node_modules/
+dist/
+yarn-debug.log*
+yarn-error.log*
+test/unit/coverage
+test/e2e/reports
+selenium-debug.log
