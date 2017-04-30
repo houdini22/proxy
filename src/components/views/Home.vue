@@ -21,7 +21,8 @@
                 </p>
             </div>
             <div class="row flex-parent">
-
+                <news-component></news-component>
+                <promo-box-component></promo-box-component>
             </div>
         </div>
         <footer-component></footer-component>
@@ -31,11 +32,15 @@
 <script>
   import HeaderComponent from '../partials/Header.vue'
   import FooterComponent from '../partials/Footer.vue'
+  import NewsComponent from '../partials/News.vue'
+  import PromoBoxComponent from '../partials/PromoBox.vue'
 
   export default {
     components: {
       'header-component': HeaderComponent,
-      'footer-component': FooterComponent
+      'footer-component': FooterComponent,
+      'news-component': NewsComponent,
+      'promo-box-component': PromoBoxComponent
     },
     name: 'home'
   }

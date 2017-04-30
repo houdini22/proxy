@@ -1,6 +1,6 @@
 const config = {
   api: {
-    url: '/api/v1/'
+    url: 'http://proxy.local/api/v1/'
   }
 }
 
