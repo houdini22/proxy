@@ -61,7 +61,7 @@
 
   import HeaderComponent from '../partials/Header.vue'
   import FooterComponent from '../partials/Footer.vue'
-  import FormValidationMixin from '../../mixins/form-validation'
+  import FormMixin from '../../mixins/form'
 
   export default {
     components: {
@@ -69,7 +69,7 @@
       'footer-component': FooterComponent
     },
     name: 'profile-component',
-    mixins: [FormValidationMixin],
+    mixins: [FormMixin],
     data () {
       return {
         formState: {},

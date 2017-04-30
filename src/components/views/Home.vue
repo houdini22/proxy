@@ -12,7 +12,7 @@
                     Check out our list and feel free to register to get even more options!
                 </p>
                 <p>
-                    <router-link to="/servers">
+                    <router-link to="/list">
                         <a href="#" class="btn btn-default btn-lg">
                             <i class="fa fa-server"></i>
                             Go to proxy list

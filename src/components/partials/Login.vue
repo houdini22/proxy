@@ -89,12 +89,12 @@
 </template>
 
 <script>
-  import FormValidatorMixin from '../../mixins/form-validation'
+  import FormMixin from '../../mixins/form'
 
   export default {
     name: 'login-component',
     components: {},
-    mixins: [FormValidatorMixin],
+    mixins: [FormMixin],
     data () {
       return {
         formState: {},
