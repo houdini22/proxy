@@ -424,7 +424,10 @@ class ApiV1Controller extends Controller
             if (Sentinel::login($user)) {
                 $ar = $user->toArray();
                 $ar['created_at'] = date('F Y', strtotime($ar['created_at']));
-                return JsonResponse::create($ar);
+                return JsonResponse::create([
+                    'isLoggedIn' => TRUE,
+                    'user' => $ar
+                ]);
             }
         }
         return JsonResponse::create([

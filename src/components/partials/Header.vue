@@ -22,23 +22,40 @@
                     <span class="has-icon">
                         <i class="fa fa-user-o"></i>
                     </span>
-                    Guest
+                    <span v-if="!isUserLoggedIn">Guest</span>
+                    <span v-if="isUserLoggedIn">{{user.email}}</span>
                     <span class="caret"></span>
                 </b-nav-item>
             </b-nav>
 
             <ul class="user user-menu dropdown-menu" v-if="userMenuVisible">
-                <li class="user-header">
-                    <p>
-                        Guest
-                    </p>
+                <li class="user-header" v-if="!isUserLoggedIn">
+                    <p>Guest</p>
                 </li>
-                <li class="user-footer" v-if="!userLoggedIn">
+                <li class="user-footer" v-if="!isUserLoggedIn">
                     <div class="pull-right">
                         <router-link to="/account" class="btn btn-xs btn-default">
                             <i class="fa fa-sign-in"></i>
                             Login or Register
                         </router-link>
+                    </div>
+                </li>
+                <li class="user-header" v-if="isUserLoggedIn">
+                    <p>
+                        {{user.email}}
+                        <small>Member since {{user.created_at}}</small>
+                    </p>
+                </li>
+                <li class="user-footer" v-if="isUserLoggedIn">
+                    <div class="pull-left">
+                        <router-link to="/profile" class="btn btn-xs btn-default">
+                            <i class="fa fa-user-o"/> Profile
+                        </router-link>
+                    </div>
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-xs btn-default" @click.prevent="handleUserLogoutClick()">
+                            <i class="fa fa-sign-out"/> Sign out
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -47,7 +64,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'header',
     components: {},
@@ -57,19 +73,23 @@
       }
     },
     computed: {
+      isUserLoggedIn () {
+        return this.$store.getters.isUserLoggedIn
+      },
       user () {
-        return {}
-      },
-      memberSince () {
-        return ''
-      },
-      userLoggedIn () {
-        return false
+        return this.$store.getters.user
       }
     },
     methods: {
       handleUserDropdownClick () {
         this.userMenuVisible = !this.userMenuVisible
+      },
+      handleUserLogoutClick () {
+        this.$store.dispatch('logout', {
+          success: () => {
+            this.$router.push('/account')
+          }
+        })
       }
     }
   }

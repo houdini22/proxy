@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import HomeComponent from '@/components/views/Home'
 import ListComponent from '@/components/views/List'
 import AboutComponent from '@/components/views/About'
+import AccountComponent from '@/components/views/Account'
+import ProfileComponent from '@/components/views/Profile'
 
 Vue.use(Router)
 
@@ -23,6 +25,16 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: AboutComponent
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: AccountComponent
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: ProfileComponent
     }
   ]
 })

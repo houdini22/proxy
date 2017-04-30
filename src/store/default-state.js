@@ -3,9 +3,7 @@ export default {
   statistics: {},
   servers: {},
   session: {
-    isLoggedIn: false,
-    user: {
-      permissions: {}
-    }
+    isUserLoggedIn: false,
+    user: {}
   }
 }
